@@ -27,16 +27,20 @@ public class MainActivity extends Activity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
-        settings.setDatabaseEnabled(true);
-        settings.setLoadWithOverviewMode(true);
-        settings.setUseWideViewPort(true);
 
-        webView.setWebViewClient(new WebViewClient());
+        webView.addJavascriptInterface(new ApiBridge(), "AndroidApi");
 
-        webView.addJavascriptInterface(
-                new ApiBridge(),
-                "AndroidApi"
-        );
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
+                webView.evaluateJavascript(
+                    "if(window.ponteOK){ponteOK();}",
+                    null
+                );
+            }
+        });
 
         webView.loadUrl("file:///android_asset/index.html");
     }
@@ -50,149 +54,126 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
 
-                    HttpURLConnection connection = null;
+                    HttpURLConnection c = null;
 
                     try {
 
                         URL url = new URL(
-                                "https://cinenovelas.xyz/v1/" + path
+                            "https://cinenovelas.xyz/v1/" + path
                         );
 
-                        connection =
-                                (HttpURLConnection) url.openConnection();
+                        c = (HttpURLConnection) url.openConnection();
 
-                        connection.setRequestMethod("GET");
-                        connection.setConnectTimeout(15000);
-                        connection.setReadTimeout(20000);
+                        c.setRequestMethod("GET");
+                        c.setConnectTimeout(8000);
+                        c.setReadTimeout(8000);
+                        c.setUseCaches(false);
 
-                        connection.setRequestProperty(
-                                "Accept",
-                                "application/json"
+                        c.setRequestProperty(
+                            "Accept",
+                            "application/json"
                         );
 
-                        connection.setRequestProperty(
-                                "User-Agent",
-                                "CineNovelas/1.0.8 Android"
+                        c.setRequestProperty(
+                            "User-Agent",
+                            "Mozilla/5.0 (Linux; Android 6.0.1)"
                         );
 
-                        int status = connection.getResponseCode();
+                        int status = c.getResponseCode();
 
                         InputStream stream;
 
-                        if (status >= 200 && status < 300) {
-                            stream = connection.getInputStream();
+                        if (status >= 200 && status < 400) {
+                            stream = c.getInputStream();
                         } else {
-                            stream = connection.getErrorStream();
+                            stream = c.getErrorStream();
                         }
 
-                        String body = readStream(stream);
+                        String body = read(stream);
 
-                        sendResult(
-                                callback,
-                                status,
-                                body,
-                                null
+                        resposta(
+                            callback,
+                            status,
+                            body,
+                            ""
                         );
 
                     } catch (Exception e) {
 
-                        sendResult(
-                                callback,
-                                0,
-                                "",
-                                e.toString()
+                        resposta(
+                            callback,
+                            0,
+                            "",
+                            e.getClass().getSimpleName()
+                                + ": "
+                                + e.getMessage()
                         );
 
                     } finally {
 
-                        if (connection != null) {
-                            connection.disconnect();
+                        if (c != null) {
+                            c.disconnect();
                         }
-
                     }
-
                 }
             }).start();
-
         }
     }
 
-    private String readStream(InputStream stream) throws Exception {
+    private String read(InputStream in) throws Exception {
 
-        if (stream == null) {
-            return "";
+        if (in == null) return "";
+
+        BufferedReader br = new BufferedReader(
+            new InputStreamReader(in, "UTF-8")
+        );
+
+        StringBuilder sb = new StringBuilder();
+        String linha;
+
+        while ((linha = br.readLine()) != null) {
+            sb.append(linha);
         }
 
-        BufferedReader reader =
-                new BufferedReader(
-                        new InputStreamReader(stream, "UTF-8")
-                );
+        br.close();
 
-        StringBuilder result = new StringBuilder();
-        String line;
-
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
-        }
-
-        reader.close();
-
-        return result.toString();
+        return sb.toString();
     }
 
-    private void sendResult(
-            final String callback,
-            final int status,
-            final String body,
-            final String error
+    private void resposta(
+        final String callback,
+        final int status,
+        final String body,
+        final String erro
     ) {
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
-                String safeBody = escapeJs(body);
-                String safeError = escapeJs(
-                        error == null ? "" : error
-                );
-
                 String js =
-                        callback +
-                        "(" +
-                        status +
-                        ",'" +
-                        safeBody +
-                        "','" +
-                        safeError +
-                        "')";
+                    callback +
+                    "(" +
+                    status +
+                    ",'" +
+                    escapar(body) +
+                    "','" +
+                    escapar(erro) +
+                    "')";
 
                 webView.evaluateJavascript(js, null);
             }
         });
-
     }
 
-    private String escapeJs(String value) {
+    private String escapar(String s) {
 
-        if (value == null) {
-            return "";
-        }
+        if (s == null) return "";
 
-        return value
-                .replace("\\", "\\\\")
-                .replace("'", "\\'")
-                .replace("\n", "\\n")
-                .replace("\r", "");
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        if (webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            super.onBackPressed();
-        }
-
+        return s
+            .replace("\\", "\\\\")
+            .replace("'", "\\'")
+            .replace("\r", "")
+            .replace("\n", "\\n");
     }
 }
