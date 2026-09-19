@@ -6,14 +6,12 @@
   <title>Cinenovelas Lite</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       background: #0d0d0f;
-      color: #ffffff;
+      color: #fff;
       font-family: Arial, sans-serif;
     }
 
@@ -22,9 +20,6 @@
       padding: 18px 16px;
       font-size: 20px;
       font-weight: bold;
-      position: sticky;
-      top: 0;
-      z-index: 10;
     }
 
     .subtitulo {
@@ -55,6 +50,7 @@
       border-radius: 10px;
       font-size: 13px;
       color: #bbb;
+      word-break: break-word;
     }
 
     .titulo {
@@ -74,7 +70,6 @@
       background: #1a1a20;
       border-radius: 12px;
       overflow: hidden;
-      cursor: pointer;
     }
 
     .card img {
@@ -94,6 +89,10 @@
       color: #ff8a8a;
     }
 
+    .sucesso {
+      color: #8cff9a;
+    }
+
     .episodios {
       padding: 16px;
     }
@@ -106,7 +105,7 @@
     }
 
     button {
-      background: #ffffff;
+      background: white;
       border: 0;
       border-radius: 8px;
       padding: 10px 14px;
@@ -140,4 +139,69 @@
   </div>
 
   <div id="status" class="status">
-    Car
+    Testando conexão...
+  </div>
+
+  <div class="titulo">Novelas</div>
+
+  <div id="catalogo" class="grid"></div>
+
+</div>
+
+<div id="telaEpisodios" style="display:none">
+
+  <div class="voltar">
+    <button onclick="voltarCatalogo()">← Voltar</button>
+  </div>
+
+  <div id="tituloNovela" class="titulo"></div>
+
+  <div id="episodios" class="episodios"></div>
+
+</div>
+
+<script>
+
+var novelas = [];
+
+function setStatus(msg, tipo) {
+  var el = document.getElementById("status");
+
+  if (tipo === "erro") {
+    el.innerHTML = '<span class="erro">' + msg + '</span>';
+  } else if (tipo === "ok") {
+    el.innerHTML = '<span class="sucesso">' + msg + '</span>';
+  } else {
+    el.innerHTML = msg;
+  }
+}
+
+function texto(obj, campos) {
+  for (var i = 0; i < campos.length; i++) {
+    var valor = obj[campos[i]];
+
+    if (valor !== undefined && valor !== null && valor !== "") {
+      return valor;
+    }
+  }
+
+  return "";
+}
+
+function pegarLista(data) {
+
+  if (Array.isArray(data)) return data;
+
+  if (data && Array.isArray(data.data)) return data.data;
+  if (data && Array.isArray(data.results)) return data.results;
+  if (data && Array.isArray(data.novels)) return data.novels;
+
+  if (data && data.data && Array.isArray(data.data.novels)) {
+    return data.data.novels;
+  }
+
+  if (data && data.home && Array.isArray(data.home)) {
+    return data.home;
+  }
+
+  return
