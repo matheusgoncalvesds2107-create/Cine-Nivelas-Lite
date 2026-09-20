@@ -703,7 +703,32 @@ function abrirNovela(novela){
     );
 }
 
+function receberAssistirRenderizado(url, erro){
 
+    if(erro){
+
+        info(
+            "Página carregada ✅<br><br>" +
+            erro
+        );
+
+        return;
+    }
+
+    if(!url){
+
+        info(
+            "Nenhuma página pública de ASSISTIR encontrada."
+        );
+
+        return;
+    }
+
+    info(
+        "ASSISTIR encontrado ✅<br><br>" +
+        esc(url)
+    );
+}
 /* PROCURA ASSISTIR */
 
 function receberPaginaNovela(
