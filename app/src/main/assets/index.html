@@ -73,6 +73,19 @@ function resultadoTeste(status, body, erro) {
 }
 
 </script>
+setTimeout(function() {
 
+  if (window.AndroidApi) {
+
+    setStatus("Ponte Android OK. Conectando ao servidor...");
+    iniciar();
+
+  } else {
+
+    setStatus("ERRO: ponte Android não encontrada.", "erro");
+
+  }
+
+}, 1500);
 </body>
 </html>
