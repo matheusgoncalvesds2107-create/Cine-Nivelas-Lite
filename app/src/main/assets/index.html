@@ -110,8 +110,6 @@ main{
     margin-right:12px;
 }
 
-/* TOP */
-
 .topLista{
     display:flex;
     gap:12px;
@@ -172,8 +170,6 @@ main{
     text-overflow:ellipsis;
 }
 
-/* CATEGORIAS */
-
 .divisor{
     height:1px;
     background:#292929;
@@ -195,8 +191,6 @@ main{
     font-size:15px;
     font-weight:bold;
 }
-
-/* GRADE */
 
 .categoriaTopo{
     margin-top:30px;
@@ -251,7 +245,7 @@ main{
     text-overflow:ellipsis;
 }
 
-/* TELA DA NOVELA */
+/* EPISÓDIOS */
 
 #novelaTela{
     display:none;
@@ -329,68 +323,11 @@ main{
     font-size:13px;
 }
 
-/* PLAYER */
-
-#playerTela{
-    display:none;
-    background:#080808;
-}
-
-.playerArea{
-    background:#000;
-    width:100%;
-}
-
-video{
-    display:block;
-    width:100%;
-    min-height:220px;
-    background:#000;
-}
-
-.playerInfo{
-    padding:16px;
-}
-
-.nomeEpisodio{
-    font-size:20px;
-    font-weight:bold;
-}
-
-.numeroEpisodio{
-    margin-top:6px;
-    color:#aaa;
-}
-
-.playerBotoes{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:17px;
-}
-
-.playerBotoes button{
-    min-height:52px;
-    border:0;
-    border-radius:7px;
-    color:white;
-    font-size:14px;
-    font-weight:bold;
-}
-
-.btnPular{
-    background:#333;
-}
-
-.btnProximo{
-    background:#e31326;
-}
-
 .aviso{
-    margin-top:17px;
-    background:#1d1d20;
-    border-radius:8px;
+    margin:16px;
     padding:14px;
+    border-radius:8px;
+    background:#1d1d20;
     color:#bbb;
     line-height:1.5;
     font-size:14px;
@@ -503,80 +440,10 @@ video{
     class="episodios">
 </div>
 
-</div>
-
-
-<!-- PLAYER -->
-
-<div id="playerTela">
-
-<div class="subTopo">
-
-    <button
-        id="voltarEpisodios"
-        class="voltar">
-        ‹
-    </button>
-
-    <div class="subTitulo">
-
-        <strong id="tituloPlayer">
-            NOVELASPLAY
-        </strong>
-
-        <span>
-            Player
-        </span>
-
-    </div>
-
-</div>
-
-<div class="playerArea">
-
-    <video
-        id="video"
-        controls
-        playsinline
-        preload="metadata">
-    </video>
-
-</div>
-
-<div class="playerInfo">
-
-    <div id="nomeEp"
-         class="nomeEpisodio">
-        Episódio
-    </div>
-
-    <div id="numeroEp"
-         class="numeroEpisodio">
-        Episódio 1
-    </div>
-
-    <div class="playerBotoes">
-
-        <button
-            id="pularAbertura"
-            class="btnPular">
-            ⏩ Pular abertura
-        </button>
-
-        <button
-            id="proximoEpisodio"
-            class="btnProximo">
-            Próximo episódio ▶
-        </button>
-
-    </div>
-
-    <div
-        id="mensagemPlayer"
-        class="aviso">
-        Player NOVELASPLAY.
-    </div>
-
+<div
+    id="aviso"
+    class="aviso">
+    Toque em um episódio para abrir no player nativo do NovelasPlay.
 </div>
 
 </div>
@@ -599,12 +466,12 @@ var novelas = [
 ];
 
 var novelaAtual = "";
-var episodioAtual = 0;
 var episodiosAtuais = [];
 
 
 /*
-   VÍDEOS PÚBLICOS DE TESTE
+   VÍDEOS PÚBLICOS SÓ PARA TESTAR
+   O PLAYER NATIVO.
 */
 
 function criarEpisodios(nome){
@@ -614,22 +481,19 @@ function criarEpisodios(nome){
         {
             numero:1,
             titulo:nome+" - Episódio 1",
-            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-            abertura:30
+            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         },
 
         {
             numero:2,
             titulo:nome+" - Episódio 2",
-            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-            abertura:30
+            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
         },
 
         {
             numero:3,
             titulo:nome+" - Episódio 3",
-            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-            abertura:10
+            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
         }
 
     ];
@@ -701,6 +565,7 @@ function montarGrade(lista){
             '<div class="cardCapa">'+
             lista[i].nome+
             '</div>'+
+
             '<div class="cardNome">'+
             lista[i].nome+
             '</div>';
@@ -726,7 +591,8 @@ function montarGrade(lista){
 function pesquisar(){
 
     var texto =
-        document.getElementById("busca")
+        document
+        .getElementById("busca")
         .value
         .toLowerCase();
 
@@ -744,9 +610,7 @@ function pesquisar(){
             resultado.push(
                 novelas[i]
             );
-
         }
-
     }
 
     montarGrade(resultado);
@@ -762,10 +626,6 @@ function abrirNovela(nome){
 
     document
     .getElementById("catalogoTela")
-    .style.display="none";
-
-    document
-    .getElementById("playerTela")
     .style.display="none";
 
     document
@@ -799,7 +659,9 @@ function montarEpisodios(){
             episodiosAtuais[i];
 
         var botao =
-            document.createElement("button");
+            document.createElement(
+                "button"
+            );
 
         botao.className="ep";
 
@@ -829,7 +691,7 @@ function montarEpisodios(){
 
         botao.onclick=function(){
 
-            abrirEpisodio(
+            abrirPlayerNativo(
                 parseInt(
                     this.getAttribute(
                         "data-index"
@@ -844,71 +706,35 @@ function montarEpisodios(){
 }
 
 
-function abrirEpisodio(indice){
-
-    episodioAtual=indice;
+function abrirPlayerNativo(indice){
 
     var ep =
         episodiosAtuais[indice];
 
-    document
-    .getElementById("novelaTela")
-    .style.display="none";
-
-    document
-    .getElementById("playerTela")
-    .style.display="block";
-
-    document
-    .getElementById("tituloPlayer")
-    .innerHTML=novelaAtual;
-
-    document
-    .getElementById("nomeEp")
-    .innerHTML=ep.titulo;
-
-    document
-    .getElementById("numeroEp")
-    .innerHTML=
-        "Episódio "+
-        ep.numero;
-
-    var video =
-        document.getElementById("video");
-
-    video.pause();
-
-    video.src=ep.url;
-
-    video.load();
-
-    var tentativa =
-        video.play();
-
     if(
-        tentativa &&
-        tentativa.catch
+        typeof AndroidPlayer ===
+        "undefined"
     ){
 
-        tentativa.catch(function(){
+        document
+        .getElementById("aviso")
+        .innerHTML=
+            "ERRO: ponte do player nativo não encontrada.";
 
-            document
-            .getElementById(
-                "mensagemPlayer"
-            )
-            .innerHTML=
-                "Toque no botão ▶ do player para iniciar o vídeo.";
-
-        });
-
+        return;
     }
 
     document
-    .getElementById(
-        "mensagemPlayer"
-    )
+    .getElementById("aviso")
     .innerHTML=
-        "Vídeo de teste carregado no player NOVELASPLAY.";
+        "Abrindo Episódio "+
+        ep.numero+
+        "...";
+
+    AndroidPlayer.play(
+        ep.url,
+        ep.titulo
+    );
 }
 
 
@@ -921,80 +747,6 @@ function voltarCatalogo(){
     document
     .getElementById("catalogoTela")
     .style.display="block";
-}
-
-
-function voltarEpisodios(){
-
-    var video =
-        document.getElementById("video");
-
-    video.pause();
-
-    document
-    .getElementById("playerTela")
-    .style.display="none";
-
-    document
-    .getElementById("novelaTela")
-    .style.display="block";
-}
-
-
-function pularAbertura(){
-
-    var video =
-        document.getElementById("video");
-
-    var ep =
-        episodiosAtuais[
-            episodioAtual
-        ];
-
-    try{
-
-        video.currentTime=
-            ep.abertura || 30;
-
-        video.play();
-
-        document
-        .getElementById(
-            "mensagemPlayer"
-        )
-        .innerHTML=
-            "Abertura pulada.";
-
-    }catch(e){}
-
-}
-
-
-function proximo(){
-
-    var novoIndice =
-        episodioAtual+1;
-
-    if(
-        novoIndice<
-        episodiosAtuais.length
-    ){
-
-        abrirEpisodio(
-            novoIndice
-        );
-
-    }else{
-
-        document
-        .getElementById(
-            "mensagemPlayer"
-        )
-        .innerHTML=
-            "Este é o último episódio.";
-
-    }
-
 }
 
 
@@ -1017,45 +769,6 @@ document
 .addEventListener(
     "click",
     voltarCatalogo
-);
-
-document
-.getElementById("voltarEpisodios")
-.addEventListener(
-    "click",
-    voltarEpisodios
-);
-
-document
-.getElementById("pularAbertura")
-.addEventListener(
-    "click",
-    pularAbertura
-);
-
-document
-.getElementById("proximoEpisodio")
-.addEventListener(
-    "click",
-    proximo
-);
-
-
-/*
-   TERMINOU O VÍDEO:
-   PASSA AUTOMATICAMENTE
-   PARA O PRÓXIMO
-*/
-
-document
-.getElementById("video")
-.addEventListener(
-    "ended",
-    function(){
-
-        proximo();
-
-    }
 );
 
 
