@@ -2,16 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
-      content="width=device-width,
-      initial-scale=1.0,
-      maximum-scale=1.0">
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 
 <title>NovelasPlay</title>
 
 <style>
-
 *{
     box-sizing:border-box;
 }
@@ -35,12 +31,6 @@ button{
     justify-content:center;
     position:relative;
     border-bottom:1px solid #292929;
-}
-
-.menu{
-    position:absolute;
-    left:20px;
-    font-size:30px;
 }
 
 .logo{
@@ -84,7 +74,7 @@ button{
     width:62px;
     border:0;
     background:#e31326;
-    color:#fff;
+    color:white;
     font-size:24px;
 }
 
@@ -95,18 +85,18 @@ main{
 .status{
     background:#1d1d20;
     border-radius:8px;
-    padding:13px;
+    padding:14px;
     margin-bottom:16px;
     color:#bbb;
-    line-height:1.4;
+    line-height:1.5;
 }
 
-.status.ok{
+.ok{
     color:#8cff9b;
 }
 
-.status.erro{
-    color:#ff7e7e;
+.erro{
+    color:#ff8080;
 }
 
 .tituloSecao{
@@ -130,15 +120,15 @@ main{
     gap:11px;
 }
 
-.card{
-    min-width:0;
-}
-
 .cardCapa{
     height:175px;
     border-radius:6px;
     overflow:hidden;
-    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:9px;
 
     background:
         linear-gradient(
@@ -147,10 +137,6 @@ main{
             #18181b 55%,
             #a51c2f
         );
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
 }
 
 .cardCapa img{
@@ -159,30 +145,20 @@ main{
     object-fit:cover;
 }
 
-.semImagem{
-    padding:9px;
-    text-align:center;
-    font-weight:bold;
-    font-size:14px;
-}
-
 .cardNome{
     margin-top:7px;
     font-size:14px;
     font-weight:bold;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
 }
 
 .cardAno{
-    margin-top:3px;
-    font-size:12px;
     color:#999;
+    font-size:12px;
+    margin-top:3px;
 }
 
 
-/* NOVELA */
+/* TELA NOVELA */
 
 #novelaTela{
     display:none;
@@ -191,27 +167,20 @@ main{
 .subTopo{
     min-height:70px;
     background:#101011;
-
     display:flex;
     align-items:center;
-
     padding:12px 16px;
-
     border-bottom:2px solid #ef1837;
 }
 
 .voltar{
     width:44px;
     height:44px;
-
     border:0;
     border-radius:50%;
-
     background:#252525;
     color:#fff;
-
     font-size:27px;
-
     margin-right:13px;
 }
 
@@ -225,126 +194,71 @@ main{
     font-size:13px;
 }
 
-.detalhes{
+.conteudo{
     padding:18px;
 }
 
-.detalheBox{
+.painel{
     background:#1d1d20;
-    border-radius:9px;
+    border-radius:10px;
     padding:16px;
 }
 
-.detalheBox h2{
-    margin:0 0 8px;
-    font-size:22px;
-}
-
-.detalheAno{
-    color:#aaa;
-    margin-bottom:15px;
-}
-
-
-/* EPISÓDIOS */
-
-.episodiosTitulo{
-    display:flex;
-    align-items:center;
-
-    margin:25px 0 14px;
-
-    font-size:21px;
-    font-weight:bold;
-}
-
-.episodios{
-    width:100%;
+.painel h2{
+    margin-top:0;
 }
 
 .ep{
     width:100%;
-
     display:flex;
     align-items:center;
-
     padding:14px;
-
-    margin-bottom:10px;
-
+    margin-top:10px;
     border:0;
     border-radius:8px;
-
-    background:#202024;
+    background:#26262b;
     color:#fff;
-
     text-align:left;
 }
 
 .epNumero{
     width:45px;
     height:45px;
-
     flex:none;
-
     border-radius:50%;
-
     background:#e31326;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
-    margin-right:13px;
-
+    margin-right:12px;
     font-weight:bold;
-}
-
-.epTexto{
-    min-width:0;
 }
 
 .epTexto strong{
     display:block;
-
     font-size:16px;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
 }
 
 .epTexto span{
     display:block;
-    margin-top:4px;
     color:#aaa;
+    margin-top:4px;
     font-size:12px;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
 }
-
 </style>
 </head>
 
 <body>
-
 
 <!-- CATÁLOGO -->
 
 <div id="catalogoTela">
 
 <div class="topo">
-
-    <div class="menu">☰</div>
-
     <div class="logo">
         <span class="logo1">NOVELAS</span><span class="logo2">PLAY</span>
     </div>
-
 </div>
-
 
 <div class="barraBusca">
 
@@ -364,36 +278,22 @@ main{
 
 </div>
 
-
 <main>
 
-<div
-    id="status"
-    class="status">
-
+<div id="status" class="status">
     Carregando catálogo...
-
 </div>
-
 
 <div class="tituloSecao">
-
     <div class="linha"></div>
-
     Novelas
-
 </div>
 
-
-<div
-    id="grade"
-    class="grade">
-</div>
+<div id="grade" class="grade"></div>
 
 </main>
 
 </div>
-
 
 
 <!-- NOVELA -->
@@ -403,7 +303,7 @@ main{
 <div class="subTopo">
 
     <button
-        id="voltarCatalogo"
+        id="voltar"
         class="voltar">
         ‹
     </button>
@@ -422,42 +322,24 @@ main{
 
 </div>
 
+<div class="conteudo">
 
-<div class="detalhes">
-
-<div class="detalheBox">
+<div class="painel">
 
     <h2 id="tituloNovela">
         Novela
     </h2>
 
-    <div
-        id="anoNovela"
-        class="detalheAno">
+    <div id="info" class="status">
+        Carregando...
     </div>
 
-    <div
-        id="infoNovela"
-        class="status">
-
-        Carregando página...
-
-    </div>
-
-
-    <div class="episodiosTitulo">
-
+    <div class="tituloSecao">
         <div class="linha"></div>
-
         Capítulos / Episódios
-
     </div>
 
-
-    <div
-        id="listaEpisodios"
-        class="episodios">
-    </div>
+    <div id="episodios"></div>
 
 </div>
 
@@ -472,15 +354,11 @@ var URL_CATALOGO =
     "https://noveflix.lol/categoria/novelas/";
 
 var novelas = [];
-
-var novelasFiltradas = [];
-
+var filtradas = [];
 var novelaAtual = null;
 
-var episodiosAtuais = [];
 
-
-/* COMEÇA */
+/* INÍCIO */
 
 function iniciar(){
 
@@ -489,17 +367,13 @@ function iniciar(){
         "undefined"
     ){
 
-        mostrarStatus(
-            "ERRO: AndroidSite não encontrado.",
+        status(
+            "AndroidSite não encontrado.",
             "erro"
         );
 
         return;
     }
-
-    mostrarStatus(
-        "Buscando catálogo..."
-    );
 
     AndroidSite.get(
         URL_CATALOGO,
@@ -511,14 +385,14 @@ function iniciar(){
 /* CATÁLOGO */
 
 function receberCatalogo(
-    status,
+    codigo,
     html,
     erro
 ){
 
     if(erro){
 
-        mostrarStatus(
+        status(
             erro,
             "erro"
         );
@@ -527,12 +401,12 @@ function receberCatalogo(
     }
 
     if(
-        status < 200 ||
-        status >= 400
+        codigo < 200 ||
+        codigo >= 400
     ){
 
-        mostrarStatus(
-            "HTTP "+status,
+        status(
+            "HTTP "+codigo,
             "erro"
         );
 
@@ -544,38 +418,22 @@ function receberCatalogo(
             html
         );
 
-    novelasFiltradas =
+    filtradas =
         novelas.slice(0);
 
-    if(
-        novelas.length===0
-    ){
-
-        mostrarStatus(
-            "Nenhuma novela encontrada.",
-            "erro"
-        );
-
-        return;
-    }
-
-    mostrarStatus(
+    status(
         novelas.length+
         " novelas encontradas.",
         "ok"
     );
 
     montarGrade(
-        novelas
+        filtradas
     );
 }
 
 
 function extrairNovelas(html){
-
-    var resultado = [];
-
-    var encontrados = {};
 
     var parser =
         new DOMParser();
@@ -591,6 +449,8 @@ function extrairNovelas(html){
             "a[href]"
         );
 
+    var lista = [];
+    var usados = {};
 
     for(
         var i=0;
@@ -598,42 +458,37 @@ function extrairNovelas(html){
         i++
     ){
 
-        var link =
+        var a =
             links[i];
 
         var href =
-            link.getAttribute(
-                "href"
-            ) || "";
-
+            normalizar(
+                a.getAttribute(
+                    "href"
+                )
+            );
 
         if(
             href.indexOf(
-                "noveflix.lol/assista/"
-            ) === -1
+                "https://noveflix.lol/assista/"
+            ) !== 0
         ){
             continue;
         }
 
-
-        if(
-            encontrados[href]
-        ){
+        if(usados[href]){
             continue;
         }
-
 
         var img =
-            link.querySelector(
+            a.querySelector(
                 "img"
             );
 
-
         var nome =
-            limparTexto(
-                link.textContent
+            limpar(
+                a.textContent
             );
-
 
         if(
             !nome &&
@@ -641,50 +496,18 @@ function extrairNovelas(html){
         ){
 
             nome =
-                limparTexto(
+                limpar(
                     img.getAttribute(
                         "alt"
                     )
                 );
         }
 
-
         if(!nome){
             continue;
         }
 
-
-        var bloco =
-            link.parentNode;
-
-
-        var textoBloco =
-            bloco
-            ?
-            limparTexto(
-                bloco.textContent
-            )
-            :
-            "";
-
-
-        var ano = "";
-
-
-        var matchAno =
-            textoBloco.match(
-                /\b(19|20)\d{2}\b/
-            );
-
-
-        if(matchAno){
-            ano =
-                matchAno[0];
-        }
-
-
-        var capa = "";
-
+        var capa="";
 
         if(img){
 
@@ -694,37 +517,134 @@ function extrairNovelas(html){
                 )
                 ||
                 img.getAttribute(
-                    "data-lazy-src"
-                )
-                ||
-                img.getAttribute(
                     "src"
                 )
                 ||
                 "";
         }
 
+        var pai =
+            a.parentNode;
 
-        encontrados[href] =
-            true;
+        var texto =
+            pai
+            ?
+            limpar(
+                pai.textContent
+            )
+            :
+            "";
 
+        var ano="";
 
-        resultado.push({
+        var m =
+            texto.match(
+                /\b(19|20)\d{2}\b/
+            );
+
+        if(m){
+            ano=m[0];
+        }
+
+        usados[href]=true;
+
+        lista.push({
 
             nome:nome,
-
             ano:ano,
-
-            url:href,
-
-            capa:capa
+            capa:capa,
+            url:href
 
         });
-
     }
 
+    return lista;
+}
 
-    return resultado;
+
+/* CARDS */
+
+function montarGrade(lista){
+
+    var grade =
+        document.getElementById(
+            "grade"
+        );
+
+    grade.innerHTML="";
+
+    for(
+        var i=0;
+        i<lista.length;
+        i++
+    ){
+
+        var item =
+            lista[i];
+
+        var card =
+            document.createElement(
+                "div"
+            );
+
+        var imagem="";
+
+        if(
+            item.capa &&
+            item.capa.indexOf(
+                "http"
+            )===0
+        ){
+
+            imagem =
+                '<img src="' +
+                esc(item.capa) +
+                '">';
+
+        }else{
+
+            imagem =
+                esc(
+                    item.nome
+                );
+        }
+
+        card.innerHTML=
+
+            '<div class="cardCapa">'+
+            imagem+
+            '</div>'+
+
+            '<div class="cardNome">'+
+            esc(item.nome)+
+            '</div>'+
+
+            '<div class="cardAno">'+
+            esc(item.ano)+
+            '</div>';
+
+        card.setAttribute(
+            "data-index",
+            i
+        );
+
+        card.onclick=function(){
+
+            abrirNovela(
+                filtradas[
+                    parseInt(
+                        this.getAttribute(
+                            "data-index"
+                        )
+                    )
+                ]
+            );
+        };
+
+        grade.appendChild(
+            card
+        );
+    }
 }
 
 
@@ -735,161 +655,244 @@ function abrirNovela(novela){
     novelaAtual =
         novela;
 
-    episodiosAtuais = [];
-
-
-    document
-    .getElementById(
-        "listaEpisodios"
-    )
-    .innerHTML="";
-
-
     document
     .getElementById(
         "catalogoTela"
     )
-    .style.display="none";
-
+    .style.display =
+        "none";
 
     document
     .getElementById(
         "novelaTela"
     )
-    .style.display="block";
-
+    .style.display =
+        "block";
 
     document
     .getElementById(
         "tituloTopo"
     )
     .innerHTML =
-        escaparHtml(
+        esc(
             novela.nome
         );
-
 
     document
     .getElementById(
         "tituloNovela"
     )
     .innerHTML =
-        escaparHtml(
+        esc(
             novela.nome
         );
 
-
     document
     .getElementById(
-        "anoNovela"
+        "episodios"
     )
-    .innerHTML =
-        escaparHtml(
-            novela.ano
-        );
+    .innerHTML="";
 
-
-    document
-    .getElementById(
-        "infoNovela"
-    )
-    .innerHTML =
-        "Procurando capítulos públicos...";
-
+    info(
+        "Procurando botão ASSISTIR..."
+    );
 
     AndroidSite.get(
         novela.url,
-        "receberNovela"
+        "receberPaginaNovela"
     );
 }
 
 
-/* RECEBE NOVELA */
+/* PROCURA ASSISTIR */
 
-function receberNovela(
-    status,
+function receberPaginaNovela(
+    codigo,
     html,
     erro
 ){
 
     if(erro){
 
-        document
-        .getElementById(
-            "infoNovela"
-        )
-        .innerHTML =
-            escaparHtml(
-                erro
-            );
+        info(
+            erro
+        );
+
+        return;
+    }
+
+    if(
+        codigo < 200 ||
+        codigo >= 400
+    ){
+
+        info(
+            "HTTP "+codigo
+        );
+
+        return;
+    }
+
+    var parser =
+        new DOMParser();
+
+    var doc =
+        parser.parseFromString(
+            html,
+            "text/html"
+        );
+
+    var links =
+        doc.querySelectorAll(
+            "a[href]"
+        );
+
+    var assistir="";
+
+    for(
+        var i=0;
+        i<links.length;
+        i++
+    ){
+
+        var texto =
+            limpar(
+                links[i].textContent
+            )
+            .toLowerCase();
+
+        if(
+            texto==="assistir"
+            ||
+            texto.indexOf(
+                "assistir"
+            )>=0
+        ){
+
+            assistir =
+                normalizar(
+                    links[i].getAttribute(
+                        "href"
+                    )
+                );
+
+            if(assistir){
+                break;
+            }
+        }
+    }
+
+
+    if(!assistir){
+
+        info(
+            "Página carregada ✅<br><br>"+
+            "O botão ASSISTIR não apareceu como link público no HTML."
+        );
+
+        return;
+    }
+
+
+    /*
+     * AndroidSite aceita somente
+     * páginas do próprio NoveFlix.
+     */
+
+    if(
+        assistir.indexOf(
+            "https://noveflix.lol/"
+        ) !== 0
+    ){
+
+        info(
+            "Botão ASSISTIR encontrado ✅<br><br>"+
+            "Mas ele aponta para outro domínio. "+
+            "Não vamos seguir automaticamente."
+        );
+
+        return;
+    }
+
+
+    info(
+        "Botão ASSISTIR encontrado ✅<br><br>"+
+        "Carregando página de episódios..."
+    );
+
+
+    AndroidSite.get(
+        assistir,
+        "receberPaginaAssistir"
+    );
+}
+
+
+/* SEGUNDA PÁGINA */
+
+function receberPaginaAssistir(
+    codigo,
+    html,
+    erro
+){
+
+    if(erro){
+
+        info(
+            erro
+        );
 
         return;
     }
 
 
     if(
-        status < 200 ||
-        status >= 400
+        codigo < 200 ||
+        codigo >= 400
     ){
 
-        document
-        .getElementById(
-            "infoNovela"
-        )
-        .innerHTML =
-            "HTTP "+
-            status;
+        info(
+            "HTTP "+codigo
+        );
 
         return;
     }
 
 
-    episodiosAtuais =
-        extrairEpisodios(
+    var episodios =
+        encontrarEpisodios(
             html
         );
 
 
     if(
-        episodiosAtuais.length===0
+        episodios.length===0
     ){
 
-        document
-        .getElementById(
-            "infoNovela"
-        )
-        .innerHTML =
-            "Página carregada ✅<br><br>"+
-            "Nenhum link público de capítulo/episódio foi encontrado no HTML.";
+        info(
+            "Página ASSISTIR carregada ✅<br><br>"+
+            "Nenhum link público de capítulo foi encontrado."
+        );
 
         return;
     }
 
 
-    document
-    .getElementById(
-        "infoNovela"
-    )
-    .innerHTML =
-        episodiosAtuais.length+
-        " capítulos/episódios encontrados ✅";
+    info(
+        episodios.length+
+        " episódios encontrados ✅"
+    );
 
 
-    montarEpisodios();
+    montarEpisodios(
+        episodios
+    );
 }
 
 
-/*
- * PROCURA SOMENTE LINKS PÚBLICOS
- * NO HTML DA PÁGINA.
- */
+/* PROCURA LINKS DE EPISÓDIOS */
 
-function extrairEpisodios(html){
-
-    var resultado = [];
-
-    var encontrados = {};
-
+function encontrarEpisodios(html){
 
     var parser =
         new DOMParser();
@@ -908,27 +911,27 @@ function extrairEpisodios(html){
         );
 
 
+    var lista=[];
+    var usados={};
+
+
     for(
         var i=0;
         i<links.length;
         i++
     ){
 
-        var link =
-            links[i];
+        var texto =
+            limpar(
+                links[i].textContent
+            );
 
 
         var href =
-            link.getAttribute(
-                "href"
-            )
-            ||
-            "";
-
-
-        var texto =
-            limparTexto(
-                link.textContent
+            normalizar(
+                links[i].getAttribute(
+                    "href"
+                )
             );
 
 
@@ -941,259 +944,83 @@ function extrairEpisodios(html){
             .toLowerCase();
 
 
-        var pareceEpisodio =
+        var valido =
+
             teste.indexOf(
                 "episodio"
-            ) >= 0
+            )>=0
+
             ||
+
             teste.indexOf(
                 "episódio"
-            ) >= 0
+            )>=0
+
             ||
+
             teste.indexOf(
                 "capitulo"
-            ) >= 0
+            )>=0
+
             ||
+
             teste.indexOf(
                 "capítulo"
-            ) >= 0
-            ||
-            teste.indexOf(
-                "/episode/"
-            ) >= 0
-            ||
-            teste.indexOf(
-                "/episodio/"
-            ) >= 0
-            ||
-            teste.indexOf(
-                "/capitulo/"
-            ) >= 0;
+            )>=0;
 
 
-        if(
-            !pareceEpisodio
-        ){
-            continue;
-        }
-
-
-        href =
-            normalizarUrl(
-                href
-            );
-
-
-        if(
-            !href
-            ||
-            encontrados[href]
-        ){
+        if(!valido){
             continue;
         }
 
 
         /*
-         * Só mantemos páginas HTTPS
-         * do próprio NoveFlix.
+         * Somente páginas públicas
+         * do próprio domínio.
          */
 
         if(
             href.indexOf(
                 "https://noveflix.lol/"
-            ) !== 0
-            &&
-            href.indexOf(
-                "https://www.noveflix.lol/"
-            ) !== 0
+            )!==0
         ){
             continue;
         }
 
 
-        if(!texto){
-
-            texto =
-                "Episódio "+
-                (resultado.length+1);
+        if(usados[href]){
+            continue;
         }
 
 
-        encontrados[href] =
-            true;
+        usados[href]=true;
 
 
-        resultado.push({
+        lista.push({
 
-            titulo:texto,
+            titulo:
+                texto
+                ||
+                "Episódio "+
+                (lista.length+1),
 
             url:href
 
         });
-
     }
 
 
-    return resultado;
+    return lista;
 }
 
 
-/* MONTA EPISÓDIOS */
+/* MOSTRA EPISÓDIOS */
 
-function montarEpisodios(){
+function montarEpisodios(lista){
 
     var box =
         document.getElementById(
-            "listaEpisodios"
-        );
-
-
-    box.innerHTML="";
-
-
-    for(
-        var i=0;
-        i<episodiosAtuais.length;
-        i++
-    ){
-
-        var ep =
-            episodiosAtuais[i];
-
-
-        var botao =
-            document.createElement(
-                "button"
-            );
-
-
-        botao.className=
-            "ep";
-
-
-        botao.innerHTML =
-
-            '<div class="epNumero">'+
-            (i+1)+
-            '</div>'+
-
-            '<div class="epTexto">'+
-
-            '<strong>'+
-            escaparHtml(
-                ep.titulo
-            )+
-            '</strong>'+
-
-            '<span>'+
-            'Abrir dentro do NovelasPlay'+
-            '</span>'+
-
-            '</div>';
-
-
-        botao.setAttribute(
-            "data-index",
-            i
-        );
-
-
-        botao.onclick =
-            function(){
-
-                abrirPaginaEpisodio(
-                    parseInt(
-                        this.getAttribute(
-                            "data-index"
-                        )
-                    )
-                );
-
-            };
-
-
-        box.appendChild(
-            botao
-        );
-
-    }
-}
-
-
-/*
- * NÃO ABRE NAVEGADOR.
- *
- * Apenas baixa a página pública
- * do episódio em segundo plano.
- */
-
-function abrirPaginaEpisodio(indice){
-
-    var ep =
-        episodiosAtuais[
-            indice
-        ];
-
-
-    document
-    .getElementById(
-        "infoNovela"
-    )
-    .innerHTML =
-        "Carregando "+
-        escaparHtml(
-            ep.titulo
-        )+
-        "...";
-
-
-    AndroidSite.get(
-        ep.url,
-        "receberPaginaEpisodio"
-    );
-}
-
-
-function receberPaginaEpisodio(
-    status,
-    html,
-    erro
-){
-
-    if(erro){
-
-        document
-        .getElementById(
-            "infoNovela"
-        )
-        .innerHTML =
-            escaparHtml(
-                erro
-            );
-
-        return;
-    }
-
-
-    document
-    .getElementById(
-        "infoNovela"
-    )
-    .innerHTML =
-        "Página do episódio carregada ✅<br><br>"+
-        "HTTP "+
-        status+
-        ".";
-}
-
-
-/* CATÁLOGO */
-
-function montarGrade(lista){
-
-    var box =
-        document.getElementById(
-            "grade"
+            "episodios"
         );
 
 
@@ -1206,97 +1033,40 @@ function montarGrade(lista){
         i++
     ){
 
-        var novela =
-            lista[i];
-
-
-        var card =
+        var botao =
             document.createElement(
-                "div"
+                "button"
             );
 
 
-        card.className=
-            "card";
+        botao.className =
+            "ep";
 
 
-        var capaHtml="";
+        botao.innerHTML=
 
-
-        if(
-            novela.capa &&
-            novela.capa.indexOf(
-                "http"
-            )===0
-        ){
-
-            capaHtml=
-                '<img src="'+
-                escaparHtml(
-                    novela.capa
-                )+
-                '" alt="">';
-
-        }else{
-
-            capaHtml=
-                '<div class="semImagem">'+
-                escaparHtml(
-                    novela.nome
-                )+
-                '</div>';
-        }
-
-
-        card.innerHTML=
-
-            '<div class="cardCapa">'+
-            capaHtml+
+            '<div class="epNumero">'+
+            (i+1)+
             '</div>'+
 
-            '<div class="cardNome">'+
-            escaparHtml(
-                novela.nome
-            )+
-            '</div>'+
+            '<div class="epTexto">'+
 
-            '<div class="cardAno">'+
-            escaparHtml(
-                novela.ano
+            '<strong>'+
+            esc(
+                lista[i].titulo
             )+
+            '</strong>'+
+
+            '<span>'+
+            'Página pública'+
+            '</span>'+
+
             '</div>';
 
 
-        card.setAttribute(
-            "data-index",
-            i
-        );
-
-
-        card.onclick=
-            function(){
-
-                var indice =
-                    parseInt(
-                        this.getAttribute(
-                            "data-index"
-                        )
-                    );
-
-
-                abrirNovela(
-                    novelasFiltradas[
-                        indice
-                    ]
-                );
-
-            };
-
-
         box.appendChild(
-            card
+            botao
         );
-
     }
 }
 
@@ -1314,7 +1084,7 @@ function pesquisar(){
         .toLowerCase();
 
 
-    novelasFiltradas=[];
+    filtradas=[];
 
 
     for(
@@ -1332,43 +1102,22 @@ function pesquisar(){
             )>=0
         ){
 
-            novelasFiltradas.push(
+            filtradas.push(
                 novelas[i]
             );
-
         }
-
     }
 
 
     montarGrade(
-        novelasFiltradas
+        filtradas
     );
-}
-
-
-/* VOLTAR */
-
-function voltar(){
-
-    document
-    .getElementById(
-        "novelaTela"
-    )
-    .style.display="none";
-
-
-    document
-    .getElementById(
-        "catalogoTela"
-    )
-    .style.display="block";
 }
 
 
 /* UTIL */
 
-function normalizarUrl(url){
+function normalizar(url){
 
     if(!url){
         return "";
@@ -1377,9 +1126,23 @@ function normalizarUrl(url){
 
     if(
         url.indexOf(
+            "https://www.noveflix.lol/"
+        )===0
+    ){
+
+        return url.replace(
+            "https://www.noveflix.lol/",
+            "https://noveflix.lol/"
+        );
+    }
+
+
+    if(
+        url.indexOf(
             "https://"
         )===0
     ){
+
         return url;
     }
 
@@ -1406,14 +1169,13 @@ function normalizarUrl(url){
 }
 
 
-function limparTexto(texto){
+function limpar(texto){
 
     if(!texto){
         return "";
     }
 
-
-    return texto
+    return String(texto)
         .replace(
             /\s+/g,
             " "
@@ -1425,43 +1187,23 @@ function limparTexto(texto){
 }
 
 
-function escaparHtml(texto){
+function esc(texto){
 
     if(!texto){
         return "";
     }
 
-
     return String(texto)
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
-function mostrarStatus(
+function status(
     texto,
     tipo
 ){
@@ -1471,22 +1213,29 @@ function mostrarStatus(
             "status"
         );
 
-
     box.className =
         "status";
 
-
     if(tipo){
-
         box.className +=
             " "+tipo;
     }
 
-
     box.innerHTML =
-        escaparHtml(
+        esc(
             texto
         );
+}
+
+
+function info(texto){
+
+    document
+    .getElementById(
+        "info"
+    )
+    .innerHTML =
+        texto;
 }
 
 
@@ -1514,11 +1263,24 @@ document
 
 document
 .getElementById(
-    "voltarCatalogo"
+    "voltar"
 )
 .addEventListener(
     "click",
-    voltar
+    function(){
+
+        document
+        .getElementById(
+            "novelaTela"
+        )
+        .style.display="none";
+
+        document
+        .getElementById(
+            "catalogoTela"
+        )
+        .style.display="block";
+    }
 );
 
 
