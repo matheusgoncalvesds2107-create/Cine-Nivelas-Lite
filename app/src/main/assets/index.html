@@ -115,7 +115,7 @@ function iniciar() {
     respostaBox.innerHTML = "";
 
     AndroidApi.get(
-        "home",
+        "novels",
         "respostaHome"
     );
 }
@@ -154,7 +154,6 @@ function respostaHome(status, body, erro) {
 
     respostaBox.innerHTML = body;
 }
-
 
 setTimeout(function() {
 
