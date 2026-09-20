@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 
-<title>NovelasPlay</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+
+<title>NovelasPlay Motor Teste</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -19,99 +24,90 @@ body{
     font-family:Arial,sans-serif;
 }
 
-button{
+button,
+input{
     font-family:Arial,sans-serif;
 }
 
 .topo{
-    height:82px;
-    background:#101011;
+    height:80px;
     display:flex;
     align-items:center;
     justify-content:center;
-    position:relative;
-    border-bottom:1px solid #292929;
+    background:#111;
+    border-bottom:2px solid #e31b36;
 }
 
 .logo{
-    font-size:29px;
+    font-size:28px;
     font-weight:bold;
 }
 
-.logo1{
-    color:#ef1741;
+.logo span:first-child{
+    color:#e31b36;
 }
 
-.logo2{
-    color:#fff;
-}
-
-.barraBusca{
-    padding:17px;
-    background:#101011;
-    border-bottom:7px solid #222;
-}
-
-.buscaBox{
+.busca{
     display:flex;
-    background:#050505;
-    border-radius:28px;
-    overflow:hidden;
+    padding:15px;
+    background:#151515;
 }
 
-.buscaBox input{
+.busca input{
     flex:1;
     min-width:0;
+    padding:14px;
     border:0;
-    outline:0;
+    border-radius:25px 0 0 25px;
     background:#050505;
     color:#fff;
-    padding:15px 18px;
-    font-size:17px;
+    font-size:16px;
 }
 
-.btnBusca{
-    width:62px;
+.busca button{
+    width:60px;
     border:0;
-    background:#e31326;
-    color:white;
-    font-size:24px;
+    border-radius:0 25px 25px 0;
+    background:#e31b36;
+    color:#fff;
+    font-size:20px;
 }
 
 main{
-    padding:17px;
+    padding:16px;
 }
 
 .status{
-    background:#1d1d20;
-    border-radius:8px;
     padding:14px;
     margin-bottom:16px;
+    border-radius:9px;
+    background:#202024;
     color:#bbb;
     line-height:1.5;
+    word-break:break-word;
 }
 
 .ok{
-    color:#8cff9b;
+    color:#8dff9c;
 }
 
 .erro{
-    color:#ff8080;
+    color:#ff8585;
 }
 
-.tituloSecao{
+.titulo{
+    font-size:22px;
+    font-weight:bold;
+    margin:20px 0 15px;
     display:flex;
     align-items:center;
-    margin:20px 0 16px;
-    font-size:23px;
-    font-weight:bold;
 }
 
 .linha{
     width:5px;
-    height:34px;
-    background:#ef1837;
-    margin-right:12px;
+    height:30px;
+    background:#e31b36;
+    margin-right:10px;
 }
 
 .grade{
@@ -120,38 +116,45 @@ main{
     gap:11px;
 }
 
-.cardCapa{
-    height:175px;
-    border-radius:6px;
+.card{
+    min-width:0;
+}
+
+.capa{
+    height:170px;
+    border-radius:7px;
     overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:9px;
+    padding:8px;
 
     background:
         linear-gradient(
             145deg,
-            #53111a,
+            #61131e,
             #18181b 55%,
-            #a51c2f
+            #9b172a
         );
 }
 
-.cardCapa img{
+.capa img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
-.cardNome{
+.nome{
     margin-top:7px;
     font-size:14px;
     font-weight:bold;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.cardAno{
+.ano{
     color:#999;
     font-size:12px;
     margin-top:3px;
@@ -165,12 +168,12 @@ main{
 }
 
 .subTopo{
-    min-height:70px;
-    background:#101011;
+    min-height:68px;
     display:flex;
     align-items:center;
-    padding:12px 16px;
-    border-bottom:2px solid #ef1837;
+    padding:12px;
+    background:#111;
+    border-bottom:2px solid #e31b36;
 }
 
 .voltar{
@@ -178,122 +181,117 @@ main{
     height:44px;
     border:0;
     border-radius:50%;
-    background:#252525;
+    margin-right:12px;
+    background:#292929;
     color:#fff;
-    font-size:27px;
-    margin-right:13px;
+    font-size:26px;
 }
 
 .subTitulo strong{
     display:block;
-    font-size:19px;
+    font-size:18px;
 }
 
 .subTitulo span{
-    color:#aaa;
-    font-size:13px;
-}
-
-.conteudo{
-    padding:18px;
+    color:#999;
+    font-size:12px;
 }
 
 .painel{
-    background:#1d1d20;
-    border-radius:10px;
+    margin:16px;
     padding:16px;
+    background:#1c1c20;
+    border-radius:10px;
 }
 
 .painel h2{
     margin-top:0;
 }
 
-.ep{
-    width:100%;
-    display:flex;
-    align-items:center;
+.resultado{
+    margin-top:15px;
     padding:14px;
-    margin-top:10px;
-    border:0;
+    background:#101014;
     border-radius:8px;
-    background:#26262b;
-    color:#fff;
-    text-align:left;
+    color:#bbb;
+    line-height:1.5;
+    word-break:break-word;
 }
 
-.epNumero{
-    width:45px;
-    height:45px;
-    flex:none;
-    border-radius:50%;
-    background:#e31326;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-right:12px;
+.botaoTeste{
+    width:100%;
+    min-height:50px;
+    margin-top:12px;
+    border:0;
+    border-radius:7px;
+    background:#e31b36;
+    color:#fff;
+    font-size:15px;
     font-weight:bold;
 }
 
-.epTexto strong{
-    display:block;
-    font-size:16px;
-}
-
-.epTexto span{
-    display:block;
-    color:#aaa;
-    margin-top:4px;
-    font-size:12px;
-}
 </style>
+
 </head>
 
 <body>
+
 
 <!-- CATÁLOGO -->
 
 <div id="catalogoTela">
 
 <div class="topo">
+
     <div class="logo">
-        <span class="logo1">NOVELAS</span><span class="logo2">PLAY</span>
-    </div>
-</div>
-
-<div class="barraBusca">
-
-    <div class="buscaBox">
-
-        <input
-            id="busca"
-            placeholder="Pesquisar novela...">
-
-        <button
-            id="btnBusca"
-            class="btnBusca">
-            🔍
-        </button>
-
+        <span>NOVELAS</span><span>PLAY</span>
     </div>
 
 </div>
+
+
+<div class="busca">
+
+    <input
+        id="campoBusca"
+        placeholder="Pesquisar novela...">
+
+    <button id="btnBusca">
+        🔍
+    </button>
+
+</div>
+
 
 <main>
 
-<div id="status" class="status">
-    Carregando catálogo...
+<div
+    id="status"
+    class="status">
+
+    Inicializando motor...
+
 </div>
 
-<div class="tituloSecao">
+
+<div class="titulo">
+
     <div class="linha"></div>
+
     Novelas
+
 </div>
 
-<div id="grade" class="grade"></div>
+
+<div
+    id="grade"
+    class="grade">
+</div>
 
 </main>
 
 </div>
+
 
 
 <!-- NOVELA -->
@@ -303,9 +301,11 @@ main{
 <div class="subTopo">
 
     <button
-        id="voltar"
+        id="btnVoltar"
         class="voltar">
+
         ‹
+
     </button>
 
     <div class="subTitulo">
@@ -314,7 +314,7 @@ main{
             Novela
         </strong>
 
-        <span>
+        <span id="modoTopo">
             NovelasPlay
         </span>
 
@@ -322,7 +322,6 @@ main{
 
 </div>
 
-<div class="conteudo">
 
 <div class="painel">
 
@@ -330,22 +329,28 @@ main{
         Novela
     </h2>
 
-    <div id="info" class="status">
+
+    <div
+        id="resultado"
+        class="resultado">
+
         Carregando...
+
     </div>
 
-    <div class="tituloSecao">
-        <div class="linha"></div>
-        Capítulos / Episódios
-    </div>
 
-    <div id="episodios"></div>
+    <button
+        id="btnRender"
+        class="botaoTeste">
+
+        Testar ASSISTIR renderizado
+
+    </button>
+
+</div>
 
 </div>
 
-</div>
-
-</div>
 
 
 <script>
@@ -354,35 +359,156 @@ var URL_CATALOGO =
     "https://noveflix.lol/categoria/novelas/";
 
 var novelas = [];
+
 var filtradas = [];
+
 var novelaAtual = null;
 
 
-/* INÍCIO */
 
-function iniciar(){
+/*
+ * ==========================================
+ * DESCOBRE O MODO
+ * ==========================================
+ */
 
-    if(
-        typeof AndroidSite ===
+function modoAPK(){
+
+    return (
+        typeof AndroidSite !==
         "undefined"
+    );
+}
+
+
+function modoRenderAPK(){
+
+    return (
+        typeof AndroidRendered !==
+        "undefined"
+    );
+}
+
+
+
+/*
+ * ==========================================
+ * REQUISIÇÃO HÍBRIDA
+ * ==========================================
+ */
+
+function baixarPagina(
+    url,
+    callback
+){
+
+    /*
+     * APK
+     */
+    if(
+        modoAPK()
     ){
 
-        status(
-            "AndroidSite não encontrado.",
-            "erro"
+        AndroidSite.get(
+            url,
+            callback
         );
 
         return;
     }
 
-    AndroidSite.get(
+
+    /*
+     * NAVEGADOR NORMAL
+     */
+
+    mostrarStatus(
+        "Modo navegador: tentando baixar página pública..."
+    );
+
+
+    fetch(
+        url,
+        {
+            method:"GET"
+        }
+    )
+
+    .then(
+        function(resposta){
+
+            return resposta
+                .text()
+                .then(
+                    function(texto){
+
+                        window[
+                            callback
+                        ](
+                            resposta.status,
+                            texto,
+                            ""
+                        );
+                    }
+                );
+        }
+    )
+
+    .catch(
+        function(erro){
+
+            window[
+                callback
+            ](
+                0,
+                "",
+                "O navegador bloqueou a leitura. "+
+                "Provavelmente CORS: "+
+                erro
+            );
+        }
+    );
+}
+
+
+
+/*
+ * ==========================================
+ * INÍCIO
+ * ==========================================
+ */
+
+function iniciar(){
+
+    if(
+        modoAPK()
+    ){
+
+        mostrarStatus(
+            "Modo APK ✅ Buscando catálogo..."
+        );
+
+    }else{
+
+        mostrarStatus(
+            "Modo navegador 🌐 Testando catálogo..."
+        );
+    }
+
+
+    baixarPagina(
         URL_CATALOGO,
         "receberCatalogo"
     );
 }
 
 
-/* CATÁLOGO */
+
+/*
+ * ==========================================
+ * CATÁLOGO
+ * ==========================================
+ */
 
 function receberCatalogo(
     codigo,
@@ -392,7 +518,7 @@ function receberCatalogo(
 
     if(erro){
 
-        status(
+        mostrarStatus(
             erro,
             "erro"
         );
@@ -400,12 +526,13 @@ function receberCatalogo(
         return;
     }
 
+
     if(
         codigo < 200 ||
         codigo >= 400
     ){
 
-        status(
+        mostrarStatus(
             "HTTP "+codigo,
             "erro"
         );
@@ -413,19 +540,36 @@ function receberCatalogo(
         return;
     }
 
+
     novelas =
         extrairNovelas(
             html
         );
 
+
     filtradas =
         novelas.slice(0);
 
-    status(
+
+    if(
+        novelas.length===0
+    ){
+
+        mostrarStatus(
+            "A página abriu, mas nenhuma novela foi encontrada no HTML.",
+            "erro"
+        );
+
+        return;
+    }
+
+
+    mostrarStatus(
         novelas.length+
-        " novelas encontradas.",
+        " novelas encontradas ✅",
         "ok"
     );
+
 
     montarGrade(
         filtradas
@@ -433,491 +577,10 @@ function receberCatalogo(
 }
 
 
-function extrairNovelas(html){
 
-    var parser =
-        new DOMParser();
-
-    var doc =
-        parser.parseFromString(
-            html,
-            "text/html"
-        );
-
-    var links =
-        doc.querySelectorAll(
-            "a[href]"
-        );
-
-    var lista = [];
-    var usados = {};
-
-    for(
-        var i=0;
-        i<links.length;
-        i++
-    ){
-
-        var a =
-            links[i];
-
-        var href =
-            normalizar(
-                a.getAttribute(
-                    "href"
-                )
-            );
-
-        if(
-            href.indexOf(
-                "https://noveflix.lol/assista/"
-            ) !== 0
-        ){
-            continue;
-        }
-
-        if(usados[href]){
-            continue;
-        }
-
-        var img =
-            a.querySelector(
-                "img"
-            );
-
-        var nome =
-            limpar(
-                a.textContent
-            );
-
-        if(
-            !nome &&
-            img
-        ){
-
-            nome =
-                limpar(
-                    img.getAttribute(
-                        "alt"
-                    )
-                );
-        }
-
-        if(!nome){
-            continue;
-        }
-
-        var capa="";
-
-        if(img){
-
-            capa =
-                img.getAttribute(
-                    "data-src"
-                )
-                ||
-                img.getAttribute(
-                    "src"
-                )
-                ||
-                "";
-        }
-
-        var pai =
-            a.parentNode;
-
-        var texto =
-            pai
-            ?
-            limpar(
-                pai.textContent
-            )
-            :
-            "";
-
-        var ano="";
-
-        var m =
-            texto.match(
-                /\b(19|20)\d{2}\b/
-            );
-
-        if(m){
-            ano=m[0];
-        }
-
-        usados[href]=true;
-
-        lista.push({
-
-            nome:nome,
-            ano:ano,
-            capa:capa,
-            url:href
-
-        });
-    }
-
-    return lista;
-}
-
-
-/* CARDS */
-
-function montarGrade(lista){
-
-    var grade =
-        document.getElementById(
-            "grade"
-        );
-
-    grade.innerHTML="";
-
-    for(
-        var i=0;
-        i<lista.length;
-        i++
-    ){
-
-        var item =
-            lista[i];
-
-        var card =
-            document.createElement(
-                "div"
-            );
-
-        var imagem="";
-
-        if(
-            item.capa &&
-            item.capa.indexOf(
-                "http"
-            )===0
-        ){
-
-            imagem =
-                '<img src="' +
-                esc(item.capa) +
-                '">';
-
-        }else{
-
-            imagem =
-                esc(
-                    item.nome
-                );
-        }
-
-        card.innerHTML=
-
-            '<div class="cardCapa">'+
-            imagem+
-            '</div>'+
-
-            '<div class="cardNome">'+
-            esc(item.nome)+
-            '</div>'+
-
-            '<div class="cardAno">'+
-            esc(item.ano)+
-            '</div>';
-
-        card.setAttribute(
-            "data-index",
-            i
-        );
-
-        card.onclick=function(){
-
-            abrirNovela(
-                filtradas[
-                    parseInt(
-                        this.getAttribute(
-                            "data-index"
-                        )
-                    )
-                ]
-            );
-        };
-
-        grade.appendChild(
-            card
-        );
-    }
-}
-
-
-/* ABRIR NOVELA */
-
-function abrirNovela(novela){
-
-    novelaAtual =
-        novela;
-
-    document
-    .getElementById(
-        "catalogoTela"
-    )
-    .style.display =
-        "none";
-
-    document
-    .getElementById(
-        "novelaTela"
-    )
-    .style.display =
-        "block";
-
-    document
-    .getElementById(
-        "tituloTopo"
-    )
-    .innerHTML =
-        esc(
-            novela.nome
-        );
-
-    document
-    .getElementById(
-        "tituloNovela"
-    )
-    .innerHTML =
-        esc(
-            novela.nome
-        );
-
-    document
-    .getElementById(
-        "episodios"
-    )
-    .innerHTML="";
-
-    info(
-        "Procurando botão ASSISTIR..."
-    );
-
-    AndroidRendered.findAssistir(
-        novelaAtual.url,
-        "receberAssistirRenderizado"
-    );
-}
-
-function receberAssistirRenderizado(url, erro){
-
-    if(erro){
-
-        info(
-            "Página carregada ✅<br><br>" +
-            erro
-        );
-
-        return;
-    }
-
-    if(!url){
-
-        info(
-            "Nenhuma página pública de ASSISTIR encontrada."
-        );
-
-        return;
-    }
-
-    info(
-        "ASSISTIR encontrado ✅<br><br>" +
-        esc(url)
-    );
-}
-/* PROCURA ASSISTIR */
-
-function receberPaginaNovela(
-    codigo,
-    html,
-    erro
+function extrairNovelas(
+    html
 ){
-
-    if(erro){
-
-        info(
-            erro
-        );
-
-        return;
-    }
-
-    if(
-        codigo < 200 ||
-        codigo >= 400
-    ){
-
-        info(
-            "HTTP "+codigo
-        );
-
-        return;
-    }
-
-    var parser =
-        new DOMParser();
-
-    var doc =
-        parser.parseFromString(
-            html,
-            "text/html"
-        );
-
-    var links =
-        doc.querySelectorAll(
-            "a[href]"
-        );
-
-    var assistir="";
-
-    for(
-        var i=0;
-        i<links.length;
-        i++
-    ){
-
-        var texto =
-            limpar(
-                links[i].textContent
-            )
-            .toLowerCase();
-
-        if(
-            texto==="assistir"
-            ||
-            texto.indexOf(
-                "assistir"
-            )>=0
-        ){
-
-            assistir =
-                normalizar(
-                    links[i].getAttribute(
-                        "href"
-                    )
-                );
-
-            if(assistir){
-                break;
-            }
-        }
-    }
-
-
-    if(!assistir){
-
-        info(
-            "Página carregada ✅<br><br>"+
-            "O botão ASSISTIR não apareceu como link público no HTML."
-        );
-
-        return;
-    }
-
-
-    /*
-     * AndroidSite aceita somente
-     * páginas do próprio NoveFlix.
-     */
-
-    if(
-        assistir.indexOf(
-            "https://noveflix.lol/"
-        ) !== 0
-    ){
-
-        info(
-            "Botão ASSISTIR encontrado ✅<br><br>"+
-            "Mas ele aponta para outro domínio. "+
-            "Não vamos seguir automaticamente."
-        );
-
-        return;
-    }
-
-
-    info(
-        "Botão ASSISTIR encontrado ✅<br><br>"+
-        "Carregando página de episódios..."
-    );
-
-
-    AndroidSite.get(
-        assistir,
-        "receberPaginaAssistir"
-    );
-}
-
-
-/* SEGUNDA PÁGINA */
-
-function receberPaginaAssistir(
-    codigo,
-    html,
-    erro
-){
-
-    if(erro){
-
-        info(
-            erro
-        );
-
-        return;
-    }
-
-
-    if(
-        codigo < 200 ||
-        codigo >= 400
-    ){
-
-        info(
-            "HTTP "+codigo
-        );
-
-        return;
-    }
-
-
-    var episodios =
-        encontrarEpisodios(
-            html
-        );
-
-
-    if(
-        episodios.length===0
-    ){
-
-        info(
-            "Página ASSISTIR carregada ✅<br><br>"+
-            "Nenhum link público de capítulo foi encontrado."
-        );
-
-        return;
-    }
-
-
-    info(
-        episodios.length+
-        " episódios encontrados ✅"
-    );
-
-
-    montarEpisodios(
-        episodios
-    );
-}
-
-
-/* PROCURA LINKS DE EPISÓDIOS */
-
-function encontrarEpisodios(html){
 
     var parser =
         new DOMParser();
@@ -937,6 +600,7 @@ function encontrarEpisodios(html){
 
 
     var lista=[];
+
     var usados={};
 
 
@@ -946,75 +610,117 @@ function encontrarEpisodios(html){
         i++
     ){
 
-        var texto =
-            limpar(
-                links[i].textContent
-            );
+        var a =
+            links[i];
 
 
         var href =
             normalizar(
-                links[i].getAttribute(
+                a.getAttribute(
                     "href"
                 )
             );
 
 
-        var teste =
-            (
-                texto+
-                " "+
-                href
-            )
-            .toLowerCase();
-
-
-        var valido =
-
-            teste.indexOf(
-                "episodio"
-            )>=0
-
-            ||
-
-            teste.indexOf(
-                "episódio"
-            )>=0
-
-            ||
-
-            teste.indexOf(
-                "capitulo"
-            )>=0
-
-            ||
-
-            teste.indexOf(
-                "capítulo"
-            )>=0;
-
-
-        if(!valido){
-            continue;
-        }
-
-
-        /*
-         * Somente páginas públicas
-         * do próprio domínio.
-         */
-
         if(
             href.indexOf(
-                "https://noveflix.lol/"
-            )!==0
+                "https://noveflix.lol/assista/"
+            ) !== 0
         ){
+
             continue;
         }
 
 
-        if(usados[href]){
+        if(
+            usados[href]
+        ){
+
             continue;
+        }
+
+
+        var img =
+            a.querySelector(
+                "img"
+            );
+
+
+        var nome =
+            limpar(
+                a.textContent
+            );
+
+
+        if(
+            !nome &&
+            img
+        ){
+
+            nome =
+                limpar(
+                    img.getAttribute(
+                        "alt"
+                    )
+                );
+        }
+
+
+        if(!nome){
+            continue;
+        }
+
+
+        var capa="";
+
+
+        if(img){
+
+            capa =
+                img.getAttribute(
+                    "data-src"
+                )
+                ||
+                img.getAttribute(
+                    "data-lazy-src"
+                )
+                ||
+                img.getAttribute(
+                    "src"
+                )
+                ||
+                "";
+        }
+
+
+        var textoPai="";
+
+
+        if(
+            a.parentNode
+        ){
+
+            textoPai =
+                limpar(
+                    a.parentNode
+                    .textContent
+                );
+        }
+
+
+        var ano="";
+
+
+        var achouAno =
+            textoPai.match(
+                /\b(19|20)\d{2}\b/
+            );
+
+
+        if(achouAno){
+
+            ano =
+                achouAno[0];
         }
 
 
@@ -1023,11 +729,11 @@ function encontrarEpisodios(html){
 
         lista.push({
 
-            titulo:
-                texto
-                ||
-                "Episódio "+
-                (lista.length+1),
+            nome:nome,
+
+            ano:ano,
+
+            capa:capa,
 
             url:href
 
@@ -1039,17 +745,24 @@ function encontrarEpisodios(html){
 }
 
 
-/* MOSTRA EPISÓDIOS */
 
-function montarEpisodios(lista){
+/*
+ * ==========================================
+ * CARDS
+ * ==========================================
+ */
 
-    var box =
+function montarGrade(
+    lista
+){
+
+    var grade =
         document.getElementById(
-            "episodios"
+            "grade"
         );
 
 
-    box.innerHTML="";
+    grade.innerHTML="";
 
 
     for(
@@ -1058,52 +771,362 @@ function montarEpisodios(lista){
         i++
     ){
 
-        var botao =
+        var novela =
+            lista[i];
+
+
+        var card =
             document.createElement(
-                "button"
+                "div"
             );
 
 
-        botao.className =
-            "ep";
+        card.className =
+            "card";
 
 
-        botao.innerHTML=
+        var capa="";
 
-            '<div class="epNumero">'+
-            (i+1)+
+
+        if(
+            novela.capa &&
+            novela.capa.indexOf(
+                "http"
+            ) === 0
+        ){
+
+            capa =
+                '<img src="' +
+                esc(
+                    novela.capa
+                ) +
+                '" alt="">';
+
+        }else{
+
+            capa =
+                esc(
+                    novela.nome
+                );
+        }
+
+
+        card.innerHTML=
+
+            '<div class="capa">'+
+            capa+
             '</div>'+
 
-            '<div class="epTexto">'+
-
-            '<strong>'+
+            '<div class="nome">'+
             esc(
-                lista[i].titulo
+                novela.nome
             )+
-            '</strong>'+
+            '</div>'+
 
-            '<span>'+
-            'Página pública'+
-            '</span>'+
-
+            '<div class="ano">'+
+            esc(
+                novela.ano
+            )+
             '</div>';
 
 
-        box.appendChild(
-            botao
+        card.setAttribute(
+            "data-index",
+            i
+        );
+
+
+        card.onclick =
+            function(){
+
+                var indice =
+                    parseInt(
+                        this.getAttribute(
+                            "data-index"
+                        )
+                    );
+
+
+                abrirNovela(
+                    filtradas[
+                        indice
+                    ]
+                );
+            };
+
+
+        grade.appendChild(
+            card
         );
     }
 }
 
 
-/* BUSCA */
+
+/*
+ * ==========================================
+ * NOVELA
+ * ==========================================
+ */
+
+function abrirNovela(
+    novela
+){
+
+    novelaAtual =
+        novela;
+
+
+    document
+    .getElementById(
+        "catalogoTela"
+    )
+    .style.display =
+        "none";
+
+
+    document
+    .getElementById(
+        "novelaTela"
+    )
+    .style.display =
+        "block";
+
+
+    document
+    .getElementById(
+        "tituloTopo"
+    )
+    .innerHTML =
+        esc(
+            novela.nome
+        );
+
+
+    document
+    .getElementById(
+        "tituloNovela"
+    )
+    .innerHTML =
+        esc(
+            novela.nome
+        );
+
+
+    document
+    .getElementById(
+        "resultado"
+    )
+    .innerHTML =
+        "Baixando página da novela...";
+
+
+    baixarPagina(
+        novela.url,
+        "receberNovela"
+    );
+}
+
+
+
+function receberNovela(
+    codigo,
+    html,
+    erro
+){
+
+    if(erro){
+
+        resultado(
+            erro
+        );
+
+        return;
+    }
+
+
+    if(
+        codigo < 200 ||
+        codigo >= 400
+    ){
+
+        resultado(
+            "HTTP "+codigo
+        );
+
+        return;
+    }
+
+
+    var parser =
+        new DOMParser();
+
+
+    var doc =
+        parser.parseFromString(
+            html,
+            "text/html"
+        );
+
+
+    var links =
+        doc.querySelectorAll(
+            "a[href]"
+        );
+
+
+    var assistir=[];
+
+
+    for(
+        var i=0;
+        i<links.length;
+        i++
+    ){
+
+        var texto =
+            limpar(
+                links[i]
+                .textContent
+            );
+
+
+        if(
+            texto
+            .toLowerCase()
+            .indexOf(
+                "assistir"
+            ) >= 0
+        ){
+
+            assistir.push(
+
+                normalizar(
+                    links[i]
+                    .getAttribute(
+                        "href"
+                    )
+                )
+
+            );
+        }
+    }
+
+
+    if(
+        assistir.length > 0
+    ){
+
+        resultado(
+            "HTML carregado ✅<br><br>"+
+            "ASSISTIR encontrado no HTML:<br>"+
+            esc(
+                assistir[0]
+            )
+        );
+
+    }else{
+
+        resultado(
+            "HTML carregado ✅<br><br>"+
+            "Nenhum link ASSISTIR apareceu no HTML bruto."
+        );
+    }
+}
+
+
+
+/*
+ * ==========================================
+ * TESTE RENDERIZADO
+ * ==========================================
+ */
+
+function testarRenderizado(){
+
+    if(
+        !novelaAtual
+    ){
+        return;
+    }
+
+
+    if(
+        !modoRenderAPK()
+    ){
+
+        resultado(
+            "No navegador comum não existe AndroidRendered.<br><br>"+
+            "Esse teste só funciona dentro do APK."
+        );
+
+        return;
+    }
+
+
+    resultado(
+        "Renderizando página com JavaScript..."
+    );
+
+
+    AndroidRendered.findAssistir(
+
+        novelaAtual.url,
+
+        "receberAssistirRenderizado"
+
+    );
+}
+
+
+
+function receberAssistirRenderizado(
+    url,
+    erro
+){
+
+    if(erro){
+
+        resultado(
+            erro
+        );
+
+        return;
+    }
+
+
+    if(!url){
+
+        resultado(
+            "Nenhuma página pública de ASSISTIR foi encontrada."
+        );
+
+        return;
+    }
+
+
+    resultado(
+        "ASSISTIR encontrado ✅<br><br>"+
+        esc(
+            url
+        )
+    );
+}
+
+
+
+/*
+ * ==========================================
+ * BUSCA
+ * ==========================================
+ */
 
 function pesquisar(){
 
     var termo =
         document
         .getElementById(
-            "busca"
+            "campoBusca"
         )
         .value
         .toLowerCase();
@@ -1124,7 +1147,7 @@ function pesquisar(){
             .toLowerCase()
             .indexOf(
                 termo
-            )>=0
+            ) >= 0
         ){
 
             filtradas.push(
@@ -1140,19 +1163,30 @@ function pesquisar(){
 }
 
 
-/* UTIL */
 
-function normalizar(url){
+/*
+ * ==========================================
+ * UTIL
+ * ==========================================
+ */
+
+function normalizar(
+    url
+){
 
     if(!url){
         return "";
     }
 
 
+    url =
+        String(url);
+
+
     if(
         url.indexOf(
             "https://www.noveflix.lol/"
-        )===0
+        ) === 0
     ){
 
         return url.replace(
@@ -1165,7 +1199,7 @@ function normalizar(url){
     if(
         url.indexOf(
             "https://"
-        )===0
+        ) === 0
     ){
 
         return url;
@@ -1175,7 +1209,7 @@ function normalizar(url){
     if(
         url.indexOf(
             "//"
-        )===0
+        ) === 0
     ){
 
         return "https:"+url;
@@ -1183,7 +1217,7 @@ function normalizar(url){
 
 
     if(
-        url.charAt(0)==="/"
+        url.charAt(0) === "/"
     ){
 
         return "https://noveflix.lol"+url;
@@ -1194,17 +1228,23 @@ function normalizar(url){
 }
 
 
-function limpar(texto){
+
+function limpar(
+    texto
+){
 
     if(!texto){
         return "";
     }
 
+
     return String(texto)
+
         .replace(
             /\s+/g,
             " "
         )
+
         .replace(
             /^\s+|\s+$/g,
             ""
@@ -1212,23 +1252,32 @@ function limpar(texto){
 }
 
 
-function esc(texto){
+
+function esc(
+    texto
+){
 
     if(!texto){
         return "";
     }
 
+
     return String(texto)
 
         .replace(/&/g,"&amp;")
+
         .replace(/</g,"&lt;")
+
         .replace(/>/g,"&gt;")
+
         .replace(/"/g,"&quot;")
+
         .replace(/'/g,"&#039;");
 }
 
 
-function status(
+
+function mostrarStatus(
     texto,
     tipo
 ){
@@ -1238,13 +1287,17 @@ function status(
             "status"
         );
 
+
     box.className =
         "status";
 
+
     if(tipo){
+
         box.className +=
             " "+tipo;
     }
+
 
     box.innerHTML =
         esc(
@@ -1253,22 +1306,30 @@ function status(
 }
 
 
-function info(texto){
+
+function resultado(
+    texto
+){
 
     document
     .getElementById(
-        "info"
+        "resultado"
     )
     .innerHTML =
         texto;
 }
 
 
-/* EVENTOS */
+
+/*
+ * ==========================================
+ * EVENTOS
+ * ==========================================
+ */
 
 document
 .getElementById(
-    "busca"
+    "campoBusca"
 )
 .addEventListener(
     "keyup",
@@ -1288,7 +1349,17 @@ document
 
 document
 .getElementById(
-    "voltar"
+    "btnRender"
+)
+.addEventListener(
+    "click",
+    testarRenderizado
+);
+
+
+document
+.getElementById(
+    "btnVoltar"
 )
 .addEventListener(
     "click",
@@ -1298,20 +1369,22 @@ document
         .getElementById(
             "novelaTela"
         )
-        .style.display="none";
+        .style.display =
+            "none";
 
         document
         .getElementById(
             "catalogoTela"
         )
-        .style.display="block";
+        .style.display =
+            "block";
     }
 );
 
 
 setTimeout(
     iniciar,
-    700
+    500
 );
 
 </script>
