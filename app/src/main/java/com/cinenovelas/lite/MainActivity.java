@@ -1,607 +1,1858 @@
-package com.cinenovelas.lite;
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+<head>
 
-import org.json.JSONObject;
+<meta charset="UTF-8">
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+<meta
+    name="viewport"
+    content="
+        width=device-width,
+        initial-scale=1.0,
+        maximum-scale=1.0
+    "
+>
 
-public class MainActivity extends Activity {
-
-    private WebView webView;
+<title>NovelasPlay</title>
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+<style>
 
-        webView = new WebView(this);
+*{
+    box-sizing:border-box;
+}
 
-        webView.setBackgroundColor(Color.BLACK);
-
-        WebSettings settings =
-                webView.getSettings();
-
-        settings.setJavaScriptEnabled(true);
-
-        settings.setDomStorageEnabled(true);
-
-        settings.setAllowFileAccess(true);
-
-        settings.setAllowContentAccess(true);
-
-        settings.setLoadsImagesAutomatically(true);
-
-        settings.setDatabaseEnabled(true);
-
-        settings.setUseWideViewPort(true);
-
-        settings.setLoadWithOverviewMode(true);
+body{
+    margin:0;
+    background:#0d0d0e;
+    color:#ffffff;
+    font-family:Arial,sans-serif;
+}
 
 
-        /*
-         * Interface do player.
-         */
-        webView.addJavascriptInterface(
-                new AndroidPlayer(),
-                "AndroidPlayer"
+/* =========================
+   TOPO
+   ========================= */
+
+.topo{
+    height:82px;
+    background:#101011;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-bottom:1px solid #292929;
+}
+
+.logo{
+    font-size:29px;
+    font-weight:bold;
+}
+
+.logo1{
+    color:#ef1741;
+}
+
+.logo2{
+    color:#ffffff;
+}
+
+
+/* =========================
+   BUSCA
+   ========================= */
+
+.buscaBox{
+
+    display:flex;
+
+    margin:17px;
+
+    background:#050505;
+
+    border-radius:28px;
+
+    overflow:hidden;
+}
+
+.buscaBox input{
+
+    flex:1;
+
+    min-width:0;
+
+    border:0;
+
+    outline:0;
+
+    background:#050505;
+
+    color:#ffffff;
+
+    padding:15px 18px;
+
+    font-size:17px;
+}
+
+.buscaBox button{
+
+    width:62px;
+
+    border:0;
+
+    background:#e31326;
+
+    color:#ffffff;
+
+    font-size:22px;
+}
+
+
+/* =========================
+   CONTEÚDO
+   ========================= */
+
+main{
+    padding:17px;
+}
+
+.status{
+
+    background:#1d1d20;
+
+    border-radius:9px;
+
+    padding:14px;
+
+    margin-bottom:18px;
+
+    color:#bbbbbb;
+
+    line-height:1.5;
+}
+
+.ok{
+    color:#8cff9b;
+}
+
+.erro{
+    color:#ff8585;
+}
+
+
+/* =========================
+   TÍTULO DA SEÇÃO
+   ========================= */
+
+.titulo{
+
+    display:flex;
+
+    align-items:center;
+
+    margin:20px 0 15px;
+
+    font-size:23px;
+
+    font-weight:bold;
+}
+
+.linha{
+
+    width:5px;
+
+    height:34px;
+
+    background:#ef1837;
+
+    margin-right:11px;
+}
+
+
+/* =========================
+   GRADE
+   ========================= */
+
+.grade{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:11px;
+}
+
+.card{
+    min-width:0;
+}
+
+.capa{
+
+    height:175px;
+
+    border-radius:7px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:9px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #53111a,
+            #18181b 55%,
+            #a51c2f
+        );
+}
+
+.capa img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+}
+
+.nome{
+
+    margin-top:7px;
+
+    font-size:14px;
+
+    line-height:1.3;
+
+    font-weight:bold;
+}
+
+.episodios{
+
+    margin-top:3px;
+
+    font-size:12px;
+
+    color:#999999;
+}
+
+
+/* =========================
+   DETALHES
+   ========================= */
+
+#detalheTela{
+    display:none;
+}
+
+.subTopo{
+
+    min-height:70px;
+
+    background:#101011;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:12px 16px;
+
+    border-bottom:
+        2px solid #ef1837;
+}
+
+.voltar{
+
+    width:44px;
+
+    height:44px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#252525;
+
+    color:#ffffff;
+
+    font-size:27px;
+
+    margin-right:13px;
+}
+
+.tituloTopo{
+
+    font-size:18px;
+
+    font-weight:bold;
+}
+
+.detalhes{
+    padding:18px;
+}
+
+.painel{
+
+    background:#1d1d20;
+
+    border-radius:10px;
+
+    padding:16px;
+}
+
+.painel h2{
+    margin-top:0;
+}
+
+.info{
+
+    color:#bbbbbb;
+
+    line-height:1.6;
+}
+
+
+/* =========================
+   CELULAR MENOR
+   ========================= */
+
+@media(
+    max-width:420px
+){
+
+    .capa{
+        height:165px;
+    }
+
+    .nome{
+        font-size:13px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     CATÁLOGO
+     ========================= -->
+
+<div id="catalogoTela">
+
+
+<div class="topo">
+
+    <div class="logo">
+
+        <span class="logo1">
+            NOVELAS
+        </span>
+
+        <span class="logo2">
+            PLAY
+        </span>
+
+    </div>
+
+</div>
+
+
+<div class="buscaBox">
+
+    <input
+        id="busca"
+        placeholder="
+            Pesquisar novela turca...
+        "
+    >
+
+    <button id="btnBusca">
+        🔍
+    </button>
+
+</div>
+
+
+<main>
+
+
+<div
+    id="status"
+    class="status"
+>
+
+    Carregando catálogo...
+
+</div>
+
+
+<div class="titulo">
+
+    <div class="linha"></div>
+
+    Novelas Turcas
+
+</div>
+
+
+<div
+    id="grade"
+    class="grade"
+>
+</div>
+
+
+</main>
+
+</div>
+
+
+
+<!-- =========================
+     DETALHE
+     ========================= -->
+
+<div id="detalheTela">
+
+
+<div class="subTopo">
+
+    <button
+        id="voltar"
+        class="voltar"
+    >
+        ‹
+    </button>
+
+
+    <div
+        id="tituloTopo"
+        class="tituloTopo"
+    >
+        Novela
+    </div>
+
+</div>
+
+
+<div class="detalhes">
+
+    <div class="painel">
+
+        <h2 id="tituloDetalhe">
+            Novela
+        </h2>
+
+
+        <div
+            id="infoDetalhe"
+            class="info"
+        >
+            Carregando...
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* ================================
+   CONFIGURAÇÃO
+   ================================ */
+
+var URL_BASE =
+    "https://assistirfarah.com/";
+
+var catalogo = [];
+
+var exibindo = [];
+
+
+
+/* ================================
+   INICIAR
+   ================================ */
+
+function iniciar(){
+
+
+    if(
+        typeof AndroidSite ===
+        "undefined"
+    ){
+
+        mostrarStatus(
+            "AndroidSite não encontrado.",
+            "erro"
         );
 
-
-        /*
-         * Interface que baixa
-         * as páginas das fontes.
-         */
-        webView.addJavascriptInterface(
-                new AndroidSite(),
-                "AndroidSite"
-        );
-
-
-        webView.setWebViewClient(
-                new WebViewClient()
-        );
-
-
-        setContentView(webView);
-
-
-        /*
-         * Abre nosso NovelasPlay.
-         */
-        webView.loadUrl(
-                "file:///android_asset/index.html"
-        );
+        return;
     }
 
 
-    /*
-     * =========================================
-     * PLAYER
-     * =========================================
-     */
-
-    public class AndroidPlayer {
-
-        @JavascriptInterface
-        public void playList(
-                String novela,
-                String urls,
-                String titulos,
-                String aberturas,
-                int episodioInicial
-        ) {
-
-            try {
-
-                Intent intent =
-                        new Intent(
-                                MainActivity.this,
-                                PlayerActivity.class
-                        );
+    mostrarStatus(
+        "Buscando catálogo..."
+    );
 
 
-                intent.putExtra(
-                        "novela",
-                        novela
-                );
+    AndroidSite.get(
+        URL_BASE,
+        "receberCatalogo"
+    );
+
+}
 
 
-                intent.putExtra(
-                        "urls",
-                        urls
-                );
+
+/* ================================
+   RECEBE HTML
+   ================================ */
+
+function receberCatalogo(
+    codigo,
+    html,
+    erro
+){
 
 
-                intent.putExtra(
-                        "titulos",
-                        titulos
-                );
+    if(erro){
 
+        mostrarStatus(
+            erro,
+            "erro"
+        );
 
-                intent.putExtra(
-                        "aberturas",
-                        aberturas
-                );
-
-
-                intent.putExtra(
-                        "episodioInicial",
-                        episodioInicial
-                );
-
-
-                startActivity(intent);
-
-            } catch (Exception e) {
-
-                e.printStackTrace();
-            }
-        }
+        return;
     }
 
 
-    /*
-     * =========================================
-     * MOTOR DAS FONTES
-     * =========================================
-     */
+    if(
+        codigo < 200
+        ||
+        codigo >= 400
+    ){
 
-    public class AndroidSite {
+        mostrarStatus(
+            "HTTP "+codigo,
+            "erro"
+        );
 
-        @JavascriptInterface
-        public void get(
-                final String endereco,
-                final String callback
-        ) {
-
-            /*
-             * Segurança:
-             * somente as fontes liberadas.
-             */
-            if (!permitida(endereco)) {
-
-                responderJavascript(
-                        callback,
-                        0,
-                        "",
-                        "URL não permitida."
-                );
-
-                return;
-            }
-
-
-            new Thread(
-                    new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            HttpURLConnection conexao =
-                                    null;
-
-                            try {
-
-                                URL url =
-                                        new URL(
-                                                endereco
-                                        );
-
-
-                                conexao =
-                                        (HttpURLConnection)
-                                                url.openConnection();
-
-
-                                conexao.setRequestMethod(
-                                        "GET"
-                                );
-
-
-                                conexao.setConnectTimeout(
-                                        15000
-                                );
-
-
-                                conexao.setReadTimeout(
-                                        20000
-                                );
-
-
-                                conexao.setInstanceFollowRedirects(
-                                        true
-                                );
-
-
-                                /*
-                                 * User-Agent parecido
-                                 * com navegador Android.
-                                 */
-                                conexao.setRequestProperty(
-                                        "User-Agent",
-                                        "Mozilla/5.0 " +
-                                        "(Linux; Android 6.0.1) " +
-                                        "AppleWebKit/537.36 " +
-                                        "(KHTML, like Gecko) " +
-                                        "Chrome/55.0 Mobile Safari/537.36"
-                                );
-
-
-                                conexao.setRequestProperty(
-                                        "Accept",
-                                        "text/html,application/xhtml+xml," +
-                                        "application/xml;q=0.9,*/*;q=0.8"
-                                );
-
-
-                                conexao.setRequestProperty(
-                                        "Accept-Language",
-                                        "pt-BR,pt;q=0.9,en;q=0.8"
-                                );
-
-
-                                conexao.connect();
-
-
-                                int codigo =
-                                        conexao.getResponseCode();
-
-
-                                InputStream stream;
-
-
-                                if (
-                                        codigo >= 200 &&
-                                        codigo < 400
-                                ) {
-
-                                    stream =
-                                            conexao.getInputStream();
-
-                                } else {
-
-                                    stream =
-                                            conexao.getErrorStream();
-                                }
-
-
-                                String html =
-                                        lerStream(
-                                                stream
-                                        );
-
-
-                                responderJavascript(
-                                        callback,
-                                        codigo,
-                                        html,
-                                        ""
-                                );
-
-
-                            } catch (Exception e) {
-
-                                responderJavascript(
-                                        callback,
-                                        0,
-                                        "",
-                                        e.getClass()
-                                                .getSimpleName()
-                                                +
-                                                ": "
-                                                +
-                                                (
-                                                        e.getMessage()
-                                                        == null
-                                                        ?
-                                                        "Erro de conexão"
-                                                        :
-                                                        e.getMessage()
-                                                )
-                                );
-
-                            } finally {
-
-                                if (conexao != null) {
-
-                                    conexao.disconnect();
-                                }
-                            }
-                        }
-                    }
-            ).start();
-        }
+        return;
     }
 
 
-    /*
-     * =========================================
-     * FONTES PERMITIDAS
-     * =========================================
-     */
+    catalogo =
+        extrair(
+            html
+        );
 
-    private boolean permitida(
-            String endereco
-    ) {
 
-        if (endereco == null) {
-            return false;
+    exibindo =
+        catalogo.slice(0);
+
+
+    mostrarStatus(
+
+        catalogo.length+
+        " títulos encontrados ✅",
+
+        "ok"
+
+    );
+
+
+    montarGrade(
+        exibindo
+    );
+
+}
+
+
+
+/* ================================
+   EXTRATOR DO CATÁLOGO
+   ================================ */
+
+function extrair(html){
+
+
+    var doc =
+
+        new DOMParser()
+        .parseFromString(
+
+            html,
+
+            "text/html"
+
+        );
+
+
+    var links =
+
+        doc.querySelectorAll(
+            "a[href]"
+        );
+
+
+    var lista = [];
+
+    var usados = {};
+
+
+    for(
+        var i=0;
+        i<links.length;
+        i++
+    ){
+
+
+        var a =
+            links[i];
+
+
+        var href =
+
+            normalizarUrl(
+
+                a.getAttribute(
+                    "href"
+                )
+                ||
+                ""
+
+            );
+
+
+        if(!href){
+
+            continue;
         }
 
 
-        try {
+        /*
+         * Ignora a própria home.
+         */
 
-            Uri uri =
-                    Uri.parse(
-                            endereco
+        if(
+            removerBarraFinal(
+                href
+            )
+            ===
+            removerBarraFinal(
+                URL_BASE
+            )
+        ){
+
+            continue;
+        }
+
+
+        var texto =
+
+            limpar(
+
+                a.textContent
+
+            );
+
+
+        if(!texto){
+
+            continue;
+        }
+
+
+        /*
+         * PROCURA A CONTAGEM:
+         *
+         * 88 episódios
+         * 200 episódios
+         * 161 episódios
+         */
+
+        var match =
+
+            texto.match(
+
+                /(\d+)\s*epis[oó]dios?/i
+
+            );
+
+
+        /*
+         * Caso a contagem esteja
+         * no elemento pai.
+         */
+
+        if(!match){
+
+
+            var pai =
+                a.parentNode;
+
+
+            if(pai){
+
+
+                var textoPai =
+
+                    limpar(
+
+                        pai.textContent
+
                     );
 
 
-            String protocolo =
-                    uri.getScheme();
+                var matchPai =
+
+                    textoPai.match(
+
+                        /(\d+)\s*epis[oó]dios?/i
+
+                    );
 
 
-            String host =
-                    uri.getHost();
+                if(matchPai){
+
+                    match =
+                        matchPai;
 
 
-            if (
-                    protocolo == null ||
-                    host == null
-            ) {
+                    /*
+                     * Se o próprio link
+                     * não tinha o texto
+                     * completo, usamos
+                     * o texto do card.
+                     */
 
-                return false;
+                    if(
+                        texto.length < 3
+                    ){
+
+                        texto =
+                            textoPai;
+
+                    }
+
+                }
+
             }
 
-
-            /*
-             * Só HTTPS.
-             */
-            if (
-                    !protocolo.equalsIgnoreCase(
-                            "https"
-                    )
-            ) {
-
-                return false;
-            }
-
-
-            /*
-             * ASSISTIR FARAH
-             */
-            if (
-                    host.equalsIgnoreCase(
-                            "assistirfarah.com"
-                    )
-                    ||
-                    host.equalsIgnoreCase(
-                            "www.assistirfarah.com"
-                    )
-            ) {
-
-                return true;
-            }
-
-
-            /*
-             * NETIDIZIS
-             */
-            if (
-                    host.equalsIgnoreCase(
-                            "netidizis.club"
-                    )
-                    ||
-                    host.equalsIgnoreCase(
-                            "www.netidizis.club"
-                    )
-            ) {
-
-                return true;
-            }
-
-
-            /*
-             * DRAMAS
-             */
-            if (
-                    host.equalsIgnoreCase(
-                            "dramas.com.br"
-                    )
-                    ||
-                    host.equalsIgnoreCase(
-                            "www.dramas.com.br"
-                    )
-            ) {
-
-                return true;
-            }
-
-
-            return false;
-
-
-        } catch (Exception e) {
-
-            return false;
-        }
-    }
-
-
-    /*
-     * =========================================
-     * LÊ HTML
-     * =========================================
-     */
-
-    private String lerStream(
-            InputStream stream
-    ) throws Exception {
-
-        if (stream == null) {
-            return "";
         }
 
 
-        BufferedReader reader =
-                new BufferedReader(
-                        new InputStreamReader(
-                                stream,
-                                "UTF-8"
-                        )
+        if(!match){
+
+            continue;
+        }
+
+
+        /*
+         * LIMPA O NOME.
+         *
+         * Exemplo:
+         *
+         * Adım FarahMeu Nome é Farah
+         * Completa
+         * 88 episódios
+         */
+
+        var nome =
+            texto;
+
+
+        nome =
+            nome.replace(
+
+                /\s*Completa.*$/i,
+
+                ""
+
+            );
+
+
+        nome =
+            nome.replace(
+
+                /\s*\d+\s*epis[oó]dios?.*$/i,
+
+                ""
+
+            );
+
+
+        nome =
+            limpar(
+                nome
+            );
+
+
+        /*
+         * Se o texto do link ficou
+         * ruim, tenta ALT da imagem.
+         */
+
+        var img =
+
+            a.querySelector(
+                "img"
+            );
+
+
+        if(
+            (
+                !nome
+                ||
+                nome.length < 3
+            )
+            &&
+            img
+        ){
+
+
+            var alt =
+
+                limpar(
+
+                    img.getAttribute(
+                        "alt"
+                    )
+
                 );
 
 
-        StringBuilder resultado =
-                new StringBuilder();
+            if(alt){
 
+                nome =
+                    alt;
+            }
 
-        String linha;
-
-
-        while (
-                (linha = reader.readLine())
-                        != null
-        ) {
-
-            resultado
-                    .append(linha)
-                    .append("\n");
         }
 
 
-        reader.close();
+        if(
+            !nome
+            ||
+            nome.length < 3
+        ){
 
-
-        return resultado.toString();
-    }
-
-
-    /*
-     * =========================================
-     * DEVOLVE RESULTADO PARA O index.html
-     * =========================================
-     */
-
-    private void responderJavascript(
-            final String callback,
-            final int codigo,
-            final String html,
-            final String erro
-    ) {
-
-        runOnUiThread(
-                new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        try {
-
-                            /*
-                             * JSONObject.quote evita
-                             * quebrar o JavaScript
-                             * quando o HTML tem aspas,
-                             * quebra de linha etc.
-                             */
-                            String js =
-
-                                    "javascript:" +
-                                    callback +
-                                    "(" +
-                                    codigo +
-                                    "," +
-                                    JSONObject.quote(
-                                            html == null
-                                                    ?
-                                                    ""
-                                                    :
-                                                    html
-                                    ) +
-                                    "," +
-                                    JSONObject.quote(
-                                            erro == null
-                                                    ?
-                                                    ""
-                                                    :
-                                                    erro
-                                    ) +
-                                    ");";
-
-
-                            webView.loadUrl(js);
-
-                        } catch (Exception e) {
-
-                            e.printStackTrace();
-                        }
-                    }
-                }
-        );
-    }
-
-
-    /*
-     * =========================================
-     * BOTÃO VOLTAR DO CELULAR
-     * =========================================
-     */
-
-    @Override
-    public void onBackPressed() {
-
-        if (
-                webView != null &&
-                webView.canGoBack()
-        ) {
-
-            webView.goBack();
-
-        } else {
-
-            super.onBackPressed();
+            continue;
         }
-    }
 
 
-    /*
-     * =========================================
-     * DESTROY
-     * =========================================
-     */
-
-    @Override
-    protected void onDestroy() {
-
-        if (webView != null) {
-
-            webView.removeJavascriptInterface(
-                    "AndroidPlayer"
+        nome =
+            corrigirNome(
+                nome
             );
 
-            webView.removeJavascriptInterface(
-                    "AndroidSite"
-            );
 
-            webView.destroy();
+        var chave =
 
-            webView = null;
+            href.toLowerCase();
+
+
+        /*
+         * Remove duplicados.
+         */
+
+        if(
+            usados[chave]
+        ){
+
+            continue;
         }
 
 
-        super.onDestroy();
+        usados[chave] =
+            true;
+
+
+
+        /* ===========================
+           CAPA
+           =========================== */
+
+        var capa = "";
+
+
+        if(img){
+
+
+            capa =
+
+                img.getAttribute(
+                    "data-src"
+                )
+
+                ||
+
+                img.getAttribute(
+                    "data-lazy-src"
+                )
+
+                ||
+
+                img.getAttribute(
+                    "data-original"
+                )
+
+                ||
+
+                img.getAttribute(
+                    "src"
+                )
+
+                ||
+
+                "";
+
+        }
+
+
+        capa =
+            normalizarImagem(
+                capa
+            );
+
+
+
+        /* ===========================
+           ADICIONA
+           =========================== */
+
+        lista.push({
+
+
+            nome:
+                nome,
+
+
+            episodios:
+                match[1],
+
+
+            url:
+                href,
+
+
+            capa:
+                capa
+
+        });
+
     }
+
+
+    return lista;
+
 }
+
+
+
+/* ================================
+   CORRIGE NOMES GRUDADOS
+   ================================ */
+
+function corrigirNome(nome){
+
+
+    nome =
+        limpar(
+            nome
+        );
+
+
+    if(!nome){
+
+        return "";
+    }
+
+
+
+    /*
+     * Eşref RüyaEşref Rüya
+     *
+     * vira:
+     *
+     * Eşref Rüya
+     */
+
+    if(
+        nome.length % 2 === 0
+    ){
+
+
+        var metade =
+            nome.length / 2;
+
+
+        var esquerda =
+            nome.substring(
+                0,
+                metade
+            );
+
+
+        var direita =
+            nome.substring(
+                metade
+            );
+
+
+        if(
+            esquerda.toLowerCase()
+            ===
+            direita.toLowerCase()
+        ){
+
+            return limpar(
+                direita
+            );
+
+        }
+
+    }
+
+
+
+    /*
+     * YargıYargı:
+     * Segredos de Família
+     */
+
+    var posDoisPontos =
+
+        nome.indexOf(
+            ":"
+        );
+
+
+    if(
+        posDoisPontos > 0
+    ){
+
+
+        var antes =
+
+            nome.substring(
+                0,
+                posDoisPontos
+            );
+
+
+        if(
+            antes.length % 2 === 0
+        ){
+
+
+            var meioAntes =
+                antes.length / 2;
+
+
+            var p1 =
+
+                antes.substring(
+                    0,
+                    meioAntes
+                );
+
+
+            var p2 =
+
+                antes.substring(
+                    meioAntes
+                );
+
+
+            if(
+                p1.toLowerCase()
+                ===
+                p2.toLowerCase()
+            ){
+
+
+                nome =
+
+                    p2
+                    +
+                    nome.substring(
+                        posDoisPontos
+                    );
+
+            }
+
+        }
+
+    }
+
+
+
+    /*
+     * Adım FarahMeu Nome é Farah
+     *
+     * vira:
+     *
+     * Adım Farah / Meu Nome é Farah
+     *
+     *
+     * Sefirin KızıA Filha do Embaixador
+     */
+
+    nome =
+
+        nome.replace(
+
+            /([a-záàâãéêíóôõúçğıöşü])([A-ZÁÀÂÃÉÊÍÓÔÕÚÇĞİÖŞÜ])/g,
+
+            "$1 / $2"
+
+        );
+
+
+
+    /*
+     * Se ficou:
+     *
+     * Hercai / Hercai:
+     * Amor e Vingança
+     *
+     * remove o primeiro.
+     */
+
+    if(
+        nome.indexOf(
+            " / "
+        ) >= 0
+    ){
+
+
+        var partes =
+
+            nome.split(
+                " / "
+            );
+
+
+        if(
+            partes.length === 2
+        ){
+
+
+            var primeira =
+
+                limpar(
+                    partes[0]
+                );
+
+
+            var segunda =
+
+                limpar(
+                    partes[1]
+                );
+
+
+            if(
+
+                segunda
+                .toLowerCase()
+                .indexOf(
+                    primeira.toLowerCase()
+                )
+                ===
+                0
+
+            ){
+
+                nome =
+                    segunda;
+
+            }
+
+        }
+
+    }
+
+
+    return limpar(
+        nome
+    );
+
+}
+
+
+
+/* ================================
+   MONTA GRADE
+   ================================ */
+
+function montarGrade(lista){
+
+
+    var grade =
+
+        document.getElementById(
+            "grade"
+        );
+
+
+    grade.innerHTML = "";
+
+
+    for(
+        var i=0;
+        i<lista.length;
+        i++
+    ){
+
+
+        var item =
+            lista[i];
+
+
+        var card =
+
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "card";
+
+
+        var visual = "";
+
+
+        if(
+            item.capa
+        ){
+
+
+            visual =
+
+                '<img src="' +
+                escapar(
+                    item.capa
+                ) +
+                '" alt="">';
+
+
+        }else{
+
+
+            visual =
+
+                escapar(
+                    item.nome
+                );
+
+        }
+
+
+        card.innerHTML =
+
+
+            '<div class="capa">'+
+                visual+
+            '</div>'+
+
+
+            '<div class="nome">'+
+
+                escapar(
+                    item.nome
+                )+
+
+            '</div>'+
+
+
+            '<div class="episodios">'+
+
+                escapar(
+                    item.episodios
+                )+
+
+                ' episódios'+
+
+            '</div>';
+
+
+
+        card.setAttribute(
+            "data-index",
+            i
+        );
+
+
+        card.onclick =
+
+            function(){
+
+
+                var indice =
+
+                    parseInt(
+
+                        this.getAttribute(
+                            "data-index"
+                        )
+
+                    );
+
+
+                abrirNovela(
+
+                    exibindo[
+                        indice
+                    ]
+
+                );
+
+            };
+
+
+        grade.appendChild(
+            card
+        );
+
+    }
+
+}
+
+
+
+/* ================================
+   ABRIR NOVELA
+   ================================ */
+
+function abrirNovela(item){
+
+
+    document
+    .getElementById(
+        "catalogoTela"
+    )
+    .style.display =
+        "none";
+
+
+    document
+    .getElementById(
+        "detalheTela"
+    )
+    .style.display =
+        "block";
+
+
+    document
+    .getElementById(
+        "tituloTopo"
+    )
+    .innerHTML =
+
+        escapar(
+            item.nome
+        );
+
+
+    document
+    .getElementById(
+        "tituloDetalhe"
+    )
+    .innerHTML =
+
+        escapar(
+            item.nome
+        );
+
+
+    document
+    .getElementById(
+        "infoDetalhe"
+    )
+    .innerHTML =
+
+        '<strong>'+
+        escapar(
+            item.episodios
+        )+
+        ' episódios encontrados.</strong>'+
+
+        '<br><br>'+
+
+        'Página pública:<br>'+
+
+        escapar(
+            item.url
+        );
+
+}
+
+
+
+/* ================================
+   PESQUISAR
+   ================================ */
+
+function pesquisar(){
+
+
+    var termo =
+
+        document
+        .getElementById(
+            "busca"
+        )
+        .value
+        .toLowerCase();
+
+
+    exibindo = [];
+
+
+    for(
+        var i=0;
+        i<catalogo.length;
+        i++
+    ){
+
+
+        var nome =
+
+            catalogo[i]
+            .nome
+            .toLowerCase();
+
+
+        if(
+            nome.indexOf(
+                termo
+            ) >= 0
+        ){
+
+
+            exibindo.push(
+                catalogo[i]
+            );
+
+        }
+
+    }
+
+
+    montarGrade(
+        exibindo
+    );
+
+}
+
+
+
+/* ================================
+   NORMALIZA URL
+   ================================ */
+
+function normalizarUrl(url){
+
+
+    if(!url){
+
+        return "";
+    }
+
+
+    url =
+        limpar(
+            url
+        );
+
+
+    if(
+        url.indexOf(
+            "javascript:"
+        ) === 0
+    ){
+
+        return "";
+    }
+
+
+    if(
+        url.indexOf(
+            "mailto:"
+        ) === 0
+    ){
+
+        return "";
+    }
+
+
+    if(
+        url.charAt(0) === "#"
+    ){
+
+        return "";
+    }
+
+
+    if(
+        url.indexOf(
+            "https://"
+        ) === 0
+    ){
+
+        return url;
+    }
+
+
+    if(
+        url.indexOf(
+            "//"
+        ) === 0
+    ){
+
+        return "https:"+url;
+    }
+
+
+    if(
+        url.charAt(0) === "/"
+    ){
+
+        return
+
+            "https://assistirfarah.com"+
+            url;
+
+    }
+
+
+    /*
+     * Link relativo.
+     */
+
+    return
+
+        "https://assistirfarah.com/"+
+        url.replace(
+            /^\/+/,
+            ""
+        );
+
+}
+
+
+
+/* ================================
+   NORMALIZA IMAGEM
+   ================================ */
+
+function normalizarImagem(url){
+
+
+    if(!url){
+
+        return "";
+    }
+
+
+    url =
+        limpar(
+            url
+        );
+
+
+    if(
+        url.indexOf(
+            "https://"
+        ) === 0
+        ||
+        url.indexOf(
+            "http://"
+        ) === 0
+    ){
+
+        return url;
+    }
+
+
+    if(
+        url.indexOf(
+            "//"
+        ) === 0
+    ){
+
+        return "https:"+url;
+    }
+
+
+    if(
+        url.charAt(0) === "/"
+    ){
+
+        return
+
+            "https://assistirfarah.com"+
+            url;
+
+    }
+
+
+    return
+
+        "https://assistirfarah.com/"+
+        url.replace(
+            /^\/+/,
+            ""
+        );
+
+}
+
+
+
+/* ================================
+   REMOVE /
+   ================================ */
+
+function removerBarraFinal(url){
+
+
+    if(!url){
+
+        return "";
+    }
+
+
+    return String(url)
+        .replace(
+            /\/+$/,
+            ""
+        );
+
+}
+
+
+
+/* ================================
+   LIMPA TEXTO
+   ================================ */
+
+function limpar(texto){
+
+
+    if(
+        texto === null
+        ||
+        texto === undefined
+    ){
+
+        return "";
+    }
+
+
+    return String(texto)
+
+        .replace(
+            /\s+/g,
+            " "
+        )
+
+        .replace(
+            /^\s+|\s+$/g,
+            ""
+        );
+
+}
+
+
+
+/* ================================
+   ESCAPA HTML
+   ================================ */
+
+function escapar(texto){
+
+
+    if(
+        texto === null
+        ||
+        texto === undefined
+    ){
+
+        return "";
+    }
+
+
+    return String(texto)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* ================================
+   STATUS
+   ================================ */
+
+function mostrarStatus(
+    texto,
+    tipo
+){
+
+
+    var box =
+
+        document.getElementById(
+            "status"
+        );
+
+
+    box.className =
+        "status";
+
+
+    if(tipo){
+
+        box.className +=
+            " "+tipo;
+
+    }
+
+
+    box.innerHTML =
+
+        escapar(
+            texto
+        );
+
+}
+
+
+
+/* ================================
+   EVENTOS
+   ================================ */
+
+document
+.getElementById(
+    "busca"
+)
+.addEventListener(
+
+    "keyup",
+
+    pesquisar
+
+);
+
+
+document
+.getElementById(
+    "btnBusca"
+)
+.addEventListener(
+
+    "click",
+
+    pesquisar
+
+);
+
+
+document
+.getElementById(
+    "voltar"
+)
+.addEventListener(
+
+    "click",
+
+    function(){
+
+
+        document
+        .getElementById(
+            "detalheTela"
+        )
+        .style.display =
+            "none";
+
+
+        document
+        .getElementById(
+            "catalogoTela"
+        )
+        .style.display =
+            "block";
+
+    }
+
+);
+
+
+
+/* ================================
+   COMEÇAR
+   ================================ */
+
+setTimeout(
+
+    iniciar,
+
+    500
+
+);
+
+</script>
+
+
+</body>
+
+</html>
