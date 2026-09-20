@@ -2,39 +2,61 @@ package com.cinenovelas.lite;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
-import android.media.MediaPlayer;
+
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ui.PlayerView;
 
 public class PlayerActivity extends Activity {
 
-    private VideoView videoView;
+    private SimpleExoPlayer player;
+    private PlayerView playerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String url = getIntent().getStringExtra("url");
-        String titulo = getIntent().getStringExtra("titulo");
+        String url =
+            getIntent().getStringExtra("url");
 
-        LinearLayout tela = new LinearLayout(this);
-        tela.setOrientation(LinearLayout.VERTICAL);
-        tela.setBackgroundColor(Color.BLACK);
+        String titulo =
+            getIntent().getStringExtra("titulo");
 
-        TextView tituloView = new TextView(this);
+        LinearLayout tela =
+            new LinearLayout(this);
 
-        if (titulo == null) {
+        tela.setOrientation(
+            LinearLayout.VERTICAL
+        );
+
+        tela.setBackgroundColor(
+            Color.BLACK
+        );
+
+        TextView tituloView =
+            new TextView(this);
+
+        if (
+            titulo == null ||
+            titulo.equals("")
+        ) {
             titulo = "NOVELASPLAY";
         }
 
         tituloView.setText(titulo);
         tituloView.setTextColor(Color.WHITE);
         tituloView.setTextSize(20);
-        tituloView.setPadding(20, 20, 20, 20);
+        tituloView.setPadding(
+            20,
+            20,
+            20,
+            20
+        );
 
         tela.addView(
             tituloView,
@@ -44,10 +66,13 @@ public class PlayerActivity extends Activity {
             )
         );
 
-        videoView = new VideoView(this);
+        playerView =
+            new PlayerView(this);
+
+        playerView.setUseController(true);
 
         tela.addView(
-            videoView,
+            playerView,
             new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 0,
@@ -57,30 +82,74 @@ public class PlayerActivity extends Activity {
 
         setContentView(tela);
 
-        MediaController controller =
-            new MediaController(this);
+        player =
+            new SimpleExoPlayer.Builder(this)
+                .build();
 
-        controller.setAnchorView(videoView);
+        playerView.setPlayer(player);
 
-        videoView.setMediaController(controller);
+        if (
+            url != null &&
+            !url.equals("")
+        ) {
 
-        if (url != null && !url.equals("")) {
+            MediaItem item =
+                MediaItem.fromUri(url);
 
-            videoView.setVideoURI(
-                Uri.parse(url)
-            );
+            player.setMediaItem(item);
 
-            videoView.setOnPreparedListener(
-                new MediaPlayer.OnPreparedListener() {
+            player.prepare();
+
+            player.setPlayWhenReady(true);
+
+            player.addListener(
+                new Player.Listener() {
 
                     @Override
-                    public void onPrepared(
-                        MediaPlayer mp
+                    public void onPlaybackStateChanged(
+                        int playbackState
                     ) {
-                        videoView.start();
+
+                        if (
+                            playbackState ==
+                            Player.STATE_ENDED
+                        ) {
+
+                            finish();
+                        }
                     }
                 }
             );
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (player != null) {
+            player.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (player != null) {
+            player.play();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (player != null) {
+
+            player.release();
+
+            player = null;
         }
     }
 }
