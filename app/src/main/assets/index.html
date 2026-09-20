@@ -121,15 +121,11 @@ main{
     border-radius:6px;
     position:relative;
     overflow:hidden;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:14px;
-
     text-align:center;
-
     background:
         linear-gradient(
             145deg,
@@ -137,7 +133,6 @@ main{
             #1b1b1d 55%,
             #4d1017
         );
-
     font-size:18px;
     font-weight:bold;
 }
@@ -155,9 +150,7 @@ main{
     position:absolute;
     left:8px;
     bottom:12px;
-
     writing-mode:vertical-rl;
-
     letter-spacing:3px;
     font-size:10px;
 }
@@ -166,7 +159,6 @@ main{
     margin-top:8px;
     font-size:15px;
     font-weight:bold;
-
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -215,24 +207,16 @@ main{
     margin-top:16px;
 }
 
-.card{
-    min-width:0;
-}
-
 .cardCapa{
     height:175px;
     border-radius:6px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:9px;
-
     text-align:center;
     font-size:14px;
     font-weight:bold;
-
     background:
         linear-gradient(
             145deg,
@@ -246,7 +230,6 @@ main{
     margin-top:7px;
     font-size:14px;
     font-weight:bold;
-
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -261,27 +244,20 @@ main{
 .subTopo{
     min-height:70px;
     background:#101011;
-
     display:flex;
     align-items:center;
-
     padding:12px 16px;
-
     border-bottom:2px solid #ef1837;
 }
 
 .voltar{
     width:44px;
     height:44px;
-
     border:0;
     border-radius:50%;
-
     background:#252525;
     color:#fff;
-
     font-size:27px;
-
     margin-right:13px;
 }
 
@@ -301,20 +277,14 @@ main{
 
 .ep{
     width:100%;
-
     display:flex;
     align-items:center;
-
     padding:15px;
-
     margin-bottom:10px;
-
     border:0;
     border-radius:8px;
-
     background:#202024;
     color:#fff;
-
     text-align:left;
 }
 
@@ -322,17 +292,12 @@ main{
     width:45px;
     height:45px;
     flex:none;
-
     border-radius:50%;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     margin-right:13px;
-
     background:#e31326;
-
     font-weight:bold;
 }
 
@@ -350,15 +315,10 @@ main{
 
 .aviso{
     margin:16px;
-
     padding:14px;
-
     border-radius:8px;
-
     background:#1d1d20;
-
     color:#bbb;
-
     line-height:1.5;
     font-size:14px;
 }
@@ -367,6 +327,8 @@ main{
 </head>
 
 <body>
+
+<!-- CATÁLOGO -->
 
 <div id="catalogoTela">
 
@@ -448,6 +410,8 @@ main{
 </div>
 
 
+<!-- EPISÓDIOS -->
+
 <div id="novelaTela">
 
 <div class="subTopo">
@@ -490,6 +454,8 @@ main{
 
 <script>
 
+/* NOVELAS */
+
 var novelas = [
 
     {nome:"Quem Ama Cuida"},
@@ -505,8 +471,15 @@ var novelas = [
 ];
 
 var novelaAtual = "";
+
 var episodiosAtuais = [];
 
+
+/*
+   3 VÍDEOS PÚBLICOS DE TESTE.
+
+   abertura está em MILISSEGUNDOS.
+*/
 
 function criarEpisodios(nome){
 
@@ -514,25 +487,48 @@ function criarEpisodios(nome){
 
         {
             numero:1,
-            titulo:nome+" - Episódio 1",
-            url:"https://www.w3schools.com/html/mov_bbb.mp4"
+
+            titulo:
+                nome+
+                " - Episódio 1",
+
+            url:
+                "https://www.w3schools.com/html/mov_bbb.mp4",
+
+            abertura:3000
         },
 
         {
             numero:2,
-            titulo:nome+" - Episódio 2",
-            url:""
+
+            titulo:
+                nome+
+                " - Episódio 2",
+
+            url:
+                "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+
+            abertura:5000
         },
 
         {
             numero:3,
-            titulo:nome+" - Episódio 3",
-            url:""
+
+            titulo:
+                nome+
+                " - Episódio 3",
+
+            url:
+                "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+
+            abertura:5000
         }
 
     ];
 }
 
+
+/* TOP */
 
 function montarTop(){
 
@@ -602,11 +598,11 @@ function montarTop(){
         box.appendChild(
             item
         );
-
     }
-
 }
 
+
+/* GRADE */
 
 function montarGrade(lista){
 
@@ -660,11 +656,11 @@ function montarGrade(lista){
         box.appendChild(
             card
         );
-
     }
-
 }
 
+
+/* BUSCA */
 
 function pesquisar(){
 
@@ -694,17 +690,16 @@ function pesquisar(){
             resultado.push(
                 novelas[i]
             );
-
         }
-
     }
 
     montarGrade(
         resultado
     );
-
 }
 
+
+/* ABRE NOVELA */
 
 function abrirNovela(nome){
 
@@ -737,10 +732,18 @@ function abrirNovela(nome){
     .innerHTML =
         nome;
 
-    montarEpisodios();
+    document
+    .getElementById(
+        "aviso"
+    )
+    .innerHTML =
+        "Toque em um episódio para abrir no player do NovelasPlay.";
 
+    montarEpisodios();
 }
 
+
+/* MONTA EPISÓDIOS */
 
 function montarEpisodios(){
 
@@ -808,32 +811,16 @@ function montarEpisodios(){
         box.appendChild(
             botao
         );
-
     }
-
 }
 
 
+/*
+   MANDA A LISTA INTEIRA
+   PARA O PLAYER NATIVO
+*/
+
 function abrirPlayer(indice){
-
-    var ep =
-        episodiosAtuais[
-            indice
-        ];
-
-    if(
-        !ep.url
-    ){
-
-        document
-        .getElementById(
-            "aviso"
-        )
-        .innerHTML =
-            "Este episódio ainda não tem vídeo de teste.";
-
-        return;
-    }
 
     if(
         typeof AndroidPlayer ===
@@ -850,22 +837,62 @@ function abrirPlayer(indice){
         return;
     }
 
+
+    var urls = [];
+
+    var titulos = [];
+
+    var aberturas = [];
+
+
+    for(
+        var i=0;
+        i<episodiosAtuais.length;
+        i++
+    ){
+
+        urls.push(
+            episodiosAtuais[i].url
+        );
+
+        titulos.push(
+            "Episódio "+
+            episodiosAtuais[i].numero
+        );
+
+        aberturas.push(
+            episodiosAtuais[i].abertura
+        );
+    }
+
+
     document
     .getElementById(
         "aviso"
     )
     .innerHTML =
         "Abrindo Episódio "+
-        ep.numero+
+        (indice+1)+
         "...";
 
-    AndroidPlayer.play(
-        ep.url,
-        ep.titulo
-    );
 
+    AndroidPlayer.playList(
+
+        novelaAtual,
+
+        urls.join("|"),
+
+        titulos.join("|"),
+
+        aberturas.join("|"),
+
+        indice
+
+    );
 }
 
+
+/* VOLTAR */
 
 function voltarCatalogo(){
 
@@ -882,9 +909,10 @@ function voltarCatalogo(){
     )
     .style.display =
         "block";
-
 }
 
+
+/* EVENTOS */
 
 document
 .getElementById(
@@ -895,6 +923,7 @@ document
     pesquisar
 );
 
+
 document
 .getElementById(
     "btnBusca"
@@ -903,6 +932,7 @@ document
     "click",
     pesquisar
 );
+
 
 document
 .getElementById(
@@ -913,6 +943,8 @@ document
     voltarCatalogo
 );
 
+
+/* INICIAR */
 
 montarTop();
 
