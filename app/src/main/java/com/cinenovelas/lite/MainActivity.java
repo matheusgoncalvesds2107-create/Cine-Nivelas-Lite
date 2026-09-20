@@ -9,6 +9,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MainActivity extends Activity {
 
     private WebView webView;
@@ -43,9 +49,20 @@ public class MainActivity extends Activity {
             new WebViewClient()
         );
 
+        /*
+         * PLAYER NATIVO
+         */
         webView.addJavascriptInterface(
             new PlayerBridge(),
             "AndroidPlayer"
+        );
+
+        /*
+         * LEITURA DAS PÁGINAS PÚBLICAS
+         */
+        webView.addJavascriptInterface(
+            new SiteBridge(),
+            "AndroidSite"
         );
 
         webView.setLayerType(
@@ -58,6 +75,10 @@ public class MainActivity extends Activity {
         );
     }
 
+
+    /*
+     * PLAYER
+     */
 
     public class PlayerBridge {
 
@@ -107,7 +128,9 @@ public class MainActivity extends Activity {
                             episodioInicial
                         );
 
-                        startActivity(intent);
+                        startActivity(
+                            intent
+                        );
                     }
                 }
             );
@@ -115,10 +138,305 @@ public class MainActivity extends Activity {
     }
 
 
+    /*
+     * SITE
+     */
+
+    public class SiteBridge {
+
+        @JavascriptInterface
+        public void get(
+            final String endereco,
+            final String callback
+        ) {
+
+            new Thread(
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        HttpURLConnection conexao = null;
+
+                        try {
+
+                            URL url =
+                                new URL(
+                                    endereco
+                                );
+
+                            /*
+                             * Nosso app só lê páginas HTTPS
+                             * do domínio escolhido.
+                             */
+                            String protocolo =
+                                url.getProtocol();
+
+                            String host =
+                                url.getHost();
+
+                            if (
+                                !"https".equalsIgnoreCase(
+                                    protocolo
+                                )
+                            ) {
+
+                                enviarSite(
+                                    callback,
+                                    0,
+                                    "",
+                                    "Somente HTTPS permitido."
+                                );
+
+                                return;
+                            }
+
+                            boolean hostPermitido =
+                                "noveflix.lol".equalsIgnoreCase(
+                                    host
+                                )
+                                ||
+                                "www.noveflix.lol".equalsIgnoreCase(
+                                    host
+                                );
+
+                            if (!hostPermitido) {
+
+                                enviarSite(
+                                    callback,
+                                    0,
+                                    "",
+                                    "Domínio não permitido."
+                                );
+
+                                return;
+                            }
+
+                            conexao =
+                                (HttpURLConnection)
+                                url.openConnection();
+
+                            conexao.setRequestMethod(
+                                "GET"
+                            );
+
+                            conexao.setConnectTimeout(
+                                12000
+                            );
+
+                            conexao.setReadTimeout(
+                                15000
+                            );
+
+                            conexao.setInstanceFollowRedirects(
+                                true
+                            );
+
+                            conexao.setUseCaches(
+                                false
+                            );
+
+                            conexao.setRequestProperty(
+                                "User-Agent",
+                                "Mozilla/5.0 (Linux; Android 6.0.1) AppleWebKit/537.36 Chrome/55 Mobile Safari/537.36"
+                            );
+
+                            conexao.setRequestProperty(
+                                "Accept",
+                                "text/html,application/xhtml+xml"
+                            );
+
+                            conexao.setRequestProperty(
+                                "Accept-Language",
+                                "pt-BR,pt;q=0.9"
+                            );
+
+                            int status =
+                                conexao.getResponseCode();
+
+                            InputStream stream;
+
+                            if (
+                                status >= 200 &&
+                                status < 400
+                            ) {
+
+                                stream =
+                                    conexao.getInputStream();
+
+                            } else {
+
+                                stream =
+                                    conexao.getErrorStream();
+                            }
+
+                            String html =
+                                ler(
+                                    stream
+                                );
+
+                            enviarSite(
+                                callback,
+                                status,
+                                html,
+                                ""
+                            );
+
+                        } catch (Exception e) {
+
+                            enviarSite(
+                                callback,
+                                0,
+                                "",
+                                e.getClass()
+                                    .getSimpleName()
+                                    + ": "
+                                    + e.getMessage()
+                            );
+
+                        } finally {
+
+                            if (
+                                conexao != null
+                            ) {
+
+                                conexao.disconnect();
+                            }
+                        }
+                    }
+                }
+            ).start();
+        }
+    }
+
+
+    private String ler(
+        InputStream stream
+    ) throws Exception {
+
+        if (stream == null) {
+            return "";
+        }
+
+        BufferedReader reader =
+            new BufferedReader(
+                new InputStreamReader(
+                    stream,
+                    "UTF-8"
+                )
+            );
+
+        StringBuilder texto =
+            new StringBuilder();
+
+        String linha;
+
+        while (
+            (linha = reader.readLine())
+            != null
+        ) {
+
+            texto.append(
+                linha
+            );
+
+            texto.append(
+                "\n"
+            );
+        }
+
+        reader.close();
+
+        return texto.toString();
+    }
+
+
+    private void enviarSite(
+        final String callback,
+        final int status,
+        final String html,
+        final String erro
+    ) {
+
+        runOnUiThread(
+            new Runnable() {
+
+                @Override
+                public void run() {
+
+                    String javascript =
+
+                        callback
+                        + "("
+                        + status
+                        + ",'"
+                        + escapar(
+                            html
+                        )
+                        + "','"
+                        + escapar(
+                            erro
+                        )
+                        + "')";
+
+                    webView.evaluateJavascript(
+                        javascript,
+                        null
+                    );
+                }
+            }
+        );
+    }
+
+
+    private String escapar(
+        String texto
+    ) {
+
+        if (texto == null) {
+            return "";
+        }
+
+        return texto
+
+            .replace(
+                "\\",
+                "\\\\"
+            )
+
+            .replace(
+                "'",
+                "\\'"
+            )
+
+            .replace(
+                "\r",
+                ""
+            )
+
+            .replace(
+                "\n",
+                "\\n"
+            )
+
+            .replace(
+                "\u2028",
+                ""
+            )
+
+            .replace(
+                "\u2029",
+                ""
+            );
+    }
+
+
     @Override
     public void onBackPressed() {
 
-        if (webView.canGoBack()) {
+        if (
+            webView.canGoBack()
+        ) {
 
             webView.goBack();
 
