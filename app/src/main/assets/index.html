@@ -1,183 +1,223 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Cinenovelas Lite V3</title>
 
-    <title>Cinenovelas Lite V2</title>
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+body {
+    margin: 0;
+    background: #0d0d0f;
+    color: white;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            margin: 0;
-            background: #0d0d0f;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-        }
+header {
+    background: #18171c;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+}
 
-        header {
-            background: #18171c;
-            padding: 24px 20px;
-        }
+h1 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 26px;
-        }
+input {
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 16px;
+}
 
-        main {
-            padding: 22px;
-        }
+main {
+    padding: 18px;
+}
 
-        .painel {
-            background: #222328;
-            border-radius: 18px;
-            padding: 22px;
-            margin-bottom: 20px;
-        }
+#status {
+    background: #222328;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 18px;
+}
 
-        #status {
-            font-size: 20px;
-            line-height: 1.4;
-            word-break: break-word;
-        }
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
 
-        #resposta {
-            margin-top: 22px;
-            font-size: 17px;
-            line-height: 1.4;
-            word-break: break-word;
-            white-space: pre-wrap;
-        }
+.card {
+    background: #222328;
+    padding: 18px;
+    border-radius: 14px;
+    cursor: pointer;
+}
 
-        .erro {
-            color: #ff7070;
-        }
+.card h2 {
+    font-size: 19px;
+    margin: 0 0 6px 0;
+}
 
-        .ok {
-            color: #8dff8d;
-        }
-    </style>
+.card span {
+    color: #aaaaaa;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    border: 0;
+    border-radius: 12px;
+    margin-top: 12px;
+    font-size: 16px;
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-    <h1>CINENOVELAS LITE V2</h1>
+    <h1>CINENOVELAS LITE V3</h1>
+
+    <input
+        id="busca"
+        placeholder="Buscar novela..."
+        onkeyup="filtrar()">
 </header>
 
 <main>
 
-    <div class="painel">
+<div id="status">
+    Catálogo NoveFlix
+</div>
 
-        <div id="status">
-            JavaScript iniciando...
-        </div>
-
-        <div id="resposta"></div>
-
-    </div>
+<div id="lista" class="grid"></div>
 
 </main>
 
 <script>
 
-var statusBox = document.getElementById("status");
-var respostaBox = document.getElementById("resposta");
+var novelas = [
 
-function setStatus(texto, tipo) {
+    {
+        nome: "Colisão",
+        ano: "2026",
+        url: "https://noveflix.lol/assista/colisao/"
+    },
 
-    statusBox.innerHTML = texto;
+    {
+        nome: "Sol da Minha Vida",
+        ano: "2022",
+        url: "https://noveflix.lol/categoria/novelas/"
+    },
 
-    statusBox.className = "";
+    {
+        nome: "A Mulher Proibida",
+        ano: "2026",
+        url: "https://noveflix.lol/categoria/novelas/"
+    },
 
-    if (tipo === "erro") {
-        statusBox.className = "erro";
+    {
+        nome: "A Nova Vida de Ana",
+        ano: "2023",
+        url: "https://noveflix.lol/categoria/novelas/"
+    },
+
+    {
+        nome: "Chamas da Vida",
+        ano: "2008",
+        url: "https://noveflix.lol/categoria/novelas/"
+    },
+
+    {
+        nome: "Essas Mulheres",
+        ano: "2005",
+        url: "https://noveflix.lol/categoria/novelas/"
+    },
+
+    {
+        nome: "Rosario Tijeras",
+        ano: "2016",
+        url: "https://noveflix.lol/categoria/novelas/"
+    },
+
+    {
+        nome: "O Herdeiro",
+        ano: "2025",
+        url: "https://noveflix.lol/categoria/novelas/"
     }
 
-    if (tipo === "ok") {
-        statusBox.className = "ok";
+];
+
+function mostrar(lista) {
+
+    var box = document.getElementById("lista");
+
+    box.innerHTML = "";
+
+    for (var i = 0; i < lista.length; i++) {
+
+        var n = lista[i];
+
+        var card = document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML =
+            "<h2>" + n.nome + "</h2>" +
+            "<span>" + n.ano + "</span>";
+
+        card.setAttribute(
+            "data-url",
+            n.url
+        );
+
+        card.onclick = function() {
+
+            var url = this.getAttribute("data-url");
+
+            window.location.href = url;
+        };
+
+        box.appendChild(card);
     }
 }
 
-function iniciar() {
-
-    setStatus(
-        "JavaScript OK ✅<br>" +
-        "Ponte Android OK ✅<br>" +
-        "Conectando..."
-    );
-
-    respostaBox.innerHTML = "";
-
-    AndroidApi.get(
-        "novels?page=1",
-        "respostaHome"
-    );
-}
-
-function respostaHome(status, body, erro) {
+function filtrar() {
 
     var texto =
-        "JavaScript OK ✅<br>" +
-        "Ponte Android OK ✅<br>" +
-        "HTTP: " + status;
+        document.getElementById("busca")
+        .value
+        .toLowerCase();
 
-    if (status >= 200 && status < 300) {
+    var resultado = [];
 
-        setStatus(texto, "ok");
+    for (var i = 0; i < novelas.length; i++) {
 
-    } else {
-
-        setStatus(texto, "erro");
+        if (
+            novelas[i].nome
+            .toLowerCase()
+            .indexOf(texto) >= 0
+        ) {
+            resultado.push(novelas[i]);
+        }
     }
 
-    if (erro && erro.length > 0) {
-
-        respostaBox.innerHTML =
-            "ERRO ANDROID:\n\n" + erro;
-
-        return;
-    }
-
-    if (!body) {
-
-        respostaBox.innerHTML =
-            "O servidor não retornou conteúdo.";
-
-        return;
-    }
-
-    respostaBox.innerHTML = body;
+    mostrar(resultado);
 }
 
-setTimeout(function() {
-
-    if (window.AndroidApi) {
-
-        setStatus(
-            "JavaScript OK ✅<br>" +
-            "Ponte Android OK ✅<br>" +
-            "Preparando conexão..."
-        );
-
-        iniciar();
-
-    } else {
-
-        setStatus(
-            "JavaScript OK ✅<br>" +
-            "ERRO: ponte Android não encontrada.",
-            "erro"
-        );
-    }
-
-}, 1500);
+mostrar(novelas);
 
 </script>
 
