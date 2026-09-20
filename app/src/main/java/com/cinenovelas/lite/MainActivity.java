@@ -3,6 +3,7 @@ package com.cinenovelas.lite;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -25,113 +26,191 @@ public class MainActivity extends Activity {
         setContentView(webView);
 
         WebSettings settings = webView.getSettings();
+
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
 
-        webView.addJavascriptInterface(new ApiBridge(), "AndroidApi");
+        settings.setAllowFileAccess(true);
+        settings.setAllowContentAccess(true);
 
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
+        settings.setLoadsImagesAutomatically(true);
 
-                webView.evaluateJavascript(
-                    "if(window.ponteOK){ponteOK();}",
-                    null
-                );
-            }
-        });
+        /*
+         * IMPORTANTE PARA VÍDEO
+         */
+        settings.setMediaPlaybackRequiresUserGesture(false);
 
-        webView.loadUrl("file:///android_asset/index.html");
+        /*
+         * Permite conteúdo remoto dentro
+         * do HTML carregado dos assets.
+         */
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            settings.setMixedContentMode(
+                WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            );
+        }
+
+        /*
+         * ChromeClient melhora suporte
+         * a vídeo HTML5.
+         */
+        webView.setWebChromeClient(
+            new WebChromeClient()
+        );
+
+        webView.setWebViewClient(
+            new WebViewClient()
+        );
+
+        /*
+         * Ponte usada pelo projeto anterior.
+         */
+        webView.addJavascriptInterface(
+            new ApiBridge(),
+            "AndroidApi"
+        );
+
+        /*
+         * Ativa aceleração de hardware.
+         */
+        webView.setLayerType(
+            WebView.LAYER_TYPE_HARDWARE,
+            null
+        );
+
+        webView.loadUrl(
+            "file:///android_asset/index.html"
+        );
     }
+
 
     public class ApiBridge {
 
         @JavascriptInterface
-        public void get(final String path, final String callback) {
+        public void get(
+            final String path,
+            final String callback
+        ) {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
+            new Thread(
+                new Runnable() {
 
-                    HttpURLConnection c = null;
+                    @Override
+                    public void run() {
 
-                    try {
+                        HttpURLConnection c = null;
 
-                        URL url = new URL(
-                            "https://cinenovelas.xyz/v1/" + path
-                        );
+                        try {
 
-                        c = (HttpURLConnection) url.openConnection();
+                            URL url =
+                                new URL(
+                                    "https://cinenovelas.xyz/v1/"
+                                    + path
+                                );
 
-                        c.setRequestMethod("GET");
-                        c.setConnectTimeout(8000);
-                        c.setReadTimeout(8000);
-                        c.setUseCaches(false);
+                            c =
+                                (HttpURLConnection)
+                                url.openConnection();
 
-                        c.setRequestProperty(
-                            "Accept",
-                            "application/json"
-                        );
+                            c.setRequestMethod("GET");
 
-                        c.setRequestProperty(
-                            "User-Agent",
-                            "Mozilla/5.0 (Linux; Android 6.0.1)"
-                        );
+                            c.setConnectTimeout(8000);
+                            c.setReadTimeout(8000);
 
-                        int status = c.getResponseCode();
+                            c.setUseCaches(false);
 
-                        InputStream stream;
+                            c.setRequestProperty(
+                                "Accept",
+                                "application/json"
+                            );
 
-                        if (status >= 200 && status < 400) {
-                            stream = c.getInputStream();
-                        } else {
-                            stream = c.getErrorStream();
-                        }
+                            c.setRequestProperty(
+                                "User-Agent",
+                                "Mozilla/5.0 (Linux; Android 6.0.1)"
+                            );
 
-                        String body = read(stream);
+                            int status =
+                                c.getResponseCode();
 
-                        resposta(
-                            callback,
-                            status,
-                            body,
-                            ""
-                        );
+                            InputStream stream;
 
-                    } catch (Exception e) {
+                            if (
+                                status >= 200 &&
+                                status < 400
+                            ) {
 
-                        resposta(
-                            callback,
-                            0,
-                            "",
-                            e.getClass().getSimpleName()
-                                + ": "
-                                + e.getMessage()
-                        );
+                                stream =
+                                    c.getInputStream();
 
-                    } finally {
+                            } else {
 
-                        if (c != null) {
-                            c.disconnect();
+                                stream =
+                                    c.getErrorStream();
+                            }
+
+                            String body =
+                                read(stream);
+
+                            resposta(
+                                callback,
+                                status,
+                                body,
+                                ""
+                            );
+
+                        } catch (
+                            Exception e
+                        ) {
+
+                            resposta(
+                                callback,
+                                0,
+                                "",
+                                e.getClass()
+                                    .getSimpleName()
+                                    + ": "
+                                    + e.getMessage()
+                            );
+
+                        } finally {
+
+                            if (c != null) {
+                                c.disconnect();
+                            }
                         }
                     }
                 }
-            }).start();
+            ).start();
         }
     }
 
-    private String read(InputStream in) throws Exception {
 
-        if (in == null) return "";
+    private String read(
+        InputStream in
+    ) throws Exception {
 
-        BufferedReader br = new BufferedReader(
-            new InputStreamReader(in, "UTF-8")
-        );
+        if (in == null) {
+            return "";
+        }
 
-        StringBuilder sb = new StringBuilder();
+        BufferedReader br =
+            new BufferedReader(
+                new InputStreamReader(
+                    in,
+                    "UTF-8"
+                )
+            );
+
+        StringBuilder sb =
+            new StringBuilder();
+
         String linha;
 
-        while ((linha = br.readLine()) != null) {
+        while (
+            (linha = br.readLine())
+            != null
+        ) {
+
             sb.append(linha);
         }
 
@@ -140,6 +219,7 @@ public class MainActivity extends Activity {
         return sb.toString();
     }
 
+
     private void resposta(
         final String callback,
         final int status,
@@ -147,33 +227,58 @@ public class MainActivity extends Activity {
         final String erro
     ) {
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        runOnUiThread(
+            new Runnable() {
 
-                String js =
-                    callback +
-                    "(" +
-                    status +
-                    ",'" +
-                    escapar(body) +
-                    "','" +
-                    escapar(erro) +
-                    "')";
+                @Override
+                public void run() {
 
-                webView.evaluateJavascript(js, null);
+                    String js =
+                        callback
+                        + "("
+                        + status
+                        + ",'"
+                        + escapar(body)
+                        + "','"
+                        + escapar(erro)
+                        + "')";
+
+                    webView.evaluateJavascript(
+                        js,
+                        null
+                    );
+                }
             }
-        });
+        );
     }
 
-    private String escapar(String s) {
 
-        if (s == null) return "";
+    private String escapar(
+        String s
+    ) {
+
+        if (s == null) {
+            return "";
+        }
 
         return s
             .replace("\\", "\\\\")
             .replace("'", "\\'")
             .replace("\r", "")
             .replace("\n", "\\n");
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (webView.canGoBack()) {
+
+            webView.goBack();
+
+        } else {
+
+            super.onBackPressed();
+        }
     }
 }
