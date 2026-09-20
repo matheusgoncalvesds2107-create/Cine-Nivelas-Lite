@@ -1,6 +1,7 @@
 package com.cinenovelas.lite;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -29,31 +30,18 @@ public class MainActivity extends Activity {
 
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
-
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
-
         settings.setLoadsImagesAutomatically(true);
 
-        /*
-         * IMPORTANTE PARA VÍDEO
-         */
         settings.setMediaPlaybackRequiresUserGesture(false);
 
-        /*
-         * Permite conteúdo remoto dentro
-         * do HTML carregado dos assets.
-         */
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             settings.setMixedContentMode(
                 WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             );
         }
 
-        /*
-         * ChromeClient melhora suporte
-         * a vídeo HTML5.
-         */
         webView.setWebChromeClient(
             new WebChromeClient()
         );
@@ -63,7 +51,7 @@ public class MainActivity extends Activity {
         );
 
         /*
-         * Ponte usada pelo projeto anterior.
+         * Ponte antiga da API.
          */
         webView.addJavascriptInterface(
             new ApiBridge(),
@@ -71,8 +59,13 @@ public class MainActivity extends Activity {
         );
 
         /*
-         * Ativa aceleração de hardware.
+         * NOVA PONTE DO PLAYER NATIVO.
          */
+        webView.addJavascriptInterface(
+            new PlayerBridge(),
+            "AndroidPlayer"
+        );
+
         webView.setLayerType(
             WebView.LAYER_TYPE_HARDWARE,
             null
@@ -83,6 +76,56 @@ public class MainActivity extends Activity {
         );
     }
 
+
+    /*
+     * PLAYER NATIVO
+     */
+
+    public class PlayerBridge {
+
+        @JavascriptInterface
+        public void play(
+            final String url,
+            final String titulo
+        ) {
+
+            if (url == null || url.length() == 0) {
+                return;
+            }
+
+            runOnUiThread(
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        Intent intent =
+                            new Intent(
+                                MainActivity.this,
+                                PlayerActivity.class
+                            );
+
+                        intent.putExtra(
+                            "url",
+                            url
+                        );
+
+                        intent.putExtra(
+                            "titulo",
+                            titulo
+                        );
+
+                        startActivity(intent);
+                    }
+                }
+            );
+        }
+    }
+
+
+    /*
+     * PONTE HTTP ANTIGA
+     */
 
     public class ApiBridge {
 
@@ -112,12 +155,21 @@ public class MainActivity extends Activity {
                                 (HttpURLConnection)
                                 url.openConnection();
 
-                            c.setRequestMethod("GET");
+                            c.setRequestMethod(
+                                "GET"
+                            );
 
-                            c.setConnectTimeout(8000);
-                            c.setReadTimeout(8000);
+                            c.setConnectTimeout(
+                                8000
+                            );
 
-                            c.setUseCaches(false);
+                            c.setReadTimeout(
+                                8000
+                            );
+
+                            c.setUseCaches(
+                                false
+                            );
 
                             c.setRequestProperty(
                                 "Accept",
@@ -158,9 +210,7 @@ public class MainActivity extends Activity {
                                 ""
                             );
 
-                        } catch (
-                            Exception e
-                        ) {
+                        } catch (Exception e) {
 
                             resposta(
                                 callback,
@@ -211,7 +261,9 @@ public class MainActivity extends Activity {
             != null
         ) {
 
-            sb.append(linha);
+            sb.append(
+                linha
+            );
         }
 
         br.close();
