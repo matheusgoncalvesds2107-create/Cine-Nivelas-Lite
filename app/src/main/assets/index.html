@@ -2,84 +2,245 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<title>Cinenovelas Lite V3</title>
+<title>NovelasPlay</title>
 
 <style>
-* {
-    box-sizing: border-box;
+
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    background: #0d0d0f;
-    color: white;
-    font-family: Arial, sans-serif;
+body{
+    margin:0;
+    background:#0d0d0e;
+    color:#fff;
+    font-family:Arial,sans-serif;
 }
 
-header {
-    background: #18171c;
-    padding: 20px;
-    position: sticky;
-    top: 0;
+.topo{
+    height:88px;
+    background:#101011;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    border-bottom:1px solid #292929;
 }
 
-h1 {
-    margin: 0 0 15px 0;
-    font-size: 24px;
+.menu{
+    position:absolute;
+    left:22px;
+    font-size:34px;
+    font-weight:300;
 }
 
-input {
-    width: 100%;
-    padding: 14px;
-    border: 0;
-    border-radius: 10px;
-    font-size: 16px;
+.logo{
+    font-size:31px;
+    font-weight:bold;
+    letter-spacing:1px;
 }
 
-main {
-    padding: 18px;
+.logo .vermelho{
+    color:#ef1741;
 }
 
-#status {
-    background: #222328;
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 18px;
+.logo .branco{
+    color:white;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
+.barra{
+    padding:20px;
+    background:#101011;
+    border-bottom:8px solid #222;
 }
 
-.card {
-    background: #222328;
-    padding: 18px;
-    border-radius: 14px;
-    cursor: pointer;
+.buscaBox{
+    display:flex;
+    background:#050505;
+    border-radius:30px;
+    overflow:hidden;
 }
 
-.card h2 {
-    font-size: 19px;
-    margin: 0 0 6px 0;
+.buscaBox input{
+    width:100%;
+    border:0;
+    outline:0;
+    background:#050505;
+    color:white;
+    font-size:18px;
+    padding:16px 20px;
 }
 
-.card span {
-    color: #aaaaaa;
-    font-size: 14px;
+.buscaBtn{
+    width:65px;
+    border:0;
+    background:#e31326;
+    color:#fff;
+    font-size:27px;
 }
 
-button {
-    width: 100%;
-    padding: 15px;
-    border: 0;
-    border-radius: 12px;
-    margin-top: 12px;
-    font-size: 16px;
+main{
+    padding:18px;
+}
+
+.tituloSecao{
+    margin:22px 0 18px;
+    display:flex;
+    align-items:center;
+    font-size:25px;
+}
+
+.linhaVermelha{
+    width:5px;
+    height:35px;
+    background:#ef1837;
+    margin-right:13px;
+}
+
+.topLista{
+    display:flex;
+    gap:13px;
+    overflow-x:auto;
+    padding-bottom:12px;
+}
+
+.poster{
+    min-width:145px;
+    width:145px;
+}
+
+.capa{
+    height:205px;
+    border-radius:5px;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:12px;
+    background:
+        linear-gradient(145deg,#901d29,#1b1b1d 55%,#4d1017);
+    font-size:20px;
+    font-weight:bold;
+}
+
+.numero{
+    position:absolute;
+    top:-10px;
+    left:3px;
+    font-size:52px;
+    font-weight:bold;
+    text-shadow:2px 2px 4px #000;
+}
+
+.tipo{
+    position:absolute;
+    left:9px;
+    bottom:15px;
+    font-size:11px;
+    writing-mode:vertical-rl;
+    letter-spacing:3px;
+}
+
+.nomePoster{
+    font-weight:bold;
+    margin-top:10px;
+    font-size:16px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.divisor{
+    height:1px;
+    background:#292929;
+    margin:17px 0;
+}
+
+.categorias{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+}
+
+.categorias button{
+    background:#222;
+    color:white;
+    border:0;
+    border-radius:5px;
+    padding:16px 5px;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.categorias .filmes{
+    grid-column:1 / 2;
+    margin-left:50%;
+}
+
+.categorias .shows{
+    grid-column:2 / 4;
+    margin-right:25%;
+}
+
+.categoriaTitulo{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:34px;
+}
+
+.esquerdaTitulo{
+    display:flex;
+    align-items:center;
+    font-size:25px;
+}
+
+.verTudo{
+    background:#dc1729;
+    color:white;
+    padding:9px 12px;
+    border-radius:4px;
+    font-size:13px;
+}
+
+.grade{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.card{
+    cursor:pointer;
+}
+
+.cardCapa{
+    height:185px;
+    background:
+        linear-gradient(145deg,#53111a,#18181b 55%,#a51c2f);
+    border-radius:5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.cardNome{
+    margin-top:8px;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.rodape{
+    height:50px;
 }
 
 </style>
@@ -87,22 +248,79 @@ button {
 
 <body>
 
-<header>
-    <h1>CINENOVELAS LITE V3</h1>
+<div class="topo">
 
-    <input
-        id="busca"
-        placeholder="Buscar novela..."
-        onkeyup="filtrar()">
-</header>
+    <div class="menu">☰</div>
+
+    <div class="logo">
+        <span class="vermelho">NOVELAS</span><span class="branco">PLAY</span>
+    </div>
+
+</div>
+
+<div class="barra">
+
+    <div class="buscaBox">
+
+        <input
+            id="busca"
+            type="text"
+            placeholder="Pesquisar..."
+            onkeyup="pesquisar()">
+
+        <button class="buscaBtn" onclick="pesquisar()">⌕</button>
+
+    </div>
+
+</div>
 
 <main>
 
-<div id="status">
-    Catálogo NoveFlix
+<div class="tituloSecao">
+
+    <div class="linhaVermelha"></div>
+
+    Top 15 Mais Assistidos
+
 </div>
 
-<div id="lista" class="grid"></div>
+<div id="topLista" class="topLista"></div>
+
+<div class="divisor"></div>
+
+<div class="categorias">
+
+    <button onclick="categoria('Novelas')">Novelas</button>
+
+    <button onclick="categoria('Séries')">Séries</button>
+
+    <button onclick="categoria('Programas')">Programas</button>
+
+    <button class="filmes" onclick="categoria('Filmes')">Filmes</button>
+
+    <button class="shows" onclick="categoria('Shows')">Shows</button>
+
+</div>
+
+<div class="categoriaTitulo">
+
+    <div class="esquerdaTitulo">
+
+        <div class="linhaVermelha"></div>
+
+        Novelas
+
+    </div>
+
+    <div class="verTudo">
+        VER TUDO
+    </div>
+
+</div>
+
+<div id="grade" class="grade"></div>
+
+<div class="rodape"></div>
 
 </main>
 
@@ -111,113 +329,210 @@ button {
 var novelas = [
 
     {
-        nome: "Colisão",
-        ano: "2026",
-        url: "https://noveflix.lol/assista/colisao/"
+        nome:"Colisão",
+        ano:"2026",
+        url:"https://noveflix.lol/assista/colisao/"
     },
 
     {
-        nome: "Sol da Minha Vida",
-        ano: "2022",
-        url: "https://noveflix.lol/categoria/novelas/"
+        nome:"Sol da Minha Vida",
+        ano:"2022",
+        url:"https://noveflix.lol/categoria/novelas/"
     },
 
     {
-        nome: "A Mulher Proibida",
-        ano: "2026",
-        url: "https://noveflix.lol/categoria/novelas/"
+        nome:"A Mulher Proibida",
+        ano:"2026",
+        url:"https://noveflix.lol/categoria/novelas/"
     },
 
     {
-        nome: "A Nova Vida de Ana",
-        ano: "2023",
-        url: "https://noveflix.lol/categoria/novelas/"
+        nome:"A Nova Vida de Ana",
+        ano:"2023",
+        url:"https://noveflix.lol/categoria/novelas/"
     },
 
     {
-        nome: "Chamas da Vida",
-        ano: "2008",
-        url: "https://noveflix.lol/categoria/novelas/"
+        nome:"Chamas da Vida",
+        ano:"2008",
+        url:"https://noveflix.lol/categoria/novelas/"
     },
 
     {
-        nome: "Essas Mulheres",
-        ano: "2005",
-        url: "https://noveflix.lol/categoria/novelas/"
+        nome:"Essas Mulheres",
+        ano:"2005",
+        url:"https://noveflix.lol/categoria/novelas/"
     },
 
     {
-        nome: "Rosario Tijeras",
-        ano: "2016",
-        url: "https://noveflix.lol/categoria/novelas/"
+        nome:"Rosario Tijeras",
+        ano:"2016",
+        url:"https://noveflix.lol/categoria/novelas/"
     },
 
     {
-        nome: "O Herdeiro",
-        ano: "2025",
-        url: "https://noveflix.lol/categoria/novelas/"
+        nome:"O Herdeiro",
+        ano:"2025",
+        url:"https://noveflix.lol/categoria/novelas/"
     }
 
 ];
 
-function mostrar(lista) {
+function montarTop(){
 
-    var box = document.getElementById("lista");
+    var box =
+        document.getElementById("topLista");
 
-    box.innerHTML = "";
+    box.innerHTML="";
 
-    for (var i = 0; i < lista.length; i++) {
+    for(
+        var i=0;
+        i<novelas.length;
+        i++
+    ){
 
-        var n = lista[i];
+        var item =
+            document.createElement("div");
 
-        var card = document.createElement("div");
+        item.className="poster";
 
-        card.className = "card";
+        item.innerHTML=
 
-        card.innerHTML =
-            "<h2>" + n.nome + "</h2>" +
-            "<span>" + n.ano + "</span>";
+            '<div class="capa">'+
+
+                '<div class="numero">'+
+                (i+1)+
+                '</div>'+
+
+                '<div class="tipo">'+
+                'NOVELA'+
+                '</div>'+
+
+                novelas[i].nome+
+
+            '</div>'+
+
+            '<div class="nomePoster">'+
+            novelas[i].nome+
+            '</div>';
+
+        item.setAttribute(
+            "data-url",
+            novelas[i].url
+        );
+
+        item.onclick=function(){
+
+            abrir(
+                this.getAttribute(
+                    "data-url"
+                )
+            );
+
+        };
+
+        box.appendChild(item);
+    }
+}
+
+function montarGrade(lista){
+
+    var box =
+        document.getElementById("grade");
+
+    box.innerHTML="";
+
+    for(
+        var i=0;
+        i<lista.length;
+        i++
+    ){
+
+        var card =
+            document.createElement("div");
+
+        card.className="card";
+
+        card.innerHTML=
+
+            '<div class="cardCapa">'+
+
+            lista[i].nome+
+
+            '</div>'+
+
+            '<div class="cardNome">'+
+
+            lista[i].nome+
+
+            '</div>';
 
         card.setAttribute(
             "data-url",
-            n.url
+            lista[i].url
         );
 
-        card.onclick = function() {
+        card.onclick=function(){
 
-            var url = this.getAttribute("data-url");
+            abrir(
+                this.getAttribute(
+                    "data-url"
+                )
+            );
 
-            window.location.href = url;
         };
 
         box.appendChild(card);
     }
 }
 
-function filtrar() {
+function pesquisar(){
 
     var texto =
         document.getElementById("busca")
         .value
         .toLowerCase();
 
-    var resultado = [];
+    var resultado=[];
 
-    for (var i = 0; i < novelas.length; i++) {
+    for(
+        var i=0;
+        i<novelas.length;
+        i++
+    ){
 
-        if (
+        if(
             novelas[i].nome
             .toLowerCase()
-            .indexOf(texto) >= 0
-        ) {
-            resultado.push(novelas[i]);
+            .indexOf(texto)>=0
+        ){
+
+            resultado.push(
+                novelas[i]
+            );
+
         }
     }
 
-    mostrar(resultado);
+    montarGrade(resultado);
 }
 
-mostrar(novelas);
+function abrir(url){
+
+    window.location.href=url;
+}
+
+function categoria(nome){
+
+    alert(
+        nome+
+        " será adicionado na próxima etapa."
+    );
+}
+
+montarTop();
+
+montarGrade(novelas);
 
 </script>
 
