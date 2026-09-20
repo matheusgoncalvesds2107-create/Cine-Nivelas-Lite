@@ -1,91 +1,185 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<title>Cinenovelas Lite</title>
+    <title>Cinenovelas Lite V2</title>
 
-<style>
-body {
-    margin: 0;
-    background: #0d0d0f;
-    color: white;
-    font-family: Arial, sans-serif;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-header {
-    padding: 22px;
-    background: #17171b;
-    font-size: 22px;
-    font-weight: bold;
-}
+        body {
+            margin: 0;
+            background: #0d0d0f;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
 
-#status {
-    margin: 25px;
-    padding: 18px;
-    background: #202027;
-    border-radius: 12px;
-    font-size: 16px;
-}
-</style>
+        header {
+            background: #18171c;
+            padding: 24px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        main {
+            padding: 22px;
+        }
+
+        .painel {
+            background: #222328;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        #status {
+            font-size: 20px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        #resposta {
+            margin-top: 22px;
+            font-size: 17px;
+            line-height: 1.4;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .erro {
+            color: #ff7070;
+        }
+
+        .ok {
+            color: #8dff8d;
+        }
+    </style>
 </head>
 
 <body>
 
-<header>CINENOVELAS LITE V2</header>
+<header>
+    <h1>CINENOVELAS LITE V2</h1>
+</header>
 
-<div id="status">
-Abrindo teste V2...
-</div>
+<main>
+
+    <div class="painel">
+
+        <div id="status">
+            JavaScript iniciando...
+        </div>
+
+        <div id="resposta"></div>
+
+    </div>
+
+</main>
 
 <script>
 
-document.getElementById("status").innerHTML =
-    "JavaScript OK ✅";
+var statusBox = document.getElementById("status");
+var respostaBox = document.getElementById("resposta");
+
+function setStatus(texto, tipo) {
+
+    statusBox.innerHTML = texto;
+
+    statusBox.className = "";
+
+    if (tipo === "erro") {
+        statusBox.className = "erro";
+    }
+
+    if (tipo === "ok") {
+        statusBox.className = "ok";
+    }
+}
+
+function iniciar() {
+
+    setStatus(
+        "JavaScript OK ✅<br>" +
+        "Ponte Android OK ✅<br>" +
+        "Conectando..."
+    );
+
+    respostaBox.innerHTML = "";
+
+    AndroidApi.get(
+        "home",
+        "respostaHome"
+    );
+}
+
+function respostaHome(status, body, erro) {
+
+    var texto =
+        "JavaScript OK ✅<br>" +
+        "Ponte Android OK ✅<br>" +
+        "HTTP: " + status;
+
+    if (status >= 200 && status < 300) {
+
+        setStatus(texto, "ok");
+
+    } else {
+
+        setStatus(texto, "erro");
+    }
+
+    if (erro && erro.length > 0) {
+
+        respostaBox.innerHTML =
+            "ERRO ANDROID:\n\n" + erro;
+
+        return;
+    }
+
+    if (!body) {
+
+        respostaBox.innerHTML =
+            "O servidor não retornou conteúdo.";
+
+        return;
+    }
+
+    respostaBox.innerHTML = body;
+}
+
 
 setTimeout(function() {
 
     if (window.AndroidApi) {
 
-        document.getElementById("status").innerHTML =
-            "JavaScript OK ✅<br>Ponte Android OK ✅<br>Testando servidor...";
+        setStatus(
+            "JavaScript OK ✅<br>" +
+            "Ponte Android OK ✅<br>" +
+            "Preparando conexão..."
+        );
 
-        AndroidApi.get("home", "resultadoTeste");
+        iniciar();
 
     } else {
 
-        document.getElementById("status").innerHTML =
-            "JavaScript OK ✅<br>Ponte Android NÃO encontrada ❌";
-
+        setStatus(
+            "JavaScript OK ✅<br>" +
+            "ERRO: ponte Android não encontrada.",
+            "erro"
+        );
     }
 
-}, 1000);
-
-function resultadoTeste(status, body, erro) {
-
-    document.getElementById("status").innerHTML =
-        "JavaScript OK ✅<br>" +
-        "Ponte Android OK ✅<br>" +
-        "HTTP: " + status + "<br><br>" +
-        (erro ? erro : body.substring(0, 400));
-
-}
+}, 1500);
 
 </script>
-setTimeout(function() {
 
-  if (window.AndroidApi) {
-
-    setStatus("Ponte Android OK. Conectando ao servidor...");
-    iniciar();
-
-  } else {
-
-    setStatus("ERRO: ponte Android não encontrada.", "erro");
-
-  }
-
-}, 1500);
 </body>
 </html>
