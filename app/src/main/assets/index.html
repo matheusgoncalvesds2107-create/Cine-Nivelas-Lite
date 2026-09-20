@@ -129,14 +129,11 @@ main{
     border-radius:6px;
     position:relative;
     overflow:hidden;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:14px;
     text-align:center;
-
     background:
         linear-gradient(
             145deg,
@@ -144,7 +141,6 @@ main{
             #1b1b1d 55%,
             #4d1017
         );
-
     font-size:18px;
     font-weight:bold;
 }
@@ -162,9 +158,7 @@ main{
     position:absolute;
     left:8px;
     bottom:12px;
-
     writing-mode:vertical-rl;
-
     letter-spacing:3px;
     font-size:10px;
 }
@@ -173,7 +167,6 @@ main{
     margin-top:8px;
     font-size:15px;
     font-weight:bold;
-
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -195,13 +188,10 @@ main{
 
 .categorias button{
     min-height:52px;
-
     border:0;
     border-radius:5px;
-
     background:#222;
     color:#fff;
-
     font-size:15px;
     font-weight:bold;
 }
@@ -210,7 +200,6 @@ main{
 
 .categoriaTopo{
     margin-top:30px;
-
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -236,19 +225,14 @@ main{
 
 .cardCapa{
     height:175px;
-
     border-radius:6px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:9px;
-
     text-align:center;
     font-size:14px;
     font-weight:bold;
-
     background:
         linear-gradient(
             145deg,
@@ -260,10 +244,8 @@ main{
 
 .cardNome{
     margin-top:7px;
-
     font-size:14px;
     font-weight:bold;
-
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -277,34 +259,22 @@ main{
 
 .subTopo{
     min-height:70px;
-
     background:#101011;
-
     display:flex;
     align-items:center;
-
     padding:12px 16px;
-
     border-bottom:2px solid #ef1837;
 }
 
 .voltar{
     width:44px;
     height:44px;
-
     border:0;
     border-radius:50%;
-
     background:#252525;
     color:#fff;
-
     font-size:27px;
-
     margin-right:13px;
-}
-
-.subTitulo{
-    min-width:0;
 }
 
 .subTitulo strong{
@@ -323,44 +293,28 @@ main{
 
 .ep{
     width:100%;
-
     display:flex;
     align-items:center;
-
     padding:15px;
-
     margin-bottom:10px;
-
     border:0;
     border-radius:8px;
-
     background:#202024;
     color:#fff;
-
     text-align:left;
 }
 
 .epNumero{
     width:45px;
     height:45px;
-
     flex:none;
-
     border-radius:50%;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     margin-right:13px;
-
     background:#e31326;
-
     font-weight:bold;
-}
-
-.epTexto{
-    min-width:0;
 }
 
 .epTexto strong{
@@ -380,7 +334,6 @@ main{
 #playerTela{
     display:none;
     background:#080808;
-    min-height:100%;
 }
 
 .playerArea{
@@ -413,16 +366,13 @@ video{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
-
     margin-top:17px;
 }
 
 .playerBotoes button{
     min-height:52px;
-
     border:0;
     border-radius:7px;
-
     color:white;
     font-size:14px;
     font-weight:bold;
@@ -438,15 +388,10 @@ video{
 
 .aviso{
     margin-top:17px;
-
     background:#1d1d20;
-
     border-radius:8px;
-
     padding:14px;
-
     color:#bbb;
-
     line-height:1.5;
     font-size:14px;
 }
@@ -455,7 +400,6 @@ video{
 </head>
 
 <body>
-
 
 <!-- CATÁLOGO -->
 
@@ -471,7 +415,6 @@ video{
 
 </div>
 
-
 <div class="barraBusca">
 
     <div class="buscaBox">
@@ -483,15 +426,12 @@ video{
         <button
             id="btnBusca"
             class="btnBusca">
-
             🔍
-
         </button>
 
     </div>
 
 </div>
-
 
 <main>
 
@@ -500,35 +440,23 @@ video{
     Mais Assistidos
 </div>
 
-<div
-    id="topLista"
-    class="topLista">
-</div>
-
+<div id="topLista" class="topLista"></div>
 
 <div class="divisor"></div>
 
-
 <div class="categorias">
-
     <button>Novelas</button>
     <button>Séries</button>
     <button>Programas</button>
     <button>Filmes</button>
     <button>Shows</button>
-
 </div>
-
 
 <div class="categoriaTopo">
 
-    <div class="tituloSecao"
-         style="margin:0">
-
+    <div class="tituloSecao" style="margin:0">
         <div class="linha"></div>
-
         Novelas
-
     </div>
 
     <div class="verTudo">
@@ -537,16 +465,11 @@ video{
 
 </div>
 
-
-<div
-    id="grade"
-    class="grade">
-</div>
+<div id="grade" class="grade"></div>
 
 </main>
 
 </div>
-
 
 
 <!-- EPISÓDIOS -->
@@ -558,9 +481,7 @@ video{
     <button
         id="voltarCatalogo"
         class="voltar">
-
         ‹
-
     </button>
 
     <div class="subTitulo">
@@ -577,14 +498,12 @@ video{
 
 </div>
 
-
 <div
     id="listaEpisodios"
     class="episodios">
 </div>
 
 </div>
-
 
 
 <!-- PLAYER -->
@@ -596,9 +515,7 @@ video{
     <button
         id="voltarEpisodios"
         class="voltar">
-
         ‹
-
     </button>
 
     <div class="subTitulo">
@@ -615,7 +532,6 @@ video{
 
 </div>
 
-
 <div class="playerArea">
 
     <video
@@ -623,59 +539,42 @@ video{
         controls
         playsinline
         preload="metadata">
-
     </video>
 
 </div>
 
-
 <div class="playerInfo">
 
-    <div
-        id="nomeEp"
-        class="nomeEpisodio">
-
+    <div id="nomeEp"
+         class="nomeEpisodio">
         Episódio
-
     </div>
 
-    <div
-        id="numeroEp"
-        class="numeroEpisodio">
-
+    <div id="numeroEp"
+         class="numeroEpisodio">
         Episódio 1
-
     </div>
-
 
     <div class="playerBotoes">
 
         <button
             id="pularAbertura"
             class="btnPular">
-
             ⏩ Pular abertura
-
         </button>
-
 
         <button
             id="proximoEpisodio"
             class="btnProximo">
-
             Próximo episódio ▶
-
         </button>
 
     </div>
 
-
     <div
         id="mensagemPlayer"
         class="aviso">
-
         Player NOVELASPLAY.
-
     </div>
 
 </div>
@@ -683,239 +582,155 @@ video{
 </div>
 
 
-
 <script>
-
-/*
-   Nenhuma página externa é aberta.
-
-   Quando tivermos uma URL de vídeo autorizada,
-   ela entra no campo "url" do episódio.
-*/
-
 
 var novelas = [
 
-    {
-        nome:"Quem Ama Cuida"
-    },
-
-    {
-        nome:"Meu Nome é Farah"
-    },
-
-    {
-        nome:"Longe Demais"
-    },
-
-    {
-        nome:"Carinha de Anjo"
-    },
-
-    {
-        nome:"A Usurpadora"
-    },
-
-    {
-        nome:"Colisão"
-    },
-
-    {
-        nome:"Sol da Minha Vida"
-    },
-
-    {
-        nome:"Chamas da Vida"
-    },
-
-    {
-        nome:"Essas Mulheres"
-    }
+    { nome:"Quem Ama Cuida" },
+    { nome:"Meu Nome é Farah" },
+    { nome:"Longe Demais" },
+    { nome:"Carinha de Anjo" },
+    { nome:"A Usurpadora" },
+    { nome:"Colisão" },
+    { nome:"Sol da Minha Vida" },
+    { nome:"Chamas da Vida" },
+    { nome:"Essas Mulheres" }
 
 ];
 
-
 var novelaAtual = "";
-
 var episodioAtual = 0;
-
 var episodiosAtuais = [];
 
 
+/*
+   VÍDEOS PÚBLICOS DE TESTE
+*/
 
 function criarEpisodios(nome){
 
-    var lista = [];
+    return [
 
-    /*
-       Por enquanto criamos a tela
-       com episódios sem vídeo.
+        {
+            numero:1,
+            titulo:nome+" - Episódio 1",
+            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            abertura:30
+        },
 
-       Depois substituímos pelos dados
-       autorizados da fonte.
-    */
+        {
+            numero:2,
+            titulo:nome+" - Episódio 2",
+            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+            abertura:30
+        },
 
-    for(var i=1;i<=10;i++){
+        {
+            numero:3,
+            titulo:nome+" - Episódio 3",
+            url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+            abertura:10
+        }
 
-        lista.push({
-
-            numero:i,
-
-            titulo:
-                nome +
-                " - Episódio " +
-                i,
-
-            url:"",
-
-            abertura:90
-
-        });
-
-    }
-
-    return lista;
+    ];
 }
-
 
 
 function montarTop(){
 
     var box =
-        document.getElementById(
-            "topLista"
-        );
+        document.getElementById("topLista");
 
     box.innerHTML="";
 
     var limite =
-        Math.min(
-            5,
-            novelas.length
-        );
+        Math.min(5,novelas.length);
 
     for(var i=0;i<limite;i++){
 
         var item =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         item.className="poster";
 
         item.innerHTML=
 
             '<div class="capa">'+
-
-            '<div class="numero">'+
-            (i+1)+
-            '</div>'+
-
-            '<div class="tipo">'+
-            'NOVELA'+
-            '</div>'+
-
+            '<div class="numero">'+(i+1)+'</div>'+
+            '<div class="tipo">NOVELA</div>'+
             novelas[i].nome+
-
             '</div>'+
-
             '<div class="nomePoster">'+
             novelas[i].nome+
             '</div>';
-
 
         item.setAttribute(
             "data-nome",
             novelas[i].nome
         );
 
-
         item.onclick=function(){
 
             abrirNovela(
-                this.getAttribute(
-                    "data-nome"
-                )
+                this.getAttribute("data-nome")
             );
 
         };
 
-
         box.appendChild(item);
-
     }
-
 }
-
 
 
 function montarGrade(lista){
 
     var box =
-        document.getElementById(
-            "grade"
-        );
+        document.getElementById("grade");
 
     box.innerHTML="";
-
 
     for(var i=0;i<lista.length;i++){
 
         var card =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         card.className="card";
-
 
         card.innerHTML=
 
             '<div class="cardCapa">'+
             lista[i].nome+
             '</div>'+
-
             '<div class="cardNome">'+
             lista[i].nome+
             '</div>';
-
 
         card.setAttribute(
             "data-nome",
             lista[i].nome
         );
 
-
         card.onclick=function(){
 
             abrirNovela(
-                this.getAttribute(
-                    "data-nome"
-                )
+                this.getAttribute("data-nome")
             );
 
         };
 
-
         box.appendChild(card);
-
     }
-
 }
-
 
 
 function pesquisar(){
 
     var texto =
-        document
-        .getElementById("busca")
+        document.getElementById("busca")
         .value
         .toLowerCase();
 
-
     var resultado=[];
-
 
     for(var i=0;i<novelas.length;i++){
 
@@ -934,13 +749,8 @@ function pesquisar(){
 
     }
 
-
-    montarGrade(
-        resultado
-    );
-
+    montarGrade(resultado);
 }
-
 
 
 function abrirNovela(nome){
@@ -950,39 +760,24 @@ function abrirNovela(nome){
     episodiosAtuais=
         criarEpisodios(nome);
 
-
     document
-    .getElementById(
-        "catalogoTela"
-    )
+    .getElementById("catalogoTela")
     .style.display="none";
 
-
     document
-    .getElementById(
-        "playerTela"
-    )
+    .getElementById("playerTela")
     .style.display="none";
 
-
     document
-    .getElementById(
-        "novelaTela"
-    )
+    .getElementById("novelaTela")
     .style.display="block";
 
-
     document
-    .getElementById(
-        "nomeNovela"
-    )
+    .getElementById("nomeNovela")
     .innerHTML=nome;
 
-
     montarEpisodios();
-
 }
-
 
 
 function montarEpisodios(){
@@ -992,9 +787,7 @@ function montarEpisodios(){
             "listaEpisodios"
         );
 
-
     box.innerHTML="";
-
 
     for(
         var i=0;
@@ -1005,15 +798,10 @@ function montarEpisodios(){
         var ep =
             episodiosAtuais[i];
 
-
         var botao =
-            document.createElement(
-                "button"
-            );
-
+            document.createElement("button");
 
         botao.className="ep";
-
 
         botao.innerHTML=
 
@@ -1034,12 +822,10 @@ function montarEpisodios(){
 
             '</div>';
 
-
         botao.setAttribute(
             "data-index",
             i
         );
-
 
         botao.onclick=function(){
 
@@ -1053,218 +839,141 @@ function montarEpisodios(){
 
         };
 
-
-        box.appendChild(
-            botao
-        );
-
+        box.appendChild(botao);
     }
-
 }
-
 
 
 function abrirEpisodio(indice){
 
     episodioAtual=indice;
 
-
     var ep =
-        episodiosAtuais[
-            indice
-        ];
-
+        episodiosAtuais[indice];
 
     document
-    .getElementById(
-        "novelaTela"
-    )
+    .getElementById("novelaTela")
     .style.display="none";
 
-
     document
-    .getElementById(
-        "playerTela"
-    )
+    .getElementById("playerTela")
     .style.display="block";
 
+    document
+    .getElementById("tituloPlayer")
+    .innerHTML=novelaAtual;
 
     document
-    .getElementById(
-        "tituloPlayer"
-    )
-    .innerHTML=
-        novelaAtual;
-
+    .getElementById("nomeEp")
+    .innerHTML=ep.titulo;
 
     document
-    .getElementById(
-        "nomeEp"
-    )
-    .innerHTML=
-        ep.titulo;
-
-
-    document
-    .getElementById(
-        "numeroEp"
-    )
+    .getElementById("numeroEp")
     .innerHTML=
         "Episódio "+
         ep.numero;
 
-
     var video =
-        document.getElementById(
-            "video"
-        );
-
+        document.getElementById("video");
 
     video.pause();
 
-    video.removeAttribute(
-        "src"
-    );
+    video.src=ep.url;
 
     video.load();
 
-
-    if(ep.url){
-
-        video.src=
-            ep.url;
-
-        video.load();
-
+    var tentativa =
         video.play();
 
+    if(
+        tentativa &&
+        tentativa.catch
+    ){
 
-        document
-        .getElementById(
-            "mensagemPlayer"
-        )
-        .innerHTML=
-            "Reproduzindo no player NOVELASPLAY.";
+        tentativa.catch(function(){
 
-    }else{
+            document
+            .getElementById(
+                "mensagemPlayer"
+            )
+            .innerHTML=
+                "Toque no botão ▶ do player para iniciar o vídeo.";
 
-        document
-        .getElementById(
-            "mensagemPlayer"
-        )
-        .innerHTML=
-            "Tela do player funcionando. "+
-            "Ainda falta adicionar a fonte "+
-            "de vídeo autorizada deste episódio.";
+        });
 
     }
 
+    document
+    .getElementById(
+        "mensagemPlayer"
+    )
+    .innerHTML=
+        "Vídeo de teste carregado no player NOVELASPLAY.";
 }
-
 
 
 function voltarCatalogo(){
 
     document
-    .getElementById(
-        "novelaTela"
-    )
+    .getElementById("novelaTela")
     .style.display="none";
 
-
     document
-    .getElementById(
-        "catalogoTela"
-    )
+    .getElementById("catalogoTela")
     .style.display="block";
-
 }
-
 
 
 function voltarEpisodios(){
 
     var video =
-        document.getElementById(
-            "video"
-        );
-
+        document.getElementById("video");
 
     video.pause();
 
-
     document
-    .getElementById(
-        "playerTela"
-    )
+    .getElementById("playerTela")
     .style.display="none";
 
-
     document
-    .getElementById(
-        "novelaTela"
-    )
+    .getElementById("novelaTela")
     .style.display="block";
-
 }
-
 
 
 function pularAbertura(){
 
-    if(
-        episodiosAtuais.length===0
-    ){
-        return;
-    }
-
-
     var video =
-        document.getElementById(
-            "video"
-        );
-
+        document.getElementById("video");
 
     var ep =
         episodiosAtuais[
             episodioAtual
         ];
 
+    try{
 
-    if(!ep.url){
+        video.currentTime=
+            ep.abertura || 30;
+
+        video.play();
 
         document
         .getElementById(
             "mensagemPlayer"
         )
         .innerHTML=
-            "O botão está pronto. "+
-            "Quando houver vídeo, ele pula "+
-            "direto para o fim da abertura.";
-
-        return;
-
-    }
-
-
-    try{
-
-        video.currentTime=
-            ep.abertura || 90;
-
-        video.play();
+            "Abertura pulada.";
 
     }catch(e){}
 
 }
 
 
-
 function proximo(){
 
     var novoIndice =
         episodioAtual+1;
-
 
     if(
         novoIndice<
@@ -1282,84 +991,64 @@ function proximo(){
             "mensagemPlayer"
         )
         .innerHTML=
-            "Este é o último episódio disponível.";
+            "Este é o último episódio.";
 
     }
 
 }
 
 
-
 document
-.getElementById(
-    "busca"
-)
+.getElementById("busca")
 .addEventListener(
     "keyup",
     pesquisar
 );
 
-
-
 document
-.getElementById(
-    "btnBusca"
-)
+.getElementById("btnBusca")
 .addEventListener(
     "click",
     pesquisar
 );
 
-
-
 document
-.getElementById(
-    "voltarCatalogo"
-)
+.getElementById("voltarCatalogo")
 .addEventListener(
     "click",
     voltarCatalogo
 );
 
-
-
 document
-.getElementById(
-    "voltarEpisodios"
-)
+.getElementById("voltarEpisodios")
 .addEventListener(
     "click",
     voltarEpisodios
 );
 
-
-
 document
-.getElementById(
-    "pularAbertura"
-)
+.getElementById("pularAbertura")
 .addEventListener(
     "click",
     pularAbertura
 );
 
-
-
 document
-.getElementById(
-    "proximoEpisodio"
-)
+.getElementById("proximoEpisodio")
 .addEventListener(
     "click",
     proximo
 );
 
 
+/*
+   TERMINOU O VÍDEO:
+   PASSA AUTOMATICAMENTE
+   PARA O PRÓXIMO
+*/
 
 document
-.getElementById(
-    "video"
-)
+.getElementById("video")
 .addEventListener(
     "ended",
     function(){
@@ -1370,12 +1059,9 @@ document
 );
 
 
-
 montarTop();
 
-montarGrade(
-    novelas
-);
+montarGrade(novelas);
 
 </script>
 
