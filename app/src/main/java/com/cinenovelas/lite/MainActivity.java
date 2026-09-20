@@ -3,30 +3,43 @@ package com.cinenovelas.lite;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.json.JSONArray;
 
 public class MainActivity extends Activity {
 
     private WebView webView;
+    private FrameLayout root;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        webView = new WebView(this);
-        setContentView(webView);
+        root = new FrameLayout(this);
 
-        WebSettings settings = webView.getSettings();
+        webView = new WebView(this);
+
+        root.addView(
+            webView,
+            new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        );
+
+        setContentView(root);
+
+        WebSettings settings =
+            webView.getSettings();
 
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -35,7 +48,10 @@ public class MainActivity extends Activity {
         settings.setLoadsImagesAutomatically(true);
         settings.setMediaPlaybackRequiresUserGesture(false);
 
-        if (android.os.Build.VERSION.SDK_INT >= 21) {
+        if (
+            android.os.Build.VERSION.SDK_INT >= 21
+        ) {
+
             settings.setMixedContentMode(
                 WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             );
@@ -49,26 +65,24 @@ public class MainActivity extends Activity {
             new WebViewClient()
         );
 
+
         /*
-         * PLAYER NATIVO
+         * PLAYER EXOPLAYER
          */
         webView.addJavascriptInterface(
             new PlayerBridge(),
             "AndroidPlayer"
         );
 
+
         /*
-         * LEITURA DAS PÁGINAS PÚBLICAS
+         * WEBVIEW INVISÍVEL
          */
         webView.addJavascriptInterface(
-            new SiteBridge(),
-            "AndroidSite"
+            new RenderBridge(),
+            "AndroidRendered"
         );
 
-        webView.setLayerType(
-            WebView.LAYER_TYPE_HARDWARE,
-            null
-        );
 
         webView.loadUrl(
             "file:///android_asset/index.html"
@@ -76,8 +90,11 @@ public class MainActivity extends Activity {
     }
 
 
+
     /*
+     * ===============================
      * PLAYER
+     * ===============================
      */
 
     public class PlayerBridge {
@@ -138,223 +155,354 @@ public class MainActivity extends Activity {
     }
 
 
+
     /*
-     * SITE
+     * ===============================
+     * PÁGINA RENDERIZADA
+     * ===============================
      */
 
-    public class SiteBridge {
+    public class RenderBridge {
 
         @JavascriptInterface
-        public void get(
+        public void findAssistir(
             final String endereco,
             final String callback
         ) {
 
-            new Thread(
+            runOnUiThread(
                 new Runnable() {
 
                     @Override
                     public void run() {
 
-                        HttpURLConnection conexao = null;
-
-                        try {
-
-                            URL url =
-                                new URL(
-                                    endereco
-                                );
-
-                            /*
-                             * Nosso app só lê páginas HTTPS
-                             * do domínio escolhido.
-                             */
-                            String protocolo =
-                                url.getProtocol();
-
-                            String host =
-                                url.getHost();
-
-                            if (
-                                !"https".equalsIgnoreCase(
-                                    protocolo
-                                )
-                            ) {
-
-                                enviarSite(
-                                    callback,
-                                    0,
-                                    "",
-                                    "Somente HTTPS permitido."
-                                );
-
-                                return;
-                            }
-
-                            boolean hostPermitido =
-                                "noveflix.lol".equalsIgnoreCase(
-                                    host
-                                )
-                                ||
-                                "www.noveflix.lol".equalsIgnoreCase(
-                                    host
-                                );
-
-                            if (!hostPermitido) {
-
-                                enviarSite(
-                                    callback,
-                                    0,
-                                    "",
-                                    "Domínio não permitido."
-                                );
-
-                                return;
-                            }
-
-                            conexao =
-                                (HttpURLConnection)
-                                url.openConnection();
-
-                            conexao.setRequestMethod(
-                                "GET"
-                            );
-
-                            conexao.setConnectTimeout(
-                                12000
-                            );
-
-                            conexao.setReadTimeout(
-                                15000
-                            );
-
-                            conexao.setInstanceFollowRedirects(
-                                true
-                            );
-
-                            conexao.setUseCaches(
-                                false
-                            );
-
-                            conexao.setRequestProperty(
-                                "User-Agent",
-                                "Mozilla/5.0 (Linux; Android 6.0.1) AppleWebKit/537.36 Chrome/55 Mobile Safari/537.36"
-                            );
-
-                            conexao.setRequestProperty(
-                                "Accept",
-                                "text/html,application/xhtml+xml"
-                            );
-
-                            conexao.setRequestProperty(
-                                "Accept-Language",
-                                "pt-BR,pt;q=0.9"
-                            );
-
-                            int status =
-                                conexao.getResponseCode();
-
-                            InputStream stream;
-
-                            if (
-                                status >= 200 &&
-                                status < 400
-                            ) {
-
-                                stream =
-                                    conexao.getInputStream();
-
-                            } else {
-
-                                stream =
-                                    conexao.getErrorStream();
-                            }
-
-                            String html =
-                                ler(
-                                    stream
-                                );
-
-                            enviarSite(
-                                callback,
-                                status,
-                                html,
-                                ""
-                            );
-
-                        } catch (Exception e) {
-
-                            enviarSite(
-                                callback,
-                                0,
-                                "",
-                                e.getClass()
-                                    .getSimpleName()
-                                    + ": "
-                                    + e.getMessage()
-                            );
-
-                        } finally {
-
-                            if (
-                                conexao != null
-                            ) {
-
-                                conexao.disconnect();
-                            }
-                        }
+                        abrirRenderizador(
+                            endereco,
+                            callback
+                        );
                     }
                 }
-            ).start();
+            );
         }
     }
 
 
-    private String ler(
-        InputStream stream
-    ) throws Exception {
 
-        if (stream == null) {
-            return "";
-        }
+    private void abrirRenderizador(
+        final String endereco,
+        final String callback
+    ) {
 
-        BufferedReader reader =
-            new BufferedReader(
-                new InputStreamReader(
-                    stream,
-                    "UTF-8"
-                )
-            );
-
-        StringBuilder texto =
-            new StringBuilder();
-
-        String linha;
-
-        while (
-            (linha = reader.readLine())
-            != null
+        if (
+            endereco == null ||
+            !endereco.startsWith(
+                "https://noveflix.lol/"
+            )
         ) {
 
-            texto.append(
-                linha
+            enviarRender(
+                callback,
+                "",
+                "URL não permitida."
             );
 
-            texto.append(
-                "\n"
-            );
+            return;
         }
 
-        reader.close();
 
-        return texto.toString();
+        final WebView oculto =
+            new WebView(this);
+
+
+        /*
+         * 1 x 1 pixel e invisível.
+         */
+        FrameLayout.LayoutParams params =
+            new FrameLayout.LayoutParams(
+                1,
+                1
+            );
+
+        root.addView(
+            oculto,
+            params
+        );
+
+        oculto.setAlpha(
+            0.01f
+        );
+
+
+        WebSettings s =
+            oculto.getSettings();
+
+        s.setJavaScriptEnabled(true);
+        s.setDomStorageEnabled(true);
+        s.setLoadsImagesAutomatically(false);
+
+        s.setMediaPlaybackRequiresUserGesture(
+            true
+        );
+
+
+        oculto.setWebChromeClient(
+            new WebChromeClient()
+        );
+
+
+        oculto.setWebViewClient(
+
+            new WebViewClient() {
+
+                @Override
+                public boolean shouldOverrideUrlLoading(
+                    WebView view,
+                    String url
+                ) {
+
+                    return !permitida(
+                        url
+                    );
+                }
+
+
+                @Override
+                public boolean shouldOverrideUrlLoading(
+                    WebView view,
+                    WebResourceRequest request
+                ) {
+
+                    String url =
+                        request
+                        .getUrl()
+                        .toString();
+
+                    return !permitida(
+                        url
+                    );
+                }
+
+
+                @Override
+                public void onPageFinished(
+                    final WebView view,
+                    String url
+                ) {
+
+                    super.onPageFinished(
+                        view,
+                        url
+                    );
+
+
+                    /*
+                     * Dá um tempinho para o JS
+                     * da página terminar.
+                     */
+                    new Handler()
+                        .postDelayed(
+
+                            new Runnable() {
+
+                                @Override
+                                public void run() {
+
+                                    procurarAssistir(
+                                        view,
+                                        callback
+                                    );
+                                }
+
+                            },
+
+                            2500
+                        );
+                }
+            }
+        );
+
+
+        oculto.loadUrl(
+            endereco
+        );
     }
 
 
-    private void enviarSite(
+
+    private void procurarAssistir(
+        final WebView oculto,
+        final String callback
+    ) {
+
+        /*
+         * Só procura destinos públicos
+         * relacionados ao botão ASSISTIR.
+         *
+         * Não procura mídia, tokens,
+         * m3u8 ou URLs internas de player.
+         */
+
+        String js =
+            "(function(){"
+            +
+            "var els=document.querySelectorAll("
+            +
+            "'a,button,[role=\"button\"],[data-href],[data-url]'"
+            +
+            ");"
+            +
+            "for(var i=0;i<els.length;i++){"
+            +
+            "var e=els[i];"
+            +
+            "var t=(e.innerText||e.textContent||'')"
+            +
+            ".replace(/\\s+/g,' ')"
+            +
+            ".trim()"
+            +
+            ".toLowerCase();"
+            +
+            "if(t.indexOf('assistir')>=0){"
+            +
+            "var u="
+            +
+            "e.href||"
+            +
+            "e.getAttribute('href')||"
+            +
+            "e.getAttribute('data-href')||"
+            +
+            "e.getAttribute('data-url')||"
+            +
+            "e.getAttribute('formaction')||"
+            +
+            "'';"
+            +
+            "if(u){return u;}"
+            +
+            "}"
+            +
+            "}"
+            +
+            "return '';"
+            +
+            "})()";
+
+
+        oculto.evaluateJavascript(
+
+            js,
+
+            value -> {
+
+                String resultado =
+                    javascriptString(
+                        value
+                    );
+
+
+                if (
+                    resultado != null &&
+                    permitida(
+                        resultado
+                    )
+                ) {
+
+                    enviarRender(
+                        callback,
+                        resultado,
+                        ""
+                    );
+
+                } else {
+
+                    enviarRender(
+                        callback,
+                        "",
+                        "Nenhuma página pública de ASSISTIR encontrada após renderizar."
+                    );
+                }
+
+
+                root.removeView(
+                    oculto
+                );
+
+                oculto.destroy();
+            }
+        );
+    }
+
+
+
+    /*
+     * SOMENTE O PRÓPRIO SITE
+     */
+
+    private boolean permitida(
+        String url
+    ) {
+
+        if (url == null) {
+            return false;
+        }
+
+        return
+            url.startsWith(
+                "https://noveflix.lol/"
+            )
+            ||
+            url.startsWith(
+                "https://www.noveflix.lol/"
+            );
+    }
+
+
+
+    /*
+     * CONVERTE O RESULTADO DO
+     * evaluateJavascript
+     */
+
+    private String javascriptString(
+        String valor
+    ) {
+
+        try {
+
+            if (
+                valor == null ||
+                valor.equals("null")
+            ) {
+
+                return "";
+            }
+
+            JSONArray a =
+                new JSONArray(
+                    "[" + valor + "]"
+                );
+
+            return a.getString(
+                0
+            );
+
+        } catch (Exception e) {
+
+            return "";
+        }
+    }
+
+
+
+    /*
+     * DEVOLVE RESULTADO AO INDEX.HTML
+     */
+
+    private void enviarRender(
         final String callback,
-        final int status,
-        final String html,
+        final String url,
         final String erro
     ) {
 
@@ -364,23 +512,16 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
 
-                    String javascript =
-
+                    String js =
                         callback
-                        + "("
-                        + status
-                        + ",'"
-                        + escapar(
-                            html
-                        )
+                        + "('"
+                        + escapar(url)
                         + "','"
-                        + escapar(
-                            erro
-                        )
+                        + escapar(erro)
                         + "')";
 
                     webView.evaluateJavascript(
-                        javascript,
+                        js,
                         null
                     );
                 }
@@ -389,11 +530,15 @@ public class MainActivity extends Activity {
     }
 
 
+
     private String escapar(
         String texto
     ) {
 
-        if (texto == null) {
+        if (
+            texto == null
+        ) {
+
             return "";
         }
 
@@ -417,18 +562,9 @@ public class MainActivity extends Activity {
             .replace(
                 "\n",
                 "\\n"
-            )
-
-            .replace(
-                "\u2028",
-                ""
-            )
-
-            .replace(
-                "\u2029",
-                ""
             );
     }
+
 
 
     @Override
