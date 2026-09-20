@@ -2,8 +2,11 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
-      content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0">
 
 <title>NovelasPlay</title>
 
@@ -89,6 +92,23 @@ main{
     padding:17px;
 }
 
+.status{
+    background:#1d1d20;
+    border-radius:8px;
+    padding:13px;
+    margin-bottom:16px;
+    color:#bbb;
+    line-height:1.4;
+}
+
+.status.ok{
+    color:#8cff9b;
+}
+
+.status.erro{
+    color:#ff7e7e;
+}
+
 .tituloSecao{
     display:flex;
     align-items:center;
@@ -104,119 +124,21 @@ main{
     margin-right:12px;
 }
 
-.topLista{
-    display:flex;
-    gap:12px;
-    overflow-x:auto;
-    padding-bottom:12px;
-}
-
-.poster{
-    min-width:140px;
-    width:140px;
-}
-
-.capa{
-    height:200px;
-    border-radius:6px;
-    position:relative;
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:14px;
-    text-align:center;
-    background:
-        linear-gradient(
-            145deg,
-            #901d29,
-            #1b1b1d 55%,
-            #4d1017
-        );
-    font-size:18px;
-    font-weight:bold;
-}
-
-.numero{
-    position:absolute;
-    top:-8px;
-    left:4px;
-    font-size:48px;
-    font-weight:bold;
-    text-shadow:2px 2px 5px #000;
-}
-
-.tipo{
-    position:absolute;
-    left:8px;
-    bottom:12px;
-    writing-mode:vertical-rl;
-    letter-spacing:3px;
-    font-size:10px;
-}
-
-.nomePoster{
-    margin-top:8px;
-    font-size:15px;
-    font-weight:bold;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.divisor{
-    height:1px;
-    background:#292929;
-    margin:17px 0;
-}
-
-.categorias{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
-}
-
-.categorias button{
-    min-height:52px;
-    border:0;
-    border-radius:5px;
-    background:#222;
-    color:#fff;
-    font-size:15px;
-    font-weight:bold;
-}
-
-.categoriaTopo{
-    margin-top:30px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.verTudo{
-    background:#dc1729;
-    padding:8px 11px;
-    border-radius:4px;
-    font-size:12px;
-}
-
 .grade{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:11px;
-    margin-top:16px;
+}
+
+.card{
+    min-width:0;
 }
 
 .cardCapa{
     height:175px;
     border-radius:6px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:9px;
-    text-align:center;
-    font-size:14px;
-    font-weight:bold;
+    overflow:hidden;
+    position:relative;
     background:
         linear-gradient(
             145deg,
@@ -224,6 +146,23 @@ main{
             #18181b 55%,
             #a51c2f
         );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.cardCapa img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.semImagem{
+    padding:9px;
+    text-align:center;
+    font-weight:bold;
+    font-size:14px;
 }
 
 .cardNome{
@@ -235,7 +174,14 @@ main{
     text-overflow:ellipsis;
 }
 
-/* EPISÓDIOS */
+.cardAno{
+    margin-top:3px;
+    font-size:12px;
+    color:#999;
+}
+
+
+/* TELA DA NOVELA */
 
 #novelaTela{
     display:none;
@@ -271,62 +217,36 @@ main{
     font-size:13px;
 }
 
-.episodios{
+.detalhes{
+    padding:18px;
+}
+
+.detalheBox{
+    background:#1d1d20;
+    border-radius:9px;
     padding:16px;
 }
 
-.ep{
-    width:100%;
-    display:flex;
-    align-items:center;
-    padding:15px;
-    margin-bottom:10px;
-    border:0;
-    border-radius:8px;
-    background:#202024;
-    color:#fff;
-    text-align:left;
+.detalheBox h2{
+    margin:0 0 8px;
+    font-size:22px;
 }
 
-.epNumero{
-    width:45px;
-    height:45px;
-    flex:none;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-right:13px;
-    background:#e31326;
-    font-weight:bold;
-}
-
-.epTexto strong{
-    display:block;
-    font-size:16px;
-}
-
-.epTexto span{
-    display:block;
-    margin-top:4px;
+.detalheAno{
     color:#aaa;
-    font-size:13px;
+    margin-bottom:15px;
 }
 
-.aviso{
-    margin:16px;
-    padding:14px;
-    border-radius:8px;
-    background:#1d1d20;
+.info{
     color:#bbb;
     line-height:1.5;
-    font-size:14px;
 }
 
 </style>
 </head>
 
 <body>
+
 
 <!-- CATÁLOGO -->
 
@@ -341,6 +261,7 @@ main{
     </div>
 
 </div>
+
 
 <div class="barraBusca">
 
@@ -360,45 +281,26 @@ main{
 
 </div>
 
+
 <main>
 
-<div class="tituloSecao">
-    <div class="linha"></div>
-    Mais Assistidos
-</div>
-
 <div
-    id="topLista"
-    class="topLista">
-</div>
+    id="status"
+    class="status">
 
-<div class="divisor"></div>
-
-<div class="categorias">
-
-    <button>Novelas</button>
-    <button>Séries</button>
-    <button>Programas</button>
-    <button>Filmes</button>
-    <button>Shows</button>
+    Carregando catálogo...
 
 </div>
 
-<div class="categoriaTopo">
 
-    <div class="tituloSecao" style="margin:0">
+<div class="tituloSecao">
 
-        <div class="linha"></div>
+    <div class="linha"></div>
 
-        Novelas
-
-    </div>
-
-    <div class="verTudo">
-        VER TUDO
-    </div>
+    Novelas
 
 </div>
+
 
 <div
     id="grade"
@@ -410,7 +312,8 @@ main{
 </div>
 
 
-<!-- EPISÓDIOS -->
+
+<!-- DETALHES DA NOVELA -->
 
 <div id="novelaTela">
 
@@ -424,28 +327,41 @@ main{
 
     <div class="subTitulo">
 
-        <strong id="nomeNovela">
+        <strong id="tituloTopo">
             Novela
         </strong>
 
         <span>
-            Episódios
+            NovelasPlay
         </span>
 
     </div>
 
 </div>
 
-<div
-    id="listaEpisodios"
-    class="episodios">
-</div>
 
-<div
-    id="aviso"
-    class="aviso">
+<div class="detalhes">
 
-    Toque em um episódio para abrir no player do NovelasPlay.
+    <div class="detalheBox">
+
+        <h2 id="tituloNovela">
+            Novela
+        </h2>
+
+        <div
+            id="anoNovela"
+            class="detalheAno">
+        </div>
+
+        <div
+            id="infoNovela"
+            class="info">
+
+            Carregando página...
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -454,155 +370,285 @@ main{
 
 <script>
 
-/* NOVELAS */
+var URL_CATALOGO =
+    "https://noveflix.lol/categoria/novelas/";
 
-var novelas = [
+var novelas = [];
 
-    {nome:"Quem Ama Cuida"},
-    {nome:"Meu Nome é Farah"},
-    {nome:"Longe Demais"},
-    {nome:"Carinha de Anjo"},
-    {nome:"A Usurpadora"},
-    {nome:"Colisão"},
-    {nome:"Sol da Minha Vida"},
-    {nome:"Chamas da Vida"},
-    {nome:"Essas Mulheres"}
-
-];
-
-var novelaAtual = "";
-
-var episodiosAtuais = [];
+var novelasFiltradas = [];
 
 
 /*
-   3 VÍDEOS PÚBLICOS DE TESTE.
+ * COMEÇA A BUSCA
+ */
 
-   abertura está em MILISSEGUNDOS.
-*/
+function iniciar(){
 
-function criarEpisodios(nome){
+    if(
+        typeof AndroidSite ===
+        "undefined"
+    ){
 
-    return [
+        mostrarStatus(
+            "ERRO: ponte AndroidSite não encontrada.",
+            "erro"
+        );
 
-        {
-            numero:1,
+        return;
+    }
 
-            titulo:
-                nome+
-                " - Episódio 1",
+    mostrarStatus(
+        "Buscando novelas no site..."
+    );
 
-            url:
-                "https://www.w3schools.com/html/mov_bbb.mp4",
-
-            abertura:3000
-        },
-
-        {
-            numero:2,
-
-            titulo:
-                nome+
-                " - Episódio 2",
-
-            url:
-                "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-
-            abertura:5000
-        },
-
-        {
-            numero:3,
-
-            titulo:
-                nome+
-                " - Episódio 3",
-
-            url:
-                "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-
-            abertura:5000
-        }
-
-    ];
+    AndroidSite.get(
+        URL_CATALOGO,
+        "receberCatalogo"
+    );
 }
 
 
-/* TOP */
+/*
+ * RECEBE HTML DO CATÁLOGO
+ */
 
-function montarTop(){
+function receberCatalogo(
+    status,
+    html,
+    erro
+){
 
-    var box =
-        document.getElementById(
-            "topLista"
+    if(erro){
+
+        mostrarStatus(
+            erro,
+            "erro"
         );
 
-    box.innerHTML="";
+        return;
+    }
 
-    var limite =
-        Math.min(
-            5,
-            novelas.length
+    if(
+        status < 200 ||
+        status >= 400
+    ){
+
+        mostrarStatus(
+            "Servidor respondeu HTTP "
+            + status,
+            "erro"
         );
+
+        return;
+    }
+
+    novelas =
+        extrairNovelas(
+            html
+        );
+
+    novelasFiltradas =
+        novelas.slice(0);
+
+    if(
+        novelas.length === 0
+    ){
+
+        mostrarStatus(
+            "A página carregou, mas não consegui encontrar as novelas no HTML.",
+            "erro"
+        );
+
+        return;
+    }
+
+    mostrarStatus(
+        novelas.length +
+        " novelas encontradas.",
+        "ok"
+    );
+
+    montarGrade(
+        novelas
+    );
+}
+
+
+/*
+ * EXTRAI OS CARDS DA PÁGINA
+ */
+
+function extrairNovelas(html){
+
+    var resultado = [];
+
+    var encontrados = {};
+
+    var parser =
+        new DOMParser();
+
+    var doc =
+        parser.parseFromString(
+            html,
+            "text/html"
+        );
+
+    var links =
+        doc.querySelectorAll(
+            'a[href]'
+        );
+
 
     for(
         var i=0;
-        i<limite;
+        i<links.length;
         i++
     ){
 
-        var item =
-            document.createElement(
-                "div"
+        var link =
+            links[i];
+
+        var href =
+            link.getAttribute(
+                "href"
+            ) || "";
+
+        /*
+         * Páginas individuais do catálogo.
+         */
+        if(
+            href.indexOf(
+                "noveflix.lol/assista/"
+            ) === -1
+        ){
+            continue;
+        }
+
+        if(
+            encontrados[href]
+        ){
+            continue;
+        }
+
+        var nome =
+            limparTexto(
+                link.textContent
             );
 
-        item.className =
-            "poster";
+        var imagem =
+            link.querySelector(
+                "img"
+            );
 
-        item.innerHTML =
+        if(
+            !nome &&
+            imagem
+        ){
 
-            '<div class="capa">'+
+            nome =
+                imagem.getAttribute(
+                    "alt"
+                ) || "";
+        }
 
-            '<div class="numero">'+
-            (i+1)+
-            '</div>'+
+        nome =
+            limparTexto(
+                nome
+            );
 
-            '<div class="tipo">'+
-            'NOVELA'+
-            '</div>'+
+        if(!nome){
+            continue;
+        }
 
-            novelas[i].nome+
+        /*
+         * Procura dados perto do link.
+         */
+        var bloco =
+            link.parentNode;
 
-            '</div>'+
+        var textoBloco = "";
 
-            '<div class="nomePoster">'+
-            novelas[i].nome+
-            '</div>';
+        if(bloco){
 
-        item.setAttribute(
-            "data-nome",
-            novelas[i].nome
-        );
-
-        item.onclick =
-            function(){
-
-                abrirNovela(
-                    this.getAttribute(
-                        "data-nome"
-                    )
+            textoBloco =
+                limparTexto(
+                    bloco.textContent
                 );
+        }
 
-            };
+        var ano = "";
 
-        box.appendChild(
-            item
-        );
+        var matchAno =
+            textoBloco.match(
+                /\b(19|20)\d{2}\b/
+            );
+
+        if(matchAno){
+            ano =
+                matchAno[0];
+        }
+
+        var capa = "";
+
+        if(imagem){
+
+            capa =
+                imagem.getAttribute(
+                    "data-src"
+                )
+                ||
+                imagem.getAttribute(
+                    "data-lazy-src"
+                )
+                ||
+                imagem.getAttribute(
+                    "src"
+                )
+                ||
+                "";
+        }
+
+        encontrados[href] =
+            true;
+
+        resultado.push({
+
+            nome:nome,
+
+            ano:ano,
+
+            url:href,
+
+            capa:capa
+
+        });
     }
+
+    return resultado;
 }
 
 
-/* GRADE */
+function limparTexto(texto){
+
+    if(!texto){
+        return "";
+    }
+
+    return texto
+        .replace(
+            /\s+/g,
+            " "
+        )
+        .replace(
+            /^\s+|\s+$/g,
+            ""
+        );
+}
+
+
+/*
+ * MONTA CATÁLOGO
+ */
 
 function montarGrade(lista){
 
@@ -611,13 +657,16 @@ function montarGrade(lista){
             "grade"
         );
 
-    box.innerHTML="";
+    box.innerHTML = "";
 
     for(
         var i=0;
         i<lista.length;
         i++
     ){
+
+        var novela =
+            lista[i];
 
         var card =
             document.createElement(
@@ -627,31 +676,76 @@ function montarGrade(lista){
         card.className =
             "card";
 
+
+        var capaHtml = "";
+
+        if(
+            novela.capa &&
+            novela.capa.indexOf(
+                "http"
+            ) === 0
+        ){
+
+            capaHtml =
+                '<img src="' +
+                escaparHtml(
+                    novela.capa
+                ) +
+                '" alt="">';
+
+        }else{
+
+            capaHtml =
+                '<div class="semImagem">' +
+                escaparHtml(
+                    novela.nome
+                ) +
+                '</div>';
+        }
+
+
         card.innerHTML =
 
-            '<div class="cardCapa">'+
-            lista[i].nome+
-            '</div>'+
+            '<div class="cardCapa">' +
+            capaHtml +
+            '</div>' +
 
-            '<div class="cardNome">'+
-            lista[i].nome+
+            '<div class="cardNome">' +
+            escaparHtml(
+                novela.nome
+            ) +
+            '</div>' +
+
+            '<div class="cardAno">' +
+            escaparHtml(
+                novela.ano
+            ) +
             '</div>';
 
+
         card.setAttribute(
-            "data-nome",
-            lista[i].nome
+            "data-index",
+            i
         );
+
 
         card.onclick =
             function(){
 
-                abrirNovela(
-                    this.getAttribute(
-                        "data-nome"
-                    )
-                );
+                var indice =
+                    parseInt(
+                        this.getAttribute(
+                            "data-index"
+                        )
+                    );
 
+                abrirNovela(
+                    novelasFiltradas[
+                        indice
+                    ]
+                );
             };
+
 
         box.appendChild(
             card
@@ -660,11 +754,13 @@ function montarGrade(lista){
 }
 
 
-/* BUSCA */
+/*
+ * BUSCA LOCAL
+ */
 
 function pesquisar(){
 
-    var texto =
+    var termo =
         document
         .getElementById(
             "busca"
@@ -672,7 +768,9 @@ function pesquisar(){
         .value
         .toLowerCase();
 
-    var resultado = [];
+
+    novelasFiltradas = [];
+
 
     for(
         var i=0;
@@ -684,32 +782,30 @@ function pesquisar(){
             novelas[i]
             .nome
             .toLowerCase()
-            .indexOf(texto) >= 0
+            .indexOf(
+                termo
+            ) >= 0
         ){
 
-            resultado.push(
+            novelasFiltradas.push(
                 novelas[i]
             );
         }
     }
 
+
     montarGrade(
-        resultado
+        novelasFiltradas
     );
 }
 
 
-/* ABRE NOVELA */
+/*
+ * ABRE PÁGINA EM SEGUNDO PLANO
+ * NÃO ABRE O SITE NA TELA
+ */
 
-function abrirNovela(nome){
-
-    novelaAtual =
-        nome;
-
-    episodiosAtuais =
-        criarEpisodios(
-            nome
-        );
+function abrirNovela(novela){
 
     document
     .getElementById(
@@ -718,6 +814,7 @@ function abrirNovela(nome){
     .style.display =
         "none";
 
+
     document
     .getElementById(
         "novelaTela"
@@ -725,176 +822,140 @@ function abrirNovela(nome){
     .style.display =
         "block";
 
-    document
-    .getElementById(
-        "nomeNovela"
-    )
-    .innerHTML =
-        nome;
 
     document
     .getElementById(
-        "aviso"
+        "tituloTopo"
     )
     .innerHTML =
-        "Toque em um episódio para abrir no player do NovelasPlay.";
-
-    montarEpisodios();
-}
-
-
-/* MONTA EPISÓDIOS */
-
-function montarEpisodios(){
-
-    var box =
-        document.getElementById(
-            "listaEpisodios"
+        escaparHtml(
+            novela.nome
         );
 
-    box.innerHTML = "";
 
-    for(
-        var i=0;
-        i<episodiosAtuais.length;
-        i++
-    ){
-
-        var ep =
-            episodiosAtuais[i];
-
-        var botao =
-            document.createElement(
-                "button"
-            );
-
-        botao.className =
-            "ep";
-
-        botao.innerHTML =
-
-            '<div class="epNumero">'+
-            ep.numero+
-            '</div>'+
-
-            '<div class="epTexto">'+
-
-            '<strong>'+
-            'Episódio '+
-            ep.numero+
-            '</strong>'+
-
-            '<span>'+
-            novelaAtual+
-            '</span>'+
-
-            '</div>';
-
-        botao.setAttribute(
-            "data-index",
-            i
+    document
+    .getElementById(
+        "tituloNovela"
+    )
+    .innerHTML =
+        escaparHtml(
+            novela.nome
         );
 
-        botao.onclick =
-            function(){
 
-                abrirPlayer(
-                    parseInt(
-                        this.getAttribute(
-                            "data-index"
-                        )
-                    )
-                );
-
-            };
-
-        box.appendChild(
-            botao
+    document
+    .getElementById(
+        "anoNovela"
+    )
+    .innerHTML =
+        escaparHtml(
+            novela.ano
         );
-    }
+
+
+    document
+    .getElementById(
+        "infoNovela"
+    )
+    .innerHTML =
+        "Carregando informações...";
+
+
+    AndroidSite.get(
+        novela.url,
+        "receberNovela"
+    );
 }
 
 
 /*
-   MANDA A LISTA INTEIRA
-   PARA O PLAYER NATIVO
-*/
+ * RECEBE PÁGINA DA NOVELA
+ */
 
-function abrirPlayer(indice){
+function receberNovela(
+    status,
+    html,
+    erro
+){
 
-    if(
-        typeof AndroidPlayer ===
-        "undefined"
-    ){
+    if(erro){
 
         document
         .getElementById(
-            "aviso"
+            "infoNovela"
         )
         .innerHTML =
-            "ERRO: player Android não encontrado.";
+            escaparHtml(
+                erro
+            );
 
         return;
     }
 
 
-    var urls = [];
-
-    var titulos = [];
-
-    var aberturas = [];
-
-
-    for(
-        var i=0;
-        i<episodiosAtuais.length;
-        i++
+    if(
+        status < 200 ||
+        status >= 400
     ){
 
-        urls.push(
-            episodiosAtuais[i].url
+        document
+        .getElementById(
+            "infoNovela"
+        )
+        .innerHTML =
+            "HTTP " +
+            status;
+
+        return;
+    }
+
+
+    var parser =
+        new DOMParser();
+
+    var doc =
+        parser.parseFromString(
+            html,
+            "text/html"
         );
 
-        titulos.push(
-            "Episódio "+
-            episodiosAtuais[i].numero
+
+    var h1 =
+        doc.querySelector(
+            "h1"
         );
 
-        aberturas.push(
-            episodiosAtuais[i].abertura
-        );
+
+    if(h1){
+
+        document
+        .getElementById(
+            "tituloNovela"
+        )
+        .innerHTML =
+            escaparHtml(
+                limparTexto(
+                    h1.textContent
+                )
+            );
     }
 
 
     document
     .getElementById(
-        "aviso"
+        "infoNovela"
     )
     .innerHTML =
-        "Abrindo Episódio "+
-        (indice+1)+
-        "...";
-
-
-    AndroidPlayer.playList(
-
-        novelaAtual,
-
-        urls.join("|"),
-
-        titulos.join("|"),
-
-        aberturas.join("|"),
-
-        indice
-
-    );
+        "Página carregada dentro do NovelasPlay ✅<br><br>" +
+        "No próximo passo vamos identificar a lista pública de capítulos/episódios desta página.";
 }
 
 
-/* VOLTAR */
+/*
+ * VOLTAR
+ */
 
-function voltarCatalogo(){
+function voltar(){
 
     document
     .getElementById(
@@ -902,6 +963,7 @@ function voltarCatalogo(){
     )
     .style.display =
         "none";
+
 
     document
     .getElementById(
@@ -912,7 +974,45 @@ function voltarCatalogo(){
 }
 
 
-/* EVENTOS */
+function mostrarStatus(
+    texto,
+    tipo
+){
+
+    var box =
+        document.getElementById(
+            "status"
+        );
+
+    box.className =
+        "status";
+
+    if(tipo){
+        box.className +=
+            " " + tipo;
+    }
+
+    box.innerHTML =
+        escaparHtml(
+            texto
+        );
+}
+
+
+function escaparHtml(texto){
+
+    if(!texto){
+        return "";
+    }
+
+    return texto
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
 
 document
 .getElementById(
@@ -940,16 +1040,13 @@ document
 )
 .addEventListener(
     "click",
-    voltarCatalogo
+    voltar
 );
 
 
-/* INICIAR */
-
-montarTop();
-
-montarGrade(
-    novelas
+setTimeout(
+    iniciar,
+    700
 );
 
 </script>
