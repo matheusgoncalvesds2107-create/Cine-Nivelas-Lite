@@ -9,12 +9,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 public class MainActivity extends Activity {
 
     private WebView webView;
@@ -33,7 +27,6 @@ public class MainActivity extends Activity {
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
         settings.setLoadsImagesAutomatically(true);
-
         settings.setMediaPlaybackRequiresUserGesture(false);
 
         if (android.os.Build.VERSION.SDK_INT >= 21) {
@@ -50,17 +43,6 @@ public class MainActivity extends Activity {
             new WebViewClient()
         );
 
-        /*
-         * Ponte antiga da API.
-         */
-        webView.addJavascriptInterface(
-            new ApiBridge(),
-            "AndroidApi"
-        );
-
-        /*
-         * NOVA PONTE DO PLAYER NATIVO.
-         */
         webView.addJavascriptInterface(
             new PlayerBridge(),
             "AndroidPlayer"
@@ -77,21 +59,16 @@ public class MainActivity extends Activity {
     }
 
 
-    /*
-     * PLAYER NATIVO
-     */
-
     public class PlayerBridge {
 
         @JavascriptInterface
-        public void play(
-            final String url,
-            final String titulo
+        public void playList(
+            final String tituloNovela,
+            final String urls,
+            final String titulos,
+            final String aberturas,
+            final int episodioInicial
         ) {
-
-            if (url == null || url.length() == 0) {
-                return;
-            }
 
             runOnUiThread(
                 new Runnable() {
@@ -106,13 +83,28 @@ public class MainActivity extends Activity {
                             );
 
                         intent.putExtra(
-                            "url",
-                            url
+                            "novela",
+                            tituloNovela
                         );
 
                         intent.putExtra(
-                            "titulo",
-                            titulo
+                            "urls",
+                            urls
+                        );
+
+                        intent.putExtra(
+                            "titulos",
+                            titulos
+                        );
+
+                        intent.putExtra(
+                            "aberturas",
+                            aberturas
+                        );
+
+                        intent.putExtra(
+                            "episodioInicial",
+                            episodioInicial
                         );
 
                         startActivity(intent);
@@ -120,204 +112,6 @@ public class MainActivity extends Activity {
                 }
             );
         }
-    }
-
-
-    /*
-     * PONTE HTTP ANTIGA
-     */
-
-    public class ApiBridge {
-
-        @JavascriptInterface
-        public void get(
-            final String path,
-            final String callback
-        ) {
-
-            new Thread(
-                new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        HttpURLConnection c = null;
-
-                        try {
-
-                            URL url =
-                                new URL(
-                                    "https://cinenovelas.xyz/v1/"
-                                    + path
-                                );
-
-                            c =
-                                (HttpURLConnection)
-                                url.openConnection();
-
-                            c.setRequestMethod(
-                                "GET"
-                            );
-
-                            c.setConnectTimeout(
-                                8000
-                            );
-
-                            c.setReadTimeout(
-                                8000
-                            );
-
-                            c.setUseCaches(
-                                false
-                            );
-
-                            c.setRequestProperty(
-                                "Accept",
-                                "application/json"
-                            );
-
-                            c.setRequestProperty(
-                                "User-Agent",
-                                "Mozilla/5.0 (Linux; Android 6.0.1)"
-                            );
-
-                            int status =
-                                c.getResponseCode();
-
-                            InputStream stream;
-
-                            if (
-                                status >= 200 &&
-                                status < 400
-                            ) {
-
-                                stream =
-                                    c.getInputStream();
-
-                            } else {
-
-                                stream =
-                                    c.getErrorStream();
-                            }
-
-                            String body =
-                                read(stream);
-
-                            resposta(
-                                callback,
-                                status,
-                                body,
-                                ""
-                            );
-
-                        } catch (Exception e) {
-
-                            resposta(
-                                callback,
-                                0,
-                                "",
-                                e.getClass()
-                                    .getSimpleName()
-                                    + ": "
-                                    + e.getMessage()
-                            );
-
-                        } finally {
-
-                            if (c != null) {
-                                c.disconnect();
-                            }
-                        }
-                    }
-                }
-            ).start();
-        }
-    }
-
-
-    private String read(
-        InputStream in
-    ) throws Exception {
-
-        if (in == null) {
-            return "";
-        }
-
-        BufferedReader br =
-            new BufferedReader(
-                new InputStreamReader(
-                    in,
-                    "UTF-8"
-                )
-            );
-
-        StringBuilder sb =
-            new StringBuilder();
-
-        String linha;
-
-        while (
-            (linha = br.readLine())
-            != null
-        ) {
-
-            sb.append(
-                linha
-            );
-        }
-
-        br.close();
-
-        return sb.toString();
-    }
-
-
-    private void resposta(
-        final String callback,
-        final int status,
-        final String body,
-        final String erro
-    ) {
-
-        runOnUiThread(
-            new Runnable() {
-
-                @Override
-                public void run() {
-
-                    String js =
-                        callback
-                        + "("
-                        + status
-                        + ",'"
-                        + escapar(body)
-                        + "','"
-                        + escapar(erro)
-                        + "')";
-
-                    webView.evaluateJavascript(
-                        js,
-                        null
-                    );
-                }
-            }
-        );
-    }
-
-
-    private String escapar(
-        String s
-    ) {
-
-        if (s == null) {
-            return "";
-        }
-
-        return s
-            .replace("\\", "\\\\")
-            .replace("'", "\\'")
-            .replace("\r", "")
-            .replace("\n", "\\n");
     }
 
 
