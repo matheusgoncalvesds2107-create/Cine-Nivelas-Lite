@@ -2,11 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
-      content="width=device-width,
-      initial-scale=1.0,
-      maximum-scale=1.0">
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 
 <title>NovelasPlay</title>
 
@@ -23,18 +20,12 @@ body{
     font-family:Arial,sans-serif;
 }
 
-button,
-input{
-    font-family:Arial,sans-serif;
-}
-
 .topo{
     height:82px;
     background:#101011;
     display:flex;
     align-items:center;
     justify-content:center;
-    position:relative;
     border-bottom:1px solid #292929;
 }
 
@@ -51,14 +42,9 @@ input{
     color:#fff;
 }
 
-.barraBusca{
-    padding:17px;
-    background:#101011;
-    border-bottom:7px solid #222;
-}
-
 .buscaBox{
     display:flex;
+    margin:17px;
     background:#050505;
     border-radius:28px;
     overflow:hidden;
@@ -70,17 +56,17 @@ input{
     border:0;
     outline:0;
     background:#050505;
-    color:#fff;
+    color:white;
     padding:15px 18px;
     font-size:17px;
 }
 
-.btnBusca{
+.buscaBox button{
     width:62px;
     border:0;
     background:#e31326;
-    color:#fff;
-    font-size:24px;
+    color:white;
+    font-size:22px;
 }
 
 main{
@@ -90,7 +76,7 @@ main{
 .status{
     background:#1d1d20;
     border-radius:9px;
-    padding:13px;
+    padding:14px;
     margin-bottom:18px;
     color:#bbb;
     line-height:1.5;
@@ -104,39 +90,17 @@ main{
     color:#ff8585;
 }
 
-.categorias{
-    display:flex;
-    gap:9px;
-    overflow-x:auto;
-    margin-bottom:22px;
-}
-
-.categorias button{
-    flex:none;
-    min-height:45px;
-    padding:0 16px;
-    border:0;
-    border-radius:22px;
-    background:#222;
-    color:#fff;
-    font-weight:bold;
-}
-
-.categorias button.ativo{
-    background:#e31326;
-}
-
-.tituloSecao{
+.titulo{
     display:flex;
     align-items:center;
-    margin:22px 0 15px;
-    font-size:22px;
+    margin:20px 0 15px;
+    font-size:23px;
     font-weight:bold;
 }
 
 .linha{
     width:5px;
-    height:32px;
+    height:34px;
     background:#ef1837;
     margin-right:11px;
 }
@@ -152,7 +116,7 @@ main{
 }
 
 .capa{
-    height:170px;
+    height:175px;
     border-radius:7px;
     overflow:hidden;
 
@@ -160,8 +124,8 @@ main{
     align-items:center;
     justify-content:center;
 
-    text-align:center;
     padding:9px;
+    text-align:center;
 
     background:
         linear-gradient(
@@ -182,20 +146,13 @@ main{
     margin-top:7px;
     font-size:14px;
     font-weight:bold;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
 }
 
-.meta{
-    color:#999;
-    font-size:12px;
+.episodios{
     margin-top:3px;
+    font-size:12px;
+    color:#999;
 }
-
-
-/* DETALHES */
 
 #detalheTela{
     display:none;
@@ -204,59 +161,31 @@ main{
 .subTopo{
     min-height:70px;
     background:#101011;
-
     display:flex;
     align-items:center;
-
     padding:12px 16px;
-
     border-bottom:2px solid #ef1837;
 }
 
 .voltar{
     width:44px;
     height:44px;
-
     border:0;
     border-radius:50%;
-
     background:#252525;
-    color:#fff;
-
+    color:white;
     font-size:27px;
-
     margin-right:13px;
 }
 
-.subTitulo strong{
-    display:block;
-    font-size:19px;
-}
-
-.subTitulo span{
-    color:#aaa;
-    font-size:13px;
-}
-
 .detalhes{
-    padding:17px;
+    padding:18px;
 }
 
 .painel{
-    padding:16px;
-
     background:#1d1d20;
-
     border-radius:10px;
-}
-
-.painel h2{
-    margin:0 0 8px;
-}
-
-.info{
-    color:#bbb;
-    line-height:1.5;
+    padding:16px;
 }
 
 </style>
@@ -264,137 +193,59 @@ main{
 
 <body>
 
-
-<!-- INÍCIO -->
-
 <div id="catalogoTela">
 
 <div class="topo">
-
     <div class="logo">
-
-        <span class="logo1">
-            NOVELAS
-        </span>
-
-        <span class="logo2">
-            PLAY
-        </span>
-
+        <span class="logo1">NOVELAS</span><span class="logo2">PLAY</span>
     </div>
-
 </div>
 
+<div class="buscaBox">
 
-<div class="barraBusca">
+    <input
+        id="busca"
+        placeholder="Pesquisar novela turca...">
 
-    <div class="buscaBox">
-
-        <input
-            id="busca"
-            placeholder="Pesquisar...">
-
-        <button
-            id="btnBusca"
-            class="btnBusca">
-
-            🔍
-
-        </button>
-
-    </div>
+    <button id="btnBusca">
+        🔍
+    </button>
 
 </div>
-
 
 <main>
 
-<div
-    id="status"
-    class="status">
-
-    Iniciando motor...
-
+<div id="status" class="status">
+    Carregando AssistirFarah...
 </div>
 
-
-<div class="categorias">
-
-    <button
-        id="catTurcas"
-        class="ativo">
-
-        Novelas Turcas
-
-    </button>
-
-    <button
-        id="catOutros">
-
-        Outros Dramas
-
-    </button>
-
-    <button
-        id="catTudo">
-
-        Tudo
-
-    </button>
-
-</div>
-
-
-<div class="tituloSecao">
-
+<div class="titulo">
     <div class="linha"></div>
-
-    <span id="tituloCategoria">
-        Novelas Turcas
-    </span>
-
+    Novelas Turcas
 </div>
 
-
-<div
-    id="grade"
-    class="grade">
-</div>
+<div id="grade" class="grade"></div>
 
 </main>
 
 </div>
 
 
-
-<!-- DETALHE -->
-
 <div id="detalheTela">
 
 <div class="subTopo">
 
     <button
-        id="btnVoltar"
+        id="voltar"
         class="voltar">
-
         ‹
-
     </button>
 
-    <div class="subTitulo">
-
-        <strong id="tituloTopo">
-            Novela
-        </strong>
-
-        <span>
-            NovelasPlay
-        </span>
-
-    </div>
+    <strong id="tituloTopo">
+        Novela
+    </strong>
 
 </div>
-
 
 <div class="detalhes">
 
@@ -404,17 +255,8 @@ main{
             Novela
         </h2>
 
-        <div
-            id="metaDetalhe"
-            class="meta">
-        </div>
-
-        <div
-            id="infoDetalhe"
-            class="info">
-
-            Carregando informações...
-
+        <div id="infoDetalhe">
+            Carregando...
         </div>
 
     </div>
@@ -424,48 +266,15 @@ main{
 </div>
 
 
-
 <script>
 
-var FONTES = [
-
-    {
-        nome:"AssistirFarah",
-        url:"https://assistirfarah.com/",
-        tipo:"turca"
-    },
-
-    {
-        nome:"NetiDizis",
-        url:"https://netidizis.club/",
-        tipo:"turca"
-    },
-
-    {
-        nome:"Dramas",
-        url:"https://dramas.com.br/",
-        tipo:"outros"
-    }
-
-];
-
+var URL =
+    "https://assistirfarah.com/";
 
 var catalogo = [];
 
 var exibindo = [];
 
-var categoriaAtual =
-    "turca";
-
-var fontesConcluidas = 0;
-
-
-
-/*
- * ===================================
- * INÍCIO
- * ===================================
- */
 
 function iniciar(){
 
@@ -474,190 +283,89 @@ function iniciar(){
         "undefined"
     ){
 
-        mostrarStatus(
-            "Motor AndroidSite não encontrado.",
+        status(
+            "AndroidSite não encontrado.",
             "erro"
         );
 
         return;
     }
 
-    mostrarStatus(
-        "Carregando as 3 fontes..."
+    status(
+        "Buscando catálogo do AssistirFarah..."
     );
-
-    catalogo = [];
-
-    fontesConcluidas = 0;
-
-
-    for(
-        var i=0;
-        i<FONTES.length;
-        i++
-    ){
-
-        baixarFonte(
-            i
-        );
-    }
-}
-
-
-
-function baixarFonte(indice){
-
-    var fonte =
-        FONTES[indice];
-
-    /*
-     * callback separado
-     * para cada fonte.
-     */
-
-    var callback =
-        "receberFonte" +
-        indice;
-
 
     AndroidSite.get(
-        fonte.url,
-        callback
+        URL,
+        "receberCatalogo"
     );
 }
 
 
-
-/*
- * ===================================
- * CALLBACKS
- * ===================================
- */
-
-function receberFonte0(
+function receberCatalogo(
     codigo,
     html,
     erro
 ){
 
-    processarFonte(
-        0,
-        codigo,
-        html,
-        erro
-    );
-}
+    if(erro){
 
-
-function receberFonte1(
-    codigo,
-    html,
-    erro
-){
-
-    processarFonte(
-        1,
-        codigo,
-        html,
-        erro
-    );
-}
-
-
-function receberFonte2(
-    codigo,
-    html,
-    erro
-){
-
-    processarFonte(
-        2,
-        codigo,
-        html,
-        erro
-    );
-}
-
-
-
-function processarFonte(
-    indice,
-    codigo,
-    html,
-    erro
-){
-
-    fontesConcluidas++;
-
-
-    if(
-        !erro &&
-        codigo >= 200 &&
-        codigo < 400
-    ){
-
-        var fonte =
-            FONTES[indice];
-
-
-        var encontrados =
-            extrairCatalogoGenerico(
-                html,
-                fonte
-            );
-
-
-        adicionarSemDuplicar(
-            encontrados
+        status(
+            erro,
+            "erro"
         );
+
+        return;
     }
 
-
-    atualizarStatusMotor();
-
-
     if(
-        fontesConcluidas ===
-        FONTES.length
+        codigo < 200 ||
+        codigo >= 400
     ){
 
-        aplicarCategoria(
-            categoriaAtual
+        status(
+            "HTTP "+codigo,
+            "erro"
         );
+
+        return;
     }
+
+    catalogo =
+        extrair(
+            html
+        );
+
+    exibindo =
+        catalogo.slice(0);
+
+    status(
+        catalogo.length+
+        " títulos encontrados ✅",
+        "ok"
+    );
+
+    montar(
+        exibindo
+    );
 }
 
 
-
-/*
- * ===================================
- * EXTRATOR GENÉRICO
- * ===================================
- */
-
-function extrairCatalogoGenerico(
-    html,
-    fonte
-){
-
-    var parser =
-        new DOMParser();
-
+function extrair(html){
 
     var doc =
-        parser.parseFromString(
+        new DOMParser()
+        .parseFromString(
             html,
             "text/html"
         );
-
 
     var links =
         doc.querySelectorAll(
             "a[href]"
         );
 
-
-    var resultado = [];
+    var lista = [];
 
     var usados = {};
 
@@ -671,25 +379,39 @@ function extrairCatalogoGenerico(
         var a =
             links[i];
 
-
         var href =
-            normalizarUrl(
-                a.getAttribute(
-                    "href"
-                ),
-                fonte.url
+            a.getAttribute(
+                "href"
+            )
+            ||
+            "";
+
+
+        href =
+            normalizar(
+                href
             );
 
 
-        if(!href){
+        if(
+            !href ||
+            href === URL
+        ){
             continue;
         }
 
 
         /*
-         * Não adiciona navegação geral,
-         * login, categorias etc.
+         * Descarta navegação geral.
          */
+        if(
+            href.indexOf(
+                "#"
+            ) >= 0
+        ){
+            continue;
+        }
+
 
         var texto =
             limpar(
@@ -703,7 +425,7 @@ function extrairCatalogoGenerico(
             );
 
 
-        var alt = "";
+        var alt="";
 
         if(img){
 
@@ -716,39 +438,6 @@ function extrairCatalogoGenerico(
         }
 
 
-        var nome =
-            texto || alt;
-
-
-        if(
-            !nome ||
-            nome.length < 3 ||
-            nome.length > 120
-        ){
-
-            continue;
-        }
-
-
-        var chave =
-            normalizarNome(
-                nome
-            );
-
-
-        if(
-            usados[chave]
-        ){
-
-            continue;
-        }
-
-
-        /*
-         * tenta identificar
-         * títulos de conteúdo
-         */
-
         var bloco =
             a.parentNode;
 
@@ -760,47 +449,68 @@ function extrairCatalogoGenerico(
                 bloco.textContent
             )
             :
-            nome;
+            texto;
 
 
-        var pareceConteudo =
-            false;
+        /*
+         * O catálogo público usa
+         * "XX episódios".
+         */
+        var match =
+            textoBloco.match(
+                /(\d+)\s*epis[oó]dios?/i
+            );
 
 
-        if(img){
-            pareceConteudo=true;
+        if(!match){
+            continue;
         }
 
 
-        if(
-            /epis[oó]dios?/i.test(
-                textoBloco
+        var nome =
+            alt || texto;
+
+
+        if(!nome){
+            continue;
+        }
+
+
+        /*
+         * Remove texto extra depois
+         * do número de episódios.
+         */
+        nome =
+            nome
+            .replace(
+                /\s*Completa.*$/i,
+                ""
             )
-        ){
-            pareceConteudo=true;
-        }
+            .replace(
+                /\s*\d+\s*epis[oó]dios?.*$/i,
+                ""
+            );
+
+
+        nome =
+            limpar(
+                nome
+            );
 
 
         if(
-            /completa/i.test(
-                textoBloco
-            )
+            nome.length < 3
         ){
-            pareceConteudo=true;
+            continue;
         }
 
 
-        if(
-            /\b\d+\s*eps?\b/i.test(
-                textoBloco
-            )
-        ){
-            pareceConteudo=true;
-        }
+        var chave =
+            nome.toLowerCase();
 
 
         if(
-            !pareceConteudo
+            usados[chave]
         ){
             continue;
         }
@@ -828,277 +538,34 @@ function extrairCatalogoGenerico(
         }
 
 
-        var episodios="";
-
-
-        var m =
-            textoBloco.match(
-                /(\d+)\s*(epis[oó]dios?|eps?)/i
-            );
-
-
-        if(m){
-
-            episodios =
-                m[1]+
-                " episódios";
-        }
-
-
         usados[chave]=true;
 
 
-        resultado.push({
+        lista.push({
 
             nome:nome,
 
+            episodios:
+                match[1],
+
             url:href,
 
-            capa:capa,
-
-            episodios:episodios,
-
-            fonte:fonte.nome,
-
-            tipo:fonte.tipo
+            capa:capa
 
         });
     }
 
 
-    return resultado;
+    return lista;
 }
 
 
-
-/*
- * ===================================
- * REMOVE REPETIDOS
- * ===================================
- */
-
-function adicionarSemDuplicar(
-    lista
-){
-
-    for(
-        var i=0;
-        i<lista.length;
-        i++
-    ){
-
-        var novo =
-            lista[i];
-
-
-        var chaveNova =
-            normalizarNome(
-                novo.nome
-            );
-
-
-        var existe =
-            false;
-
-
-        for(
-            var j=0;
-            j<catalogo.length;
-            j++
-        ){
-
-            if(
-                normalizarNome(
-                    catalogo[j].nome
-                ) ===
-                chaveNova
-            ){
-
-                existe=true;
-
-
-                /*
-                 * Se a nova entrada tem capa
-                 * e a antiga não, melhora
-                 * a entrada existente.
-                 */
-
-                if(
-                    !catalogo[j].capa &&
-                    novo.capa
-                ){
-
-                    catalogo[j].capa =
-                        novo.capa;
-                }
-
-
-                if(
-                    !catalogo[j].episodios &&
-                    novo.episodios
-                ){
-
-                    catalogo[j].episodios =
-                        novo.episodios;
-                }
-
-
-                break;
-            }
-        }
-
-
-        if(!existe){
-
-            catalogo.push(
-                novo
-            );
-        }
-    }
-}
-
-
-
-/*
- * ===================================
- * CATEGORIAS
- * ===================================
- */
-
-function aplicarCategoria(
-    categoria
-){
-
-    categoriaAtual =
-        categoria;
-
-
-    exibindo=[];
-
-
-    for(
-        var i=0;
-        i<catalogo.length;
-        i++
-    ){
-
-        if(
-            categoria === "tudo"
-            ||
-            catalogo[i].tipo === categoria
-        ){
-
-            exibindo.push(
-                catalogo[i]
-            );
-        }
-    }
-
-
-    if(
-        categoria === "turca"
-    ){
-
-        document
-        .getElementById(
-            "tituloCategoria"
-        )
-        .innerHTML =
-            "Novelas Turcas";
-    }
-
-
-    if(
-        categoria === "outros"
-    ){
-
-        document
-        .getElementById(
-            "tituloCategoria"
-        )
-        .innerHTML =
-            "Outros Dramas";
-    }
-
-
-    if(
-        categoria === "tudo"
-    ){
-
-        document
-        .getElementById(
-            "tituloCategoria"
-        )
-        .innerHTML =
-            "Todo o catálogo";
-    }
-
-
-    atualizarBotoesCategoria();
-
-
-    montarGrade(
-        exibindo
-    );
-}
-
-
-
-function atualizarBotoesCategoria(){
-
-    document
-    .getElementById(
-        "catTurcas"
-    )
-    .className =
-        categoriaAtual === "turca"
-        ?
-        "ativo"
-        :
-        "";
-
-
-    document
-    .getElementById(
-        "catOutros"
-    )
-    .className =
-        categoriaAtual === "outros"
-        ?
-        "ativo"
-        :
-        "";
-
-
-    document
-    .getElementById(
-        "catTudo"
-    )
-    .className =
-        categoriaAtual === "tudo"
-        ?
-        "ativo"
-        :
-        "";
-}
-
-
-
-/*
- * ===================================
- * GRADE
- * ===================================
- */
-
-function montarGrade(
-    lista
-){
+function montar(lista){
 
     var grade =
         document.getElementById(
             "grade"
         );
-
 
     grade.innerHTML="";
 
@@ -1112,18 +579,16 @@ function montarGrade(
         var item =
             lista[i];
 
-
         var card =
             document.createElement(
                 "div"
             );
 
-
-        card.className =
+        card.className=
             "card";
 
 
-        var imagem="";
+        var capa="";
 
 
         if(
@@ -1133,7 +598,7 @@ function montarGrade(
             ) === 0
         ){
 
-            imagem =
+            capa =
                 '<img src="' +
                 esc(
                     item.capa
@@ -1142,25 +607,17 @@ function montarGrade(
 
         }else{
 
-            imagem =
+            capa =
                 esc(
                     item.nome
                 );
         }
 
 
-        var meta =
-            item.episodios
-            ?
-            item.episodios
-            :
-            "";
-
-
-        card.innerHTML =
+        card.innerHTML=
 
             '<div class="capa">'+
-            imagem+
+            capa+
             '</div>'+
 
             '<div class="nome">'+
@@ -1169,10 +626,9 @@ function montarGrade(
             )+
             '</div>'+
 
-            '<div class="meta">'+
-            esc(
-                meta
-            )+
+            '<div class="episodios">'+
+            item.episodios+
+            ' episódios'+
             '</div>';
 
 
@@ -1185,17 +641,13 @@ function montarGrade(
         card.onclick =
             function(){
 
-                var indice =
-                    parseInt(
-                        this.getAttribute(
-                            "data-index"
-                        )
-                    );
-
-
-                abrirDetalhe(
+                abrir(
                     exibindo[
-                        indice
+                        parseInt(
+                            this.getAttribute(
+                                "data-index"
+                            )
+                        )
                     ]
                 );
             };
@@ -1208,22 +660,13 @@ function montarGrade(
 }
 
 
-
-/*
- * ===================================
- * DETALHE
- * ===================================
- */
-
-function abrirDetalhe(
-    item
-){
+function abrir(item){
 
     document
     .getElementById(
         "catalogoTela"
     )
-    .style.display =
+    .style.display=
         "none";
 
 
@@ -1231,7 +674,7 @@ function abrirDetalhe(
     .getElementById(
         "detalheTela"
     )
-    .style.display =
+    .style.display=
         "block";
 
 
@@ -1239,7 +682,7 @@ function abrirDetalhe(
     .getElementById(
         "tituloTopo"
     )
-    .innerHTML =
+    .innerHTML=
         esc(
             item.nome
         );
@@ -1249,7 +692,7 @@ function abrirDetalhe(
     .getElementById(
         "tituloDetalhe"
     )
-    .innerHTML =
+    .innerHTML=
         esc(
             item.nome
         );
@@ -1257,30 +700,18 @@ function abrirDetalhe(
 
     document
     .getElementById(
-        "metaDetalhe"
-    )
-    .innerHTML =
-        esc(
-            item.episodios
-        );
-
-
-    document
-    .getElementById(
         "infoDetalhe"
     )
-    .innerHTML =
-        "Conteúdo localizado pelo Motor NovelasPlay.<br><br>"+
-        "No próximo passo vamos identificar temporadas e episódios públicos desta página.";
+    .innerHTML=
+
+        item.episodios+
+        " episódios encontrados.<br><br>"+
+        "Página pública:<br>"+
+        esc(
+            item.url
+        );
 }
 
-
-
-/*
- * ===================================
- * BUSCA
- * ===================================
- */
 
 function pesquisar(){
 
@@ -1293,7 +724,7 @@ function pesquisar(){
         .toLowerCase();
 
 
-    var resultado=[];
+    exibindo=[];
 
 
     for(
@@ -1311,64 +742,95 @@ function pesquisar(){
             ) >= 0
         ){
 
-            resultado.push(
+            exibindo.push(
                 catalogo[i]
             );
         }
     }
 
 
-    exibindo =
-        resultado;
-
-
-    document
-    .getElementById(
-        "tituloCategoria"
-    )
-    .innerHTML =
-        termo
-        ?
-        "Resultados"
-        :
-        "Todo o catálogo";
-
-
-    montarGrade(
-        resultado
+    montar(
+        exibindo
     );
 }
 
 
+function normalizar(url){
 
-/*
- * ===================================
- * STATUS
- * ===================================
- */
+    if(!url){
+        return "";
+    }
 
-function atualizarStatusMotor(){
 
-    mostrarStatus(
-        "Motor: "+
-        fontesConcluidas+
-        "/"+
-        FONTES.length+
-        " fontes carregadas · "+
-        catalogo.length+
-        " títulos encontrados.",
-        fontesConcluidas ===
-        FONTES.length
-        ?
-        "ok"
-        :
-        ""
-    );
+    if(
+        url.indexOf(
+            "https://"
+        ) === 0
+    ){
+
+        return url;
+    }
+
+
+    if(
+        url.indexOf(
+            "//"
+        ) === 0
+    ){
+
+        return "https:"+url;
+    }
+
+
+    if(
+        url.charAt(0) === "/"
+    ){
+
+        return "https://assistirfarah.com"+url;
+    }
+
+
+    return "";
 }
 
 
+function limpar(texto){
 
-function mostrarStatus(
+    if(!texto){
+        return "";
+    }
+
+    return String(texto)
+
+        .replace(
+            /\s+/g,
+            " "
+        )
+
+        .replace(
+            /^\s+|\s+$/g,
+            ""
+        );
+}
+
+
+function esc(texto){
+
+    if(!texto){
+        return "";
+    }
+
+    return String(texto)
+
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function status(
     texto,
     tipo
 ){
@@ -1390,176 +852,11 @@ function mostrarStatus(
     }
 
 
-    box.innerHTML =
+    box.innerHTML=
         esc(
             texto
         );
 }
-
-
-
-/*
- * ===================================
- * UTIL
- * ===================================
- */
-
-function normalizarUrl(
-    url,
-    base
-){
-
-    if(!url){
-        return "";
-    }
-
-
-    url =
-        String(url);
-
-
-    if(
-        url.indexOf(
-            "javascript:"
-        ) === 0
-        ||
-        url.indexOf(
-            "mailto:"
-        ) === 0
-        ||
-        url.charAt(0) === "#"
-    ){
-
-        return "";
-    }
-
-
-    if(
-        url.indexOf(
-            "https://"
-        ) === 0
-        ||
-        url.indexOf(
-            "http://"
-        ) === 0
-    ){
-
-        return url;
-    }
-
-
-    if(
-        url.indexOf(
-            "//"
-        ) === 0
-    ){
-
-        return "https:"+url;
-    }
-
-
-    try{
-
-        return new URL(
-            url,
-            base
-        ).href;
-
-    }catch(e){
-
-        return "";
-    }
-}
-
-
-
-function normalizarNome(
-    nome
-){
-
-    if(!nome){
-        return "";
-    }
-
-
-    return String(nome)
-
-        .toLowerCase()
-
-        .normalize
-        ?
-        String(nome)
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
-        :
-        String(nome)
-        .toLowerCase();
-}
-
-
-
-function limpar(
-    texto
-){
-
-    if(!texto){
-        return "";
-    }
-
-
-    return String(texto)
-
-        .replace(
-            /\s+/g,
-            " "
-        )
-
-        .replace(
-            /^\s+|\s+$/g,
-            ""
-        );
-}
-
-
-
-function esc(
-    texto
-){
-
-    if(!texto){
-        return "";
-    }
-
-
-    return String(texto)
-
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-
-
-
-/*
- * ===================================
- * EVENTOS
- * ===================================
- */
-
-document
-.getElementById(
-    "btnBusca"
-)
-.addEventListener(
-    "click",
-    pesquisar
-);
 
 
 document
@@ -1574,52 +871,17 @@ document
 
 document
 .getElementById(
-    "catTurcas"
+    "btnBusca"
 )
 .addEventListener(
     "click",
-    function(){
-
-        aplicarCategoria(
-            "turca"
-        );
-    }
+    pesquisar
 );
 
 
 document
 .getElementById(
-    "catOutros"
-)
-.addEventListener(
-    "click",
-    function(){
-
-        aplicarCategoria(
-            "outros"
-        );
-    }
-);
-
-
-document
-.getElementById(
-    "catTudo"
-)
-.addEventListener(
-    "click",
-    function(){
-
-        aplicarCategoria(
-            "tudo"
-        );
-    }
-);
-
-
-document
-.getElementById(
-    "btnVoltar"
+    "voltar"
 )
 .addEventListener(
     "click",
@@ -1629,7 +891,7 @@ document
         .getElementById(
             "detalheTela"
         )
-        .style.display =
+        .style.display=
             "none";
 
 
@@ -1637,7 +899,7 @@ document
         .getElementById(
             "catalogoTela"
         )
-        .style.display =
+        .style.display=
             "block";
     }
 );
