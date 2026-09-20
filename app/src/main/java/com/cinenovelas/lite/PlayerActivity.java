@@ -25,35 +25,94 @@ public class PlayerActivity extends Activity {
     private Button btnPular;
     private Button btnProximo;
 
+    private String nomeNovela = "NOVELASPLAY";
+
+    private String[] urls;
+    private String[] titulos;
+    private long[] aberturas;
+
     private int episodioAtual = 0;
 
-    private String[] urls = new String[] {
-        "https://www.w3schools.com/html/mov_bbb.mp4",
-        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
-    };
-
-    /*
-     * Tempo da abertura de cada episódio.
-     * Em milissegundos.
-     *
-     * Episódio 1: 3 segundos
-     * Episódio 2: 5 segundos
-     * Episódio 3: 5 segundos
-     *
-     * É só teste.
-     */
-    private long[] abertura = new long[] {
-        3000,
-        5000,
-        5000
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LinearLayout tela = new LinearLayout(this);
+        nomeNovela =
+            getIntent().getStringExtra("novela");
+
+        String urlsTexto =
+            getIntent().getStringExtra("urls");
+
+        String titulosTexto =
+            getIntent().getStringExtra("titulos");
+
+        String aberturasTexto =
+            getIntent().getStringExtra("aberturas");
+
+        episodioAtual =
+            getIntent().getIntExtra(
+                "episodioInicial",
+                0
+            );
+
+        if (nomeNovela == null) {
+            nomeNovela = "NOVELASPLAY";
+        }
+
+        if (urlsTexto == null) {
+            urlsTexto = "";
+        }
+
+        if (titulosTexto == null) {
+            titulosTexto = "";
+        }
+
+        if (aberturasTexto == null) {
+            aberturasTexto = "";
+        }
+
+        urls =
+            urlsTexto.split("\\|");
+
+        titulos =
+            titulosTexto.split("\\|");
+
+        String[] tempos =
+            aberturasTexto.split("\\|");
+
+        aberturas =
+            new long[urls.length];
+
+        for (
+            int i = 0;
+            i < aberturas.length;
+            i++
+        ) {
+
+            long valor = 0;
+
+            if (i < tempos.length) {
+
+                try {
+
+                    valor =
+                        Long.parseLong(
+                            tempos[i]
+                        );
+
+                } catch (Exception e) {
+
+                    valor = 0;
+                }
+            }
+
+            aberturas[i] = valor;
+        }
+
+
+        LinearLayout tela =
+            new LinearLayout(this);
 
         tela.setOrientation(
             LinearLayout.VERTICAL
@@ -63,10 +122,9 @@ public class PlayerActivity extends Activity {
             Color.BLACK
         );
 
-        /*
-         * TÍTULO
-         */
-        tituloView = new TextView(this);
+
+        tituloView =
+            new TextView(this);
 
         tituloView.setTextColor(
             Color.WHITE
@@ -91,10 +149,9 @@ public class PlayerActivity extends Activity {
             )
         );
 
-        /*
-         * PLAYER
-         */
-        playerView = new PlayerView(this);
+
+        playerView =
+            new PlayerView(this);
 
         playerView.setUseController(
             true
@@ -109,10 +166,9 @@ public class PlayerActivity extends Activity {
             )
         );
 
-        /*
-         * STATUS
-         */
-        statusView = new TextView(this);
+
+        statusView =
+            new TextView(this);
 
         statusView.setTextColor(
             Color.LTGRAY
@@ -130,16 +186,10 @@ public class PlayerActivity extends Activity {
         );
 
         tela.addView(
-            statusView,
-            new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+            statusView
         );
 
-        /*
-         * BOTÕES
-         */
+
         LinearLayout botoes =
             new LinearLayout(this);
 
@@ -154,12 +204,14 @@ public class PlayerActivity extends Activity {
             20
         );
 
+
         btnAnterior =
             new Button(this);
 
         btnAnterior.setText(
             "◀ Anterior"
         );
+
 
         btnPular =
             new Button(this);
@@ -168,12 +220,14 @@ public class PlayerActivity extends Activity {
             "⏩ Pular abertura"
         );
 
+
         btnProximo =
             new Button(this);
 
         btnProximo.setText(
             "Próximo ▶"
         );
+
 
         botoes.addView(
             btnAnterior,
@@ -210,9 +264,7 @@ public class PlayerActivity extends Activity {
             tela
         );
 
-        /*
-         * CRIA EXOPLAYER
-         */
+
         player =
             new SimpleExoPlayer.Builder(this)
                 .build();
@@ -221,9 +273,7 @@ public class PlayerActivity extends Activity {
             player
         );
 
-        /*
-         * EVENTOS DO PLAYER
-         */
+
         player.addListener(
             new Player.Listener() {
 
@@ -238,7 +288,7 @@ public class PlayerActivity extends Activity {
                     ) {
 
                         statusView.setText(
-                            "Reproduzindo Episódio "
+                            "Reproduzindo episódio "
                             + (episodioAtual + 1)
                         );
                     }
@@ -254,9 +304,7 @@ public class PlayerActivity extends Activity {
             }
         );
 
-        /*
-         * BOTÃO PULAR ABERTURA
-         */
+
         btnPular.setOnClickListener(
             new View.OnClickListener() {
 
@@ -266,7 +314,7 @@ public class PlayerActivity extends Activity {
                 ) {
 
                     long tempo =
-                        abertura[
+                        aberturas[
                             episodioAtual
                         ];
 
@@ -283,9 +331,7 @@ public class PlayerActivity extends Activity {
             }
         );
 
-        /*
-         * BOTÃO PRÓXIMO
-         */
+
         btnProximo.setOnClickListener(
             new View.OnClickListener() {
 
@@ -299,9 +345,7 @@ public class PlayerActivity extends Activity {
             }
         );
 
-        /*
-         * BOTÃO ANTERIOR
-         */
+
         btnAnterior.setOnClickListener(
             new View.OnClickListener() {
 
@@ -315,13 +359,21 @@ public class PlayerActivity extends Activity {
             }
         );
 
-        /*
-         * COMEÇA NO EPISÓDIO 1
-         */
+
+        if (
+            episodioAtual < 0 ||
+            episodioAtual >= urls.length
+        ) {
+
+            episodioAtual = 0;
+        }
+
+
         carregarEpisodio(
-            0
+            episodioAtual
         );
     }
+
 
     private void carregarEpisodio(
         int indice
@@ -337,9 +389,24 @@ public class PlayerActivity extends Activity {
         episodioAtual =
             indice;
 
+        String tituloEp =
+            "Episódio "
+            + (indice + 1);
+
+        if (
+            indice < titulos.length &&
+            titulos[indice] != null &&
+            !titulos[indice].equals("")
+        ) {
+
+            tituloEp =
+                titulos[indice];
+        }
+
         tituloView.setText(
-            "NOVELASPLAY - Episódio "
-            + (episodioAtual + 1)
+            nomeNovela
+            + " - "
+            + tituloEp
         );
 
         statusView.setText(
@@ -348,9 +415,7 @@ public class PlayerActivity extends Activity {
 
         MediaItem item =
             MediaItem.fromUri(
-                urls[
-                    episodioAtual
-                ]
+                urls[indice]
             );
 
         player.setMediaItem(
@@ -366,14 +431,14 @@ public class PlayerActivity extends Activity {
         atualizarBotoes();
     }
 
+
     private void proximoEpisodio() {
 
         int novo =
             episodioAtual + 1;
 
         if (
-            novo <
-            urls.length
+            novo < urls.length
         ) {
 
             carregarEpisodio(
@@ -387,6 +452,7 @@ public class PlayerActivity extends Activity {
             );
         }
     }
+
 
     private void episodioAnterior() {
 
@@ -409,6 +475,7 @@ public class PlayerActivity extends Activity {
         }
     }
 
+
     private void atualizarBotoes() {
 
         btnAnterior.setEnabled(
@@ -419,7 +486,16 @@ public class PlayerActivity extends Activity {
             episodioAtual <
             urls.length - 1
         );
+
+        btnPular.setEnabled(
+            episodioAtual <
+            aberturas.length &&
+            aberturas[
+                episodioAtual
+            ] > 0
+        );
     }
+
 
     @Override
     protected void onPause() {
@@ -430,6 +506,7 @@ public class PlayerActivity extends Activity {
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -438,6 +515,7 @@ public class PlayerActivity extends Activity {
             player.play();
         }
     }
+
 
     @Override
     protected void onDestroy() {
@@ -450,4 +528,4 @@ public class PlayerActivity extends Activity {
             player = null;
         }
     }
-    }
+}
