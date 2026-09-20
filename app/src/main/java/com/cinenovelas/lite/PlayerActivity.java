@@ -3,7 +3,6 @@ package com.cinenovelas.lite;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,12 +16,19 @@ public class PlayerActivity extends Activity {
     private SimpleExoPlayer player;
     private PlayerView playerView;
 
+    private String[] urls = new String[] {
+        "https://www.w3schools.com/html/mov_bbb.mp4",
+        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+    };
+
+    private int episodioAtual = 0;
+
+    private TextView tituloView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        String url =
-            getIntent().getStringExtra("url");
 
         String titulo =
             getIntent().getStringExtra("titulo");
@@ -38,7 +44,7 @@ public class PlayerActivity extends Activity {
             Color.BLACK
         );
 
-        TextView tituloView =
+        tituloView =
             new TextView(this);
 
         if (
@@ -48,9 +54,18 @@ public class PlayerActivity extends Activity {
             titulo = "NOVELASPLAY";
         }
 
-        tituloView.setText(titulo);
-        tituloView.setTextColor(Color.WHITE);
-        tituloView.setTextSize(20);
+        tituloView.setText(
+            titulo
+        );
+
+        tituloView.setTextColor(
+            Color.WHITE
+        );
+
+        tituloView.setTextSize(
+            20
+        );
+
         tituloView.setPadding(
             20,
             20,
@@ -69,7 +84,9 @@ public class PlayerActivity extends Activity {
         playerView =
             new PlayerView(this);
 
-        playerView.setUseController(true);
+        playerView.setUseController(
+            true
+        );
 
         tela.addView(
             playerView,
@@ -80,48 +97,101 @@ public class PlayerActivity extends Activity {
             )
         );
 
-        setContentView(tela);
+        setContentView(
+            tela
+        );
 
         player =
             new SimpleExoPlayer.Builder(this)
                 .build();
 
-        playerView.setPlayer(player);
+        playerView.setPlayer(
+            player
+        );
 
-        if (
-            url != null &&
-            !url.equals("")
-        ) {
+        player.addListener(
+            new Player.Listener() {
 
-            MediaItem item =
-                MediaItem.fromUri(url);
+                @Override
+                public void onPlaybackStateChanged(
+                    int playbackState
+                ) {
 
-            player.setMediaItem(item);
-
-            player.prepare();
-
-            player.setPlayWhenReady(true);
-
-            player.addListener(
-                new Player.Listener() {
-
-                    @Override
-                    public void onPlaybackStateChanged(
-                        int playbackState
+                    if (
+                        playbackState ==
+                        Player.STATE_ENDED
                     ) {
 
-                        if (
-                            playbackState ==
-                            Player.STATE_ENDED
-                        ) {
-
-                            finish();
-                        }
+                        proximoEpisodio();
                     }
                 }
+            }
+        );
+
+        carregarEpisodio(
+            0
+        );
+    }
+
+
+    private void carregarEpisodio(
+        int indice
+    ) {
+
+        if (
+            indice < 0 ||
+            indice >= urls.length
+        ) {
+            return;
+        }
+
+        episodioAtual =
+            indice;
+
+        tituloView.setText(
+            "NOVELASPLAY - Episódio "
+            + (indice + 1)
+        );
+
+        MediaItem item =
+            MediaItem.fromUri(
+                urls[indice]
+            );
+
+        player.setMediaItem(
+            item
+        );
+
+        player.prepare();
+
+        player.setPlayWhenReady(
+            true
+        );
+    }
+
+
+    private void proximoEpisodio() {
+
+        int proximo =
+            episodioAtual + 1;
+
+        if (
+            proximo <
+            urls.length
+        ) {
+
+            carregarEpisodio(
+                proximo
+            );
+
+        } else {
+
+            tituloView.setText(
+                "Fim dos episódios disponíveis"
             );
         }
     }
+
 
     @Override
     protected void onPause() {
@@ -132,6 +202,7 @@ public class PlayerActivity extends Activity {
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -140,6 +211,7 @@ public class PlayerActivity extends Activity {
             player.play();
         }
     }
+
 
     @Override
     protected void onDestroy() {
